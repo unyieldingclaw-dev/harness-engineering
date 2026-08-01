@@ -32,7 +32,12 @@ Branch: main
 12. Who owns context selection, context compaction, persistence, and retrieval?
 13. What minimum execution metadata would allow us to explain or reproduce materially different AI behavior?
 14. Which harness behaviors depend on provider-specific capabilities versus provider-independent abstractions?
+15. How does PMB handle multiple concurrent sessions working on
+    different features within the same project?
 
+16. Can session-specific handoff state be isolated without losing
+    access to authoritative project-level context?
+    
 ## Additional Assessment Dimensions
 
 The assessment is not limited to prompts, instructions, tools, and memory.
@@ -65,6 +70,27 @@ Every harness surface will be classified as:
 - ENFORCED
 - UNNECESSARY
 
+## Known Operational Issues
+
+### Concurrent Session Handoff Collision
+
+PMB has been observed in real project usage with multiple concurrent
+AI sessions working on different features within the same project.
+
+Current handoff behavior can cause session state to become jumbled,
+overwritten, or incorrectly consumed by another session, resulting
+in context confusion.
+
+HE-001 must determine:
+
+- Which handoff information is project-level versus session-specific.
+- How concurrent session state is currently identified and stored.
+- Where overwrites or ambiguous ownership can occur.
+- How a new session determines which prior session state is relevant.
+- What minimum isolation is required without duplicating shared
+  project context.
+
+No implementation approach is assumed.
 ## Evidence Standard
 
 Do not recommend a change merely because an implementation

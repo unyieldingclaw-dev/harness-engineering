@@ -14,6 +14,47 @@ Unlike prompt engineering, which focuses primarily on individual requests, conte
 - Repetition across context sources creates conflicting guidance.
 - Rich references are often better than rewritten instructions.
 
+## Research Sources and Observations
+
+### Anthropic — Context Engineering
+
+- Newer models may require fewer persistent global instructions.
+- Prefer progressive disclosure over loading specialized guidance upfront.
+- Skills provide a mechanism for selectively loading procedural context.
+- Supporting references can remain outside active context until needed.
+- Tool and interface design can reduce the need for repetitive prompting.
+- Duplicated or conflicting instructions can degrade model behavior.
+
+### Cursor — Dynamic Context Discovery
+
+- Context can be dynamically discovered rather than provided entirely upfront.
+- Rules, skills, tools, and other context sources can have different loading behavior.
+- Context consumption should be inspectable enough to identify unnecessary persistent context.
+- Independent context for delegated work may reduce pollution of the primary working context.
+
+### Nate B. Jones — Token Efficiency
+
+- Conversation continuity has a token cost; repeated input is not necessarily unnecessary input.
+- Carry forward accepted artifacts and durable state rather than unnecessary conversational history.
+- Retrieve large references only when required.
+- Prefer deterministic tools for work that does not require model reasoning.
+- Context reduction should be evaluated against mistakes, retries, review effort, and repeated work rather than token count alone.
+- A skill can influence behavior after invocation but cannot remove context already injected by the surrounding harness.
+
+### Nate B. Jones — AI Second Brain
+
+Relevant Harness Engineering principles:
+
+- Separate durable memory, compute, and interface.
+- Prefer routing over unnecessary manual organization.
+- Use explicit contracts at deterministic system boundaries.
+- Maintain enough provenance to understand important automated decisions.
+- Default to safe behavior when uncertain.
+- Make automated decisions easy to inspect and correct.
+- Build a minimal core workflow before adding optional modules.
+- Optimize for maintainability over cleverness.
+
+The Second Brain implementation itself is not currently a Harness Engineering requirement. Its architectural patterns are useful as research references.
 ## Core Concepts
 
 Persistent context should continuously justify its existence.
@@ -78,6 +119,9 @@ Evidence Required
 - How should skill hierarchies be structured?
 - What criteria determine when guidance should become a skill?
 - How should context architecture be measured over time?
+- What information should survive a session boundary?
+- How should PMB distinguish project-level durable state from session-specific working state?
+- How should multiple concurrent sessions contribute to shared project state without unnecessary context duplication or conflicting authority?
   
 ## Status
 

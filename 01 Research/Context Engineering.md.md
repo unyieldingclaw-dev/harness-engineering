@@ -55,6 +55,32 @@ Relevant Harness Engineering principles:
 - Optimize for maintainability over cleverness.
 
 The Second Brain implementation itself is not currently a Harness Engineering requirement. Its architectural patterns are useful as research references.
+
+### Simon Willison — Agentic Engineering Patterns
+
+- Coding agents should be understood as harnesses combining models,
+  system prompts, tools, execution, and iterative feedback.
+- Context isolation through subagents can preserve primary working
+  context for bounded exploration or specialized tasks.
+- Preserve proven, reusable knowledge rather than repeatedly
+  rediscovering solutions.
+- Completed work can feed a compound engineering loop where useful
+  lessons improve future agent execution.
+- Small, high-leverage instructions may activate existing model
+  capabilities more effectively than extensive procedural guidance.
+- Agent-generated code still requires verification, reviewable scope,
+  and evidence that the implementation works.
+- Reduced implementation cost increases the importance of engineering
+  judgment rather than eliminating it.
+
+Harness implication:
+
+These patterns reinforce existing HE-001 investigation areas around
+context isolation, durable knowledge, progressive disclosure,
+verification, independent review, and continuous improvement.
+Subagents and additional orchestration remain mechanisms to evaluate
+against observed problems rather than default architectural components.
+
 ## Core Concepts
 
 Persistent context should continuously justify its existence.
@@ -68,6 +94,26 @@ Information should be evaluated based on:
 - Can it become a skill, reference, retrieval, or enforcement instead?
 - What evidence justifies its continued existence?
 
+## Model Capability Drift
+
+Harness guidance should not be assumed to remain necessary simply
+because it was previously necessary.
+
+As model capabilities evolve, persistent instructions, examples,
+workarounds, and guardrails may become redundant or may unnecessarily
+constrain model judgment.
+
+Periodic context architecture audits should therefore evaluate whether
+guidance:
+
+- addresses a currently demonstrated model limitation,
+- encodes intentional project or team behavior,
+- protects a safety or deterministic requirement,
+- prevents a demonstrated failure mode, or
+- persists primarily because of historical model limitations.
+
+More capable models alone are not sufficient evidence for removal.
+Changes should be supported by observed behavior or evaluation.
 ## Potential Impact on Harness Engineering
 
 Questions to evaluate during HE-001:
@@ -77,7 +123,6 @@ Questions to evaluate during HE-001:
 - Which information should become references instead of instructions?
 - Which instructions are duplicated?
 - What should always load vs be discovered?
-
 
 ## Candidate Architectural Decisions
 

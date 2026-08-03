@@ -34,9 +34,9 @@ Branch: main
 14. Which harness behaviors depend on provider-specific capabilities versus provider-independent abstractions?
 15. How does PMB handle multiple concurrent sessions working on
     different features within the same project?
-
 16. Can session-specific handoff state be isolated without losing
     access to authoritative project-level context?
+17. Which persistent instructions constrain model judgment unnecessarily, and which constraints protect intentional project behavior or deterministic requirements?
     
 ## Additional Assessment Dimensions
 
@@ -54,6 +54,8 @@ For each workflow, identify:
 - Harness orchestration
 
 Determine which layers materially affect behavior and which are implementation details that should remain outside Harness Engineering.
+
+Evaluate whether persistent guidance exists because it remains necessary for current model behavior or because it reflects historical limitations of earlier models. Do not remove guidance solely because newer models are more capable; preserve constraints that encode intentional project behavior, safety, deterministic requirements, or demonstrated failure prevention.
 
 For each layer, identify the single owning component whenever possible.
 

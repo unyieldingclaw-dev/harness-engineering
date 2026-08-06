@@ -94,6 +94,54 @@ Information should be evaluated based on:
 - Can it become a skill, reference, retrieval, or enforcement instead?
 - What evidence justifies its continued existence?
 
+### Memory Consolidation
+
+Session knowledge and durable project knowledge should not be assumed
+to have the same lifecycle.
+
+Individual sessions and concurrent workstreams may produce discoveries,
+decisions, corrections, and temporary state that should remain isolated
+until their durable value is established.
+
+Where consolidation is needed, candidate knowledge should be evaluated
+for duplication, contradiction, staleness, ownership, and continued
+relevance before becoming persistent project context.
+
+Consolidation should preserve provenance and favor reviewable,
+reversible changes over autonomous rewriting of durable knowledge.
+### Workflow Structure Should Justify Automation
+
+Multi-step AI work can often be understood as jobs, transitions,
+state, checks, loops, and human decision points.
+
+Making that structure explicit can improve reliability when a workflow
+has demonstrated requirements for sequencing, isolation, independent
+verification, branching, recovery, or approval.
+
+Explicit workflow structure does not imply that an orchestration
+framework is required.
+
+Prefer the simplest execution model that solves the observed problem.
+Run and evaluate workflows manually or through existing tools before
+encoding them into dedicated orchestration infrastructure.
+
+Automation should follow demonstrated workflow structure rather than
+define it prematurely.
+
+### Preserve Valuable Engineering Synchronization
+
+Not all engineering friction is waste.
+
+Some coordination creates shared understanding by exposing
+misunderstandings, conflicting assumptions, architectural
+disagreements, and incomplete reasoning.
+
+Harness Engineering should automate repeatable coordination when
+doing so removes unnecessary work, but should not eliminate
+interaction that materially improves shared understanding.
+
+The objective is to reduce coordination overhead without removing
+valuable synchronization.
 ## Model Capability Drift
 
 Harness guidance should not be assumed to remain necessary simply

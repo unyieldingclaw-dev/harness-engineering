@@ -1,6 +1,7 @@
 # Context Engineering
 
 ## Overview
+
 Context Engineering is the discipline of designing how AI systems receive, discover, retrieve, organize, and apply information during task execution.
 
 Unlike prompt engineering, which focuses primarily on individual requests, context engineering considers the entire information ecosystem, including system prompts, skills, memory, references, tools, retrieval, orchestration, and runtime behavior.
@@ -81,6 +82,25 @@ verification, independent review, and continuous improvement.
 Subagents and additional orchestration remain mechanisms to evaluate
 against observed problems rather than default architectural components.
 
+### RoboNuggets — Gauntlet Loop
+
+- Separating builder and evaluator perspectives can reduce self-approval.
+- Evaluation is more useful when grounded in an explicit, task-relevant
+  quality bar.
+- Blind comparison can reduce evaluator bias during iterative refinement.
+- Builder/critic loops and subagent fan-out can support refinement where
+  repeated independent evaluation materially improves the result.
+- Iterative optimization should begin from a strong direction,
+  specification, design, or reference; otherwise the loop may optimize
+  toward the wrong objective.
+
+Harness implication:
+
+Independent evaluation and explicit quality bars are useful patterns
+for workflows that benefit from iterative refinement. Builder/critic
+loops and subagent fan-out remain execution mechanisms to justify
+against observed needs rather than default Harness architecture.
+
 ## Core Concepts
 
 Persistent context should continuously justify its existence.
@@ -93,6 +113,27 @@ Information should be evaluated based on:
 - How is it maintained?
 - Can it become a skill, reference, retrieval, or enforcement instead?
 - What evidence justifies its continued existence?
+
+### Independent Evaluation and Quality Bars
+
+Generation and evaluation should not always be performed from the
+same perspective.
+
+For workflows where quality can be evaluated against meaningful
+external criteria, separating the builder from the evaluator can
+reduce self-approval and support iterative improvement.
+
+Evaluation should use an explicit, task-relevant quality bar rather
+than open-ended instructions to continue improving.
+
+Builder/critic loops and subagent fan-out are execution mechanisms,
+not default architecture. They should be introduced only when the
+task benefits from independent evaluation or iterative refinement
+and the additional execution cost is justified.
+
+A strong initial direction, specification, design, or reference
+should precede iterative optimization. Repeated evaluation can
+otherwise improve an output toward the wrong objective.
 
 ### Memory Consolidation
 
@@ -109,6 +150,7 @@ relevance before becoming persistent project context.
 
 Consolidation should preserve provenance and favor reviewable,
 reversible changes over autonomous rewriting of durable knowledge.
+
 ### Workflow Structure Should Justify Automation
 
 Multi-step AI work can often be understood as jobs, transitions,
@@ -142,7 +184,8 @@ interaction that materially improves shared understanding.
 
 The objective is to reduce coordination overhead without removing
 valuable synchronization.
-## Model Capability Drift
+
+### Model Capability Drift
 
 Harness guidance should not be assumed to remain necessary simply
 because it was previously necessary.
@@ -162,6 +205,7 @@ guidance:
 
 More capable models alone are not sufficient evidence for removal.
 Changes should be supported by observed behavior or evaluation.
+
 ## Potential Impact on Harness Engineering
 
 Questions to evaluate during HE-001:
@@ -215,7 +259,7 @@ Evidence Required
 - What information should survive a session boundary?
 - How should PMB distinguish project-level durable state from session-specific working state?
 - How should multiple concurrent sessions contribute to shared project state without unnecessary context duplication or conflicting authority?
-  
+
 ## Status
 
 Research only.

@@ -2,11 +2,12 @@
 
 ## Purpose
 
-Harness Engineering exists to understand, design, evaluate, and
-continuously improve the systems that shape AI behavior. It treats
-context, orchestration, tools, memory, runtime, and governance as
-first-class architectural concerns rather than implementation
-details.
+Harness Engineering exists to understand, evaluate, design, and
+continuously improve the systems that shape AI behavior.
+
+It treats context, orchestration, tools, memory, runtime, and
+governance as first-class architectural concerns rather than
+implementation details.
 
 It emphasizes evidence over assumptions, clear ownership,
 progressive disclosure of context, and architectures that remain
@@ -44,3 +45,13 @@ improving clarity, retrieval, and maintainability.
 
 AI may recommend architectural changes, but architectural decisions
 remain the responsibility of human engineers.
+
+### Assessment Before Architecture
+
+Existing AI systems should be understood through structured,
+evidence-based assessment before responsibilities are moved,
+combined, or redesigned.
+
+Harness Engineering favors observation over assumption and
+architecture over implementation only after current behavior is
+well understood.

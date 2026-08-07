@@ -2,19 +2,25 @@
 
 ## Objective
 
-Determine how PMB and ACR currently construct, select, inject, retrieve,
-persist, compact, and enforce AI context and harness behavior before
-proposing Harness Engineering changes.
+Determine how PMB and ACR currently construct, select, inject,
+retrieve, persist, compact, and enforce AI context and harness
+behavior before proposing Harness Engineering changes.
+
+---
 
 ## Systems
 
 ### Personal Memory Bank
-Repository: personal-memory-bank
+
+Repository: personal-memory-bank  
 Branch: main
 
 ### AI Code Review Agent
-Repository: ai-code-review-agent
+
+Repository: ai-code-review-agent  
 Branch: main
+
+---
 
 ## Questions
 
@@ -32,12 +38,13 @@ Branch: main
 12. Who owns context selection, context compaction, persistence, and retrieval?
 13. What minimum execution metadata would allow us to explain or reproduce materially different AI behavior?
 14. Which harness behaviors depend on provider-specific capabilities versus provider-independent abstractions?
-15. How does PMB handle multiple concurrent sessions working on
-    different features within the same project?
-16. Can session-specific handoff state be isolated without losing
-    access to authoritative project-level context?
+15. How does PMB handle multiple concurrent sessions working on different features within the same project?
+16. Can session-specific handoff state be isolated without losing access to authoritative project-level context?
 17. Which persistent instructions constrain model judgment unnecessarily, and which constraints protect intentional project behavior or deterministic requirements?
-    
+18. How does information flow from repository inputs to final model context, and which components transform, filter, enrich, or enforce that context along the way?
+
+---
+
 ## Additional Assessment Dimensions
 
 The assessment is not limited to prompts, instructions, tools, and memory.
@@ -55,12 +62,32 @@ For each workflow, identify:
 
 Determine which layers materially affect behavior and which are implementation details that should remain outside Harness Engineering.
 
-Evaluate whether persistent guidance exists because it remains necessary for current model behavior or because it reflects historical limitations of earlier models. Do not remove guidance solely because newer models are more capable; preserve constraints that encode intentional project behavior, safety, deterministic requirements, or demonstrated failure prevention.
+Identify where each layer is configured, modified, or selected during execution.
 
-For each layer, identify the single owning component whenever possible.
+Evaluate whether persistent guidance exists because it remains necessary for current model behavior or because it reflects historical limitations of earlier models.
 
-Examples include the AI client, inference provider, runtime,
-PMB, ACR, the development harness, or the underlying model.
+Do not remove guidance solely because newer models are more capable.
+
+Preserve constraints that encode:
+
+- Intentional project behavior
+- Safety requirements
+- Deterministic behavior
+- Demonstrated failure prevention
+
+For each layer, identify the single owning component whenever practical.
+
+Examples include:
+
+- AI client
+- Inference provider
+- Runtime
+- PMB
+- ACR
+- Development harness
+- Underlying model
+
+---
 
 ## Harness Surface Classification
 
@@ -72,16 +99,18 @@ Every harness surface will be classified as:
 - ENFORCED
 - UNNECESSARY
 
+---
+
 ## Known Operational Issues
 
 ### Concurrent Session Handoff Collision
 
-PMB has been observed in real project usage with multiple concurrent
-AI sessions working on different features within the same project.
+PMB has been observed in real project usage with multiple concurrent AI
+sessions working on different features within the same project.
 
 Current handoff behavior can cause session state to become jumbled,
-overwritten, or incorrectly consumed by another session, resulting
-in context confusion.
+overwritten, or incorrectly consumed by another session, resulting in
+context confusion.
 
 HE-001 must determine:
 
@@ -89,28 +118,74 @@ HE-001 must determine:
 - How concurrent session state is currently identified and stored.
 - Where overwrites or ambiguous ownership can occur.
 - How a new session determines which prior session state is relevant.
-- What minimum isolation is required without duplicating shared
-  project context.
+- What minimum isolation is required without duplicating shared project context.
 
 No implementation approach is assumed.
+
+---
+
+## Assessment Phases
+
+The assessment proceeds in the following order:
+
+1. Repository Orientation
+2. Context Sources Inventory
+3. Harness Surface Classification
+4. Context Lifecycle
+5. Ownership Matrix
+6. Deterministic vs Model-mediated Classification
+7. Runtime Analysis
+8. Context Supply Chain
+9. Findings
+10. Recommendations
+
+Recommendations are intentionally deferred until the baseline
+assessment is complete.
+
+---
+
 ## Evidence Standard
 
-Do not recommend a change merely because an implementation
-appears complex.
+Do not recommend a change merely because an implementation appears
+complex.
 
 Recommendations require an observed problem, measurable cost,
-duplication, misplaced responsibility, or demonstrated opportunity
-to simplify without losing capability.
+duplication, misplaced responsibility, or demonstrated opportunity to
+simplify without losing capability.
+
+Significant architectural observations should identify the supporting
+implementation whenever practical, such as:
+
+- Source file
+- Configuration
+- Workflow
+- Documented behavior
+
+Assessment reports should clearly distinguish:
+
+- Observed behavior
+- Inference
+- Recommendation
+
+---
 
 ## Deliverables
 
 - Baseline PMB Harness Surface Map
 - Baseline ACR Harness Surface Map
+- Context Sources Inventory
+- Deterministic vs Model-mediated Classification
+- Context Supply Chain
 - Initial Skill Candidate Inventory
 - Duplication Inventory
 - Execution & Context Provenance Baseline
+- Assessment reports should include repository evidence supporting significant findings whenever practical.
 
-Define the minimum execution and context metadata necessary to explain or reproduce materially different AI behavior without turning the Harness into an observability platform.
+Define the minimum execution and context metadata necessary to explain
+or reproduce materially different AI behavior without turning the
+Harness into an observability platform.
+
+---
 
 ## Status
 

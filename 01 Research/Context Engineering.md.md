@@ -260,6 +260,25 @@ Evidence Required
 - How should PMB distinguish project-level durable state from session-specific working state?
 - How should multiple concurrent sessions contribute to shared project state without unnecessary context duplication or conflicting authority?
 
+## Assessment Observations
+
+Applying HE-001 to a mature repository demonstrated that
+understanding the context supply chain, ownership boundaries,
+runtime assumptions, deterministic behavior, and context ownership
+provided significantly more architectural insight than reviewing
+prompts alone.
+
+Assessment also demonstrated that separating:
+
+- Observed behavior
+- Inference
+- Recommendation
+
+produces clearer architectural analysis and reduces premature
+solutioning.
+
+Future Harness Engineering assessments should prioritize
+observation before architectural recommendation.
 ## Status
 
 Research only.

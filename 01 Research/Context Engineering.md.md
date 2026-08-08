@@ -284,3 +284,247 @@ observation before architectural recommendation.
 Research only.
 No architectural decisions made.
 Await HE-001 evidence.
+
+---
+
+## Matt Pocock / Eric Tech — Modular AI Engineering Skills
+
+### Source
+
+Research reviewed from:
+
+- Matt Pocock's public Claude Code skills repository
+- Eric Tech — "Matt Pocock's Claude Code Skills Beat Superpowers Now"
+- Related concepts presented in Matt Pocock's skills, including `grill-me`,
+  `to-spec`, `to-tickets`, `implement`, `code-review`, writing-for-agents,
+  and engineering vocabulary.
+
+This research is being evaluated for architectural patterns and ideas.
+Matt Pocock's implementation is not being adopted or copied.
+
+### Core Finding
+
+A potentially useful distinction exists between **workflow orchestration**
+and **engineering capabilities**.
+
+A prescribed AI workflow might require:
+
+    brainstorm → spec → plan → implement → review → commit
+
+A modular capability model instead exposes independently useful capabilities:
+
+    context
+    spec
+    implement
+    diagnose
+    review
+    architecture analysis
+
+The Harness may then select or compose capabilities based on the current
+situation rather than requiring every task to pass through every stage.
+
+This distinction should be evaluated during HE-001 rather than treated as
+an architectural decision.
+
+### Modular Capability Principle
+
+A capability should be independently useful where practical.
+
+The existence of relationships between capabilities does not require a
+mandatory end-to-end workflow.
+
+For example:
+
+- implementation may consume a specification;
+- review may consume the specification and implementation;
+- architecture analysis may consume the resulting code.
+
+These are legitimate dependencies.
+
+The architectural concern is unnecessary workflow coupling, not dependency
+itself.
+
+### Orchestration vs Capability
+
+Harness Engineering should distinguish between:
+
+**Capability**
+- performs a bounded engineering activity;
+- can be invoked independently;
+- has a clear purpose and inputs/outputs;
+- should not assume that unrelated capabilities have already run.
+
+**Orchestration**
+- determines when capabilities should be combined;
+- supplies appropriate context;
+- establishes sequencing where sequencing is actually required;
+- preserves deterministic controls and project boundaries.
+
+The Harness should coordinate capabilities without becoming a mandatory
+process pipeline.
+
+### Candidate Engineering Patterns
+
+The following concepts are candidates for evaluation rather than adopted
+architecture:
+
+- progressive clarification of ambiguous requirements;
+- one meaningful question at a time when interactive discovery is required;
+- recommending concrete options rather than presenting blank questions;
+- preserving the agreed "what" separately from implementation-specific "how";
+- vertical feature/tracer-bullet slices rather than layer-only work decomposition;
+- explicit dependency and blocking relationships between work items;
+- test-first / red-green-refactor as an implementation discipline where
+  appropriate;
+- fresh-context review to reduce builder-context contamination;
+- independent review dimensions for specification/intent and engineering
+  standards;
+- established engineering vocabulary as compact guidance for code quality;
+- deep-module, interface, and seam analysis where architectural reasoning
+  is actually required;
+- periodic architecture-health analysis rather than continuous autonomous
+  refactoring;
+- concise capability instructions rather than procedural prompt bloat;
+- lightweight capability selection/routing without imposing a universal
+  workflow.
+
+### Durable WHAT vs Implementation HOW
+
+A durable planning artifact should preserve the agreed intent, requirements,
+constraints, decisions, and acceptance criteria.
+
+It should avoid unnecessarily freezing implementation details that are
+expected to change as the code evolves.
+
+This supports durable handoff and reduces the risk of a planning artifact
+becoming stale because it describes the implementation rather than the
+intent.
+
+### Fresh-Context Review
+
+Independent review should be evaluated separately from implementation
+context.
+
+A reviewer's effectiveness may be reduced when it inherits the author's
+conversation, assumptions, intermediate reasoning, and self-justifications.
+
+This reinforces the existing Harness Engineering interest in context
+isolation and independent verification.
+
+This does not imply that every review requires a new agent or separate
+runtime. The implementation mechanism remains an assessment question.
+
+### Specification / Intent vs Standards
+
+Code review may contain at least two conceptually distinct questions:
+
+1. **Specification / Intent**
+   - Does the implementation do what was requested?
+   - Does it satisfy the agreed behavior and acceptance criteria?
+
+2. **Engineering Standards**
+   - Is the implementation technically sound?
+   - Does it violate applicable security, reliability, maintainability,
+     architectural, or coding standards?
+
+These dimensions may be independently useful even when performed by the
+same review system.
+
+This is a candidate ACR assessment dimension, not a decision to create
+additional reviewer agents.
+
+### Engineering Vocabulary as Compressed Context
+
+Established engineering terminology may allow a capability to express
+substantial engineering knowledge with significantly less procedural
+instruction.
+
+Examples include:
+
+- Shotgun Surgery
+- Feature Envy
+- Data Clumps
+- Divergent Change
+- Duplicated Code
+- Long Method
+- Large Class
+- Long Parameter List
+- Primitive Obsession
+- Message Chains
+- Speculative Generality
+
+The relevant question for Harness Engineering is not whether these specific
+terms should be adopted.
+
+The question is whether established engineering vocabulary can provide
+higher-signal guidance than lengthy procedural instructions.
+
+### Minimum Sufficient Instruction
+
+The objective should not be the shortest possible skill or instruction.
+
+The objective is **minimum sufficient instruction**.
+
+Guidance should contain the information that materially changes behavior
+while avoiding:
+
+- redundant explanation;
+- repeated project context;
+- procedural instructions already enforced elsewhere;
+- historical workarounds that no longer address demonstrated failures.
+
+### Architecture Analysis as a Distinct Capability
+
+Architecture analysis should be considered a capability that can be invoked
+when architectural concerns justify it.
+
+It should not automatically become part of every implementation or code
+review.
+
+A potential operating model is:
+
+    implementation
+        ↓
+    normal verification/review
+        ↓
+    periodic or triggered architecture analysis
+
+This avoids turning normal development into continuous architectural
+governance.
+
+### Boundaries
+
+The following are explicitly not conclusions of this research:
+
+- Do not copy Matt Pocock's skills.
+- Do not reproduce his skill names or directory structure merely for
+  consistency.
+- Do not mandate his workflow.
+- Do not create a skill for every engineering activity.
+- Do not replace deterministic enforcement with model judgment.
+- Do not duplicate existing PMB mechanisms as generic Harness capabilities.
+- Do not duplicate ACR capabilities in the Harness.
+- Do not introduce orchestration infrastructure without demonstrated need.
+- Do not treat modularity as an excuse to remove useful sequencing or
+  dependency management.
+
+### Relationship to Existing Harness Research
+
+This research reinforces several existing Harness Engineering themes:
+
+- Progressive Disclosure
+- Single Ownership
+- Evidence Before Architecture
+- Independent Verification
+- Context Isolation
+- Durable Artifacts
+- Model Capability Drift
+- Continuous Improvement
+
+It also introduces a specific architectural question for HE-001:
+
+> Should Harness Engineering primarily expose modular capabilities and
+> selectively compose them, rather than encode a prescribed end-to-end AI
+> development workflow?
+
+This remains a research question pending evidence.

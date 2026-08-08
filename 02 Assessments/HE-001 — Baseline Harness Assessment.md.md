@@ -29,7 +29,7 @@ Branch: main
 3. What context is retrieved on demand?
 4. What behavior is deterministically enforced?
 5. Where is functionality duplicated?
-6. Which workflows are candidates for skills?
+6. Which capabilities are candidates for independent skills, and which existing workflows should remain orchestration rather than become skills?
 7. Is ACR meaningfully independent from the authoring harness?
 8. What context is necessary for effective independent review?
 9. Which complexity is justified?
@@ -42,6 +42,16 @@ Branch: main
 16. Can session-specific handoff state be isolated without losing access to authoritative project-level context?
 17. Which persistent instructions constrain model judgment unnecessarily, and which constraints protect intentional project behavior or deterministic requirements?
 18. How does information flow from repository inputs to final model context, and which components transform, filter, enrich, or enforce that context along the way?
+19. Which current workflows are procedural because the workflow itself
+    provides value, and which are procedural primarily because multiple
+    capabilities have been coupled together?
+20. Which current instructions describe behavior the model already
+    understands, versus constraints that protect intentional behavior
+    or demonstrated failure modes?
+21. Where can established engineering vocabulary replace procedural
+    instruction without reducing reliability?
+22. Which existing artifacts can serve as the durable handoff between
+    capabilities without introducing new artifact types? 
 
 ---
 
@@ -86,6 +96,32 @@ Examples include:
 - ACR
 - Development harness
 - Underlying model
+
+### Modular Capability Assessment
+
+HE-001 must distinguish between:
+
+- capabilities that are independently useful;
+- capabilities that legitimately depend on prior artifacts;
+- orchestration that provides useful sequencing;
+- orchestration that exists primarily because the workflow was designed
+  around a fixed sequence.
+
+Do not assume that modularity is inherently superior.
+
+Evaluate whether modular capability composition would:
+
+- reduce unnecessary workflow coupling;
+- reduce always-loaded context;
+- simplify maintenance;
+- allow small tasks to avoid unnecessary process;
+- preserve useful dependencies and sequencing;
+- preserve deterministic enforcement;
+- avoid capability duplication;
+- avoid creating routing complexity that exceeds the value provided.
+
+Also evaluate whether a prescribed workflow currently provides benefits that
+would be lost by moving toward modular capability composition.
 
 ---
 
@@ -167,6 +203,8 @@ Assessment reports should clearly distinguish:
 - Inference
 - Recommendation
 
+Assessment reports should include repository evidence supporting significant findings whenever practical.
+
 ---
 
 ## Deliverables
@@ -179,11 +217,14 @@ Assessment reports should clearly distinguish:
 - Initial Skill Candidate Inventory
 - Duplication Inventory
 - Execution & Context Provenance Baseline
-- Assessment reports should include repository evidence supporting significant findings whenever practical.
+- Modular Capability vs Prescribed Workflow Assessment
+- Capability Ownership / Orchestration Boundary
 
 Define the minimum execution and context metadata necessary to explain
 or reproduce materially different AI behavior without turning the
 Harness into an observability platform.
+
+
 
 ---
 

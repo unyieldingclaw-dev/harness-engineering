@@ -114,6 +114,46 @@ Information should be evaluated based on:
 - Can it become a skill, reference, retrieval, or enforcement instead?
 - What evidence justifies its continued existence?
 
+### Current State Must Be Distinct From History
+
+Long-running and multi-session AI work requires a distinction between:
+
+- Stable instructions
+- Current project state
+- Context or resource map
+- Historical record
+
+The current state should represent what is true now: active goals,
+decisions, unresolved questions, next actions, and relevant boundaries.
+
+Historical records preserve what happened and why, but should not
+automatically carry the same authority as current state.
+
+Fresh sessions should inherit current state rather than depending on
+reconstruction from conversational history.
+
+This separation is especially important when multiple concurrent
+sessions work on the same project.
+### Durable Knowledge Is a Harness Responsibility
+
+Individual model executions are temporary.
+
+Long-term capability emerges when useful discoveries survive beyond a
+single execution through explicit harness mechanisms rather than
+remaining inside a model's transient context.
+
+Session outputs should become durable knowledge only after appropriate
+review, provenance, and evidence justify preservation.
+
+The harness—not the model—owns long-term knowledge management.
+
+Implications:
+
+- Preserve valuable discoveries rather than conversation history.
+- Treat durable knowledge as an architectural responsibility.
+- Separate temporary execution state from shared project knowledge.
+- Evaluate candidate knowledge before promoting it into persistent context.
+
 ### Independent Evaluation and Quality Bars
 
 Generation and evaluation should not always be performed from the
@@ -151,6 +191,8 @@ relevance before becoming persistent project context.
 Consolidation should preserve provenance and favor reviewable,
 reversible changes over autonomous rewriting of durable knowledge.
 
+Candidate knowledge should be treated as a review artifact rather than
+automatically becoming durable project context.
 ### Workflow Structure Should Justify Automation
 
 Multi-step AI work can often be understood as jobs, transitions,
@@ -170,6 +212,22 @@ encoding them into dedicated orchestration infrastructure.
 Automation should follow demonstrated workflow structure rather than
 define it prematurely.
 
+### Human Direction and Measurable Feedback
+
+AI systems can execute increasingly large portions of engineering work,
+but human judgment remains important at points where goals, architecture,
+quality, or long-term maintainability are determined.
+
+Prefer explicit outcomes, measurable acceptance criteria, reviewable
+intermediate checkpoints, and vertical increments when these reduce the
+cost of correcting a wrong direction.
+
+Where subjective expectations can be converted into deterministic checks,
+tests, rubrics, or other observable signals, prefer those mechanisms over
+relying entirely on model judgment.
+
+Automation should increase execution leverage without removing the
+human's ability to understand, redirect, and verify the work.
 ### Preserve Valuable Engineering Synchronization
 
 Not all engineering friction is waste.
@@ -234,6 +292,8 @@ Evidence Required
 - Simpler navigation
 - No measurable usability regression
 
+- Can repeated project workflows be discovered and converted into
+  skills based on observed behavior rather than only pre-declared guidance?
 ### Context Architecture Audit
 
 Decision Status: Pending HE-001 Assessment

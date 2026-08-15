@@ -39,9 +39,9 @@ Branch: main
 13. What minimum execution metadata would allow us to explain or reproduce materially different AI behavior?
 14. Which harness behaviors depend on provider-specific capabilities versus provider-independent abstractions?
 15. How does PMB handle multiple concurrent sessions working on different features within the same project?
-16. Can session-specific handoff state be isolated without losing access to authoritative project-level context?
+16. Can session-specific handoff state be isolated without losing access to authoritative project-level context, and can a session reliably determine which state belongs to it?
 17. Which persistent instructions constrain model judgment unnecessarily, and which constraints protect intentional project behavior or deterministic requirements?
-18. How does information flow from repository inputs to final model context, and which components transform, filter, enrich, or enforce that context along the way?
+18. How does information flow from repository inputs to final model context, and how are stable instructions, current project state, resource maps, and historical records selected and distinguished along that path?
 19. Which current workflows are procedural because the workflow itself
     provides value, and which are procedural primarily because multiple
     capabilities have been coupled together?

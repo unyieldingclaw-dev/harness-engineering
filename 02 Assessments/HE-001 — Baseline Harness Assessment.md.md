@@ -56,6 +56,25 @@ Branch: main
     multiple supply paths, and if so, how are those paths identified,
     owned, selected, and prevented from creating unnecessary or
     conflicting capability exposure?
+24. How are PMB capabilities distributed and discovered when multiple
+    PMB installations, versions, or capability surfaces are available,
+    including global and project-local installations and plugin,
+    command, skill, and other harness surfaces?
+
+    Determine:
+    - Which installation or surface takes precedence.
+    - Whether precedence is deterministic and documented.
+    - How version mismatches are detected.
+    - Whether an older global installation can shadow a newer
+      project-local implementation.
+    - How command, skill, and other capability collisions are resolved.
+    - Whether users can reliably determine which PMB implementation
+      executed.
+    - Whether distribution, discovery, and execution ownership are
+      clearly separated.
+
+    Treat observed precedence behavior as a correctness concern, not
+    merely a usability issue.
 
 ---
 
@@ -223,6 +242,7 @@ Assessment reports should include repository evidence supporting significant fin
 - Execution & Context Provenance Baseline
 - Modular Capability vs Prescribed Workflow Assessment
 - Capability Ownership / Orchestration Boundary
+- Capability Distribution & Precedence Map
 
 Define the minimum execution and context metadata necessary to explain
 or reproduce materially different AI behavior without turning the

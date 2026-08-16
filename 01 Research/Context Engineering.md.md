@@ -647,3 +647,18 @@ It also introduces a specific architectural question for HE-001:
 
 This remains a research question pending evidence.
 
+### Agent Skills Ecosystem / Matt Pocock
+
+Capture these observations:
+
+- Skills can function as progressive-disclosure boundaries rather than simply reusable prompts.
+- Handoff can preserve transient session state without duplicating durable project artifacts.
+- Handoff can reference existing artifacts rather than copying their contents.
+- Skill routing can be separated from capability execution.
+- Repository-specific configuration can be separated from reusable skill behavior.
+- Explicit state machines can provide bounded workflow transitions where evidence gates matter.
+- High install counts identify research candidates but do not establish architectural value.
+- Capability modularity should be evaluated against workflow coupling, context cost, maintenance, and routing complexity.
+
+**Source:** Matt Pocock `skills` repository and the skills ecosystem.
+

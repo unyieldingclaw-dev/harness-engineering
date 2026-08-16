@@ -662,3 +662,110 @@ Capture these observations:
 
 **Source:** Matt Pocock `skills` repository and the skills ecosystem.
 
+# Harness Engineering — Research Sources
+
+Sources we consider useful for ongoing Harness Engineering research.
+
+## Primary Sources
+
+### Simon Willison
+
+Weblog: https://simonwillison.net/
+
+Focus:
+- Agentic engineering
+- Coding agents
+- Context engineering
+- Tool design
+- Security
+- Sandboxing
+- Prompt injection
+- Model/runtime behavior
+- AI-assisted engineering
+
+Assessment:
+High-value primary source. Follow regularly.
+Follow via weblog rather than YouTube.
+
+---
+
+### Matt Pocock
+
+YouTube: https://www.youtube.com/@mattpocockuk
+GitHub: https://github.com/mattpocock/skills
+
+Focus:
+- Claude Code
+- Skills
+- Agent workflows
+- Handoff
+- TDD
+- Coding-agent practices
+- Capability composition
+
+Assessment:
+High-value practical source. Follow selectively.
+Use implementations as research references, not automatic architecture.
+
+---
+
+### Andrej Karpathy
+
+YouTube: https://www.youtube.com/@AndrejKarpathy
+Website: https://karpathy.ai/
+
+Focus:
+- LLM fundamentals
+- Tokenization
+- Inference
+- Model behavior
+- Training
+- Tool use
+- Local inference
+- Model limitations
+
+Assessment:
+High-value technical/foundational source. Follow selectively.
+
+---
+
+## Secondary / Scout Sources
+
+Sources that frequently surface interesting techniques or ideas but
+should generally be evaluated individually rather than followed as
+authoritative Harness Engineering sources.
+
+- Nate Jones
+- Dream Labs AI
+- RoboNuggets
+- NeuralNine
+- Greg Isenberg
+- Other AI workflow / agent-content sources
+
+These sources are research inputs, not architectural authorities.
+
+---
+
+## Evaluation Rule
+
+Popularity does not establish technical authority.
+
+A source may be useful because it:
+
+- demonstrates a novel implementation;
+- identifies an emerging pattern;
+- provides useful terminology;
+- exposes a real operational problem;
+- challenges an existing assumption.
+
+Research findings must still be independently evaluated before they
+influence Harness Engineering architecture.
+
+## Current Follow Recommendations
+
+1. Simon Willison — Follow
+2. Matt Pocock — Follow
+3. Andrej Karpathy — Follow
+
+Review this list periodically as the quality and relevance of sources
+change.

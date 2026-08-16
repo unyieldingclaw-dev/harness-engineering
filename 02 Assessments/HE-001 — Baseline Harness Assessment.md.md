@@ -52,6 +52,10 @@ Branch: main
     instruction without reducing reliability?
 22. Which existing artifacts can serve as the durable handoff between
     capabilities without introducing new artifact types? 
+23. Can the same underlying capability enter the harness through
+    multiple supply paths, and if so, how are those paths identified,
+    owned, selected, and prevented from creating unnecessary or
+    conflicting capability exposure?
 
 ---
 

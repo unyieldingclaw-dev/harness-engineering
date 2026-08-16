@@ -114,6 +114,38 @@ Information should be evaluated based on:
 - Can it become a skill, reference, retrieval, or enforcement instead?
 - What evidence justifies its continued existence?
 
+### Capability Supply Paths
+
+The same underlying capability may be exposed to an AI workflow
+through multiple harness surfaces.
+
+For example, a capability such as Context7 may be available through
+a connector, plugin, skill, or directly configured MCP server.
+
+These surfaces should not automatically be treated as equivalent or
+assumed to be additive.
+
+Harness assessment should determine:
+
+- Which capability supply paths are active.
+- Whether multiple paths expose overlapping functionality.
+- Which component owns the underlying capability.
+- Which surface controls discovery and activation.
+- Whether duplicate capability exposure creates conflicting behavior,
+  redundant context, routing ambiguity, or unnecessary tool selection.
+- Whether multiple surfaces are intentional or merely different
+  distribution mechanisms for the same capability.
+
+The existence of multiple interfaces to a capability is not, by itself,
+evidence of a problem.
+
+HE-001 should distinguish:
+
+- duplicate capability implementation;
+- duplicate capability exposure;
+- multiple interfaces to one capability;
+- and intentional composition of distinct capabilities.
+
 ### Current State Must Be Distinct From History
 
 Long-running and multi-session AI work requires a distinction between:
@@ -193,6 +225,7 @@ reversible changes over autonomous rewriting of durable knowledge.
 
 Candidate knowledge should be treated as a review artifact rather than
 automatically becoming durable project context.
+
 ### Workflow Structure Should Justify Automation
 
 Multi-step AI work can often be understood as jobs, transitions,
@@ -212,6 +245,21 @@ encoding them into dedicated orchestration infrastructure.
 Automation should follow demonstrated workflow structure rather than
 define it prematurely.
 
+### Composable Harness Capabilities
+
+Harness capabilities may be composed, replaced, or temporarily disabled
+when their boundaries and dependencies are explicit.
+
+Composability should be evaluated as a means of reducing unnecessary
+coupling, context, and execution surface rather than treated as an
+architectural objective by itself.
+
+A capability boundary is valuable when it permits independent ownership,
+evaluation, replacement, isolation, or enforcement without introducing
+greater coordination complexity than the boundary removes.
+
+Runtime composition should preserve traceability of the active
+capabilities and their effects on execution.
 ### Human Direction and Measurable Feedback
 
 AI systems can execute increasingly large portions of engineering work,
@@ -346,7 +394,17 @@ No architectural decisions made.
 Await HE-001 evidence.
 
 ---
+## Research Sources and Observations
+Core Concepts
+Potential Impact
+Candidate Architectural Decisions
+Open Questions
+Assessment Observations
+Status
 
+Matt Pocock / Eric Tech — Modular AI Engineering Skills
+...
+DeepSeek Harness — Developer Preview
 ## Matt Pocock / Eric Tech — Modular AI Engineering Skills
 
 ### Source
@@ -588,3 +646,4 @@ It also introduces a specific architectural question for HE-001:
 > development workflow?
 
 This remains a research question pending evidence.
+

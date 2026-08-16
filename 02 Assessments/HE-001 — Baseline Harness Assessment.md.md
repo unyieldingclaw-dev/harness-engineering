@@ -229,6 +229,30 @@ Assessment reports should clearly distinguish:
 Assessment reports should include repository evidence supporting significant findings whenever practical.
 
 ---
+### Loop-Based Execution
+
+Evaluate whether any PMB or ACR workflow contains an implicit
+iteration loop of:
+
+goal → action → evidence → evaluation → next action.
+
+For each identified loop, determine:
+
+- what establishes the goal;
+- what actions may be taken;
+- what evidence is produced;
+- who or what evaluates the evidence;
+- what state persists between iterations;
+- what constitutes success;
+- what constitutes failure;
+- what causes retry, rollback, escalation, or termination;
+- whether the loop is bounded;
+- whether iteration state is isolated from unrelated sessions;
+- whether tool output is treated as evidence rather than trusted instruction.
+
+Do not introduce autonomous looping merely because a workflow can be
+expressed as a loop. Require demonstrated value, measurable verification,
+and explicit termination conditions.
 
 ## Deliverables
 

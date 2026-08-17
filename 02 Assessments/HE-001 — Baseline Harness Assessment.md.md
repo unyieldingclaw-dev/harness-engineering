@@ -215,6 +215,38 @@ For subjective or "taste" criteria, identify where human judgment
 remains necessary rather than treating an automated grader as the sole
 authority.
 
+
+### Context Authority and Freshness
+
+For each persistent or retrieved context source, determine where practical:
+
+- who or what owns the source;
+- whether the source is authoritative or advisory;
+- how freshness is established;
+- how stale information is detected;
+- how conflicting sources are resolved;
+- whether provenance is preserved;
+- whether derived context can be distinguished from authoritative source
+  material;
+- whether automated ingestion can introduce duplicate, stale, conflicting,
+  or untrusted information.
+
+Distinguish between:
+
+- authoritative project state;
+- session state;
+- derived summaries;
+- historical records;
+- external reference material;
+- model-generated knowledge.
+
+Do not assume that newer, more recently ingested, or more frequently
+retrieved information is more authoritative.
+
+Evaluate automated context ingestion only where the source, ownership,
+freshness, provenance, and failure behavior justify the added complexity.
+
+
 ---
 
 ## Harness Surface Classification

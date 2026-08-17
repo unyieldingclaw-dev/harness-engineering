@@ -15,6 +15,33 @@ Unlike prompt engineering, which focuses primarily on individual requests, conte
 - Repetition across context sources creates conflicting guidance.
 - Rich references are often better than rewritten instructions.
 
+## Harness as a System
+
+AI behavior should be evaluated as the result of an execution system,
+not solely as a property of the underlying model.
+
+A materially different result may arise from differences in:
+
+- model;
+- inference provider or runtime;
+- context;
+- system and persistent instructions;
+- tools;
+- skills;
+- retrieval;
+- orchestration;
+- execution environment;
+- evaluation and feedback loops.
+
+Therefore, model comparisons and workflow evaluations should distinguish
+the model from the harness surrounding it.
+
+This does not imply that every execution detail must be captured or that
+the Harness should become an observability system.
+
+Capture provenance only to the degree necessary to explain or reproduce
+materially different behavior.
+
 ## Research Sources and Observations
 
 ### Anthropic — Context Engineering
@@ -647,7 +674,7 @@ It also introduces a specific architectural question for HE-001:
 
 This remains a research question pending evidence.
 
-### Agent Skills Ecosystem / Matt Pocock
+### Agent Skills Ecosystem / Matt Pocock — Additional Observations
 
 Capture these observations:
 
@@ -686,6 +713,122 @@ Focus:
 Assessment:
 High-value primary source. Follow regularly.
 Follow via weblog rather than YouTube.
+
+
+## Dex Horthy / HumanLayer — AI Coding Workflow
+
+Source:
+"What Actually Gets You 2-3x With AI Coding (ft. Dex Horthy)"
+https://www.youtube.com/watch?v=5FcHP22u0zs
+
+Focus:
+
+- AI-assisted software engineering
+- Context engineering
+- Planning and specification
+- Human/agent feedback loops
+- Code review
+- Verification / backpressure
+- Compaction and context management
+- Sub-agent use
+- Production versus prototype workflows
+
+### Research Findings
+
+#### Planning as a Steering Artifact
+
+Planning should provide leverage for human judgment rather than attempt
+to produce a perfect specification before implementation.
+
+Plans may progressively refine from high-level intent toward implementation
+detail as uncertainty is reduced.
+
+A tactical implementation plan does not necessarily constitute durable
+project knowledge.
+
+#### Human Judgment at High-Leverage Points
+
+AI-assisted development should not optimize solely for removing human
+involvement.
+
+The harness should make human intervention most valuable where architectural,
+design, quality, or tradeoff judgment is required.
+
+#### Feedback and Backpressure
+
+Agents should have accessible mechanisms for evaluating their own work.
+
+Potential feedback mechanisms include:
+
+- tests;
+- static analysis;
+- runtime verification;
+- diff inspection;
+- independent review;
+- other deterministic validation.
+
+The relevant Harness Engineering question is whether the system provides
+sufficient feedback to make incorrect work visible before it progresses.
+
+#### AI Review as Feedback, Not Final Authority
+
+AI code review can increase review leverage but does not eliminate the need
+for human engineering judgment.
+
+Evaluate whether ACR should optimize for actionable review signal rather
+than finding volume.
+
+#### Sub-Agents
+
+Sub-agents may provide value when work is:
+
+- parallelizable;
+- investigation-heavy;
+- context-intensive.
+
+This is evidence for evaluating parallel capability composition, not
+evidence that PMB or ACR should introduce additional agents.
+
+#### Human-Editable Context
+
+Durable context remains valuable when it is inspectable and editable by
+humans.
+
+Opaque compaction or retrieval mechanisms should not automatically replace
+human-readable durable artifacts when those artifacts provide useful
+steering or handoff value.
+
+### Potential PMB Implications
+
+Evaluate:
+
+- whether tactical planning artifacts are incorrectly treated as durable
+  project knowledge;
+- whether planning supports progressive refinement rather than exhaustive
+  specification;
+- whether important durable context remains inspectable and human-editable;
+- whether planning artifacts provide effective cross-session handoff.
+
+### Potential ACR Implications
+
+Evaluate:
+
+- whether ACR functions primarily as an independent feedback/evidence
+  layer;
+- whether findings are optimized for actionable signal rather than volume;
+- whether deterministic verification is appropriately separated from
+  model-mediated judgment;
+- whether ACR improves human review rather than attempting to replace it.
+
+### Assessment Status
+
+Research input only.
+
+No architectural changes are implied by these findings.
+
+HE-001 must determine whether the observations correspond to demonstrated
+PMB or ACR behavior, operational problems, or measurable opportunities
+before architecture is changed.
 
 ---
 

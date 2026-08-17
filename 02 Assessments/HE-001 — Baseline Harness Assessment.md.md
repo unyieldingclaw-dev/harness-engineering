@@ -120,6 +120,40 @@ Examples include:
 - Development harness
 - Underlying model
 
+### Context and Capability Cost
+
+Evaluate the operational cost of harness surfaces in addition to their
+functional behavior.
+
+For each context source or capability, determine where practical:
+
+- whether it contributes to initial context;
+- whether it is loaded on every session or only when triggered;
+- whether it can be retrieved on demand;
+- whether it materially affects context allocation;
+- whether it introduces redundant or overlapping guidance;
+- whether it creates capability-selection ambiguity;
+- whether its contribution justifies its persistent availability.
+
+Distinguish between:
+
+- installed capability;
+- available capability;
+- discovered capability;
+- loaded context;
+- invoked capability;
+- demonstrated useful capability.
+
+Do not treat token reduction as an objective by itself.
+
+Evaluate context reduction only when it preserves required behavior,
+reliability, intentional constraints, and demonstrated failure prevention.
+
+Where provider pricing or caching behavior materially affects execution
+cost, record the relevant conditions as part of execution provenance rather
+than embedding provider-specific cost assumptions into PMB or ACR
+architecture.
+
 ### Modular Capability Assessment
 
 HE-001 must distinguish between:
@@ -145,6 +179,41 @@ Evaluate whether modular capability composition would:
 
 Also evaluate whether a prescribed workflow currently provides benefits that
 would be lost by moving toward modular capability composition.
+
+### Capability Contribution / Ablation Assessment
+
+Where a capability, skill, instruction set, or context source appears
+unnecessarily large or procedurally prescriptive, evaluate whether its
+individual components materially contribute to successful execution.
+
+Where practical, use an evidence-based ablation approach:
+
+- Establish a representative baseline.
+- Define what successful execution means.
+- Classify deterministic versus model-mediated behavior.
+- Remove or isolate candidate guidance, context, or capability components.
+- Execute representative tasks under comparable conditions.
+- Record failures or degradation attributable to the removed component.
+- Restore only components supported by observed evidence.
+- Preserve intentional constraints and demonstrated failure prevention.
+
+Distinguish between:
+
+- content required for deterministic execution;
+- guidance required for model judgment;
+- guidance that protects known failure modes;
+- guidance that improves output quality or project-specific behavior;
+- guidance that provides no demonstrated benefit.
+
+Do not optimize for minimum size alone.
+
+The objective is to minimize unnecessary context and procedural
+instruction while preserving required behavior, reliability, and
+project-specific intent.
+
+For subjective or "taste" criteria, identify where human judgment
+remains necessary rather than treating an automated grader as the sole
+authority.
 
 ---
 
@@ -227,6 +296,69 @@ Assessment reports should clearly distinguish:
 - Recommendation
 
 Assessment reports should include repository evidence supporting significant findings whenever practical.
+
+### Research Finding — Agent-Optimized Instructions and Capability Discovery
+
+Recent evolution of external agent skill systems indicates a distinction
+between persistent agent instructions, on-demand capabilities, and
+agent-optimized documentation.
+
+Evaluate whether PMB and ACR currently place information in the correct
+surface:
+
+- persistent instructions;
+- triggered capabilities;
+- retrieved resources;
+- workflow orchestration;
+- human-facing documentation.
+
+In particular, evaluate whether persistent instructions can be reduced by
+moving task-specific procedural guidance into discoverable capabilities
+without reducing reliability.
+
+Also evaluate whether capability metadata and invocation behavior are
+portable across development harnesses or depend on provider-specific
+mechanisms.
+
+Do not adopt external skill structures solely because they are popular.
+Use them as evidence when assessing PMB and ACR's existing capability
+boundaries.
+### Reproducibility / Conditions Disclosure
+
+For materially different AI outcomes, determine whether the available
+execution record contains enough information to distinguish model behavior
+from harness, context, tool, runtime, configuration, and evaluation effects.
+
+Where practical, identify the minimum reproducibility recipe for a
+workflow, including:
+
+- Model and model version
+- Inference provider/runtime
+- Relevant model configuration
+- Harness/workflow version
+- Context sources and significant context selection
+- Tool availability
+- Relevant execution constraints
+- Evaluation method and evaluator
+- Benchmark/test version
+- Repository/project state when relevant
+
+Do not treat complete observability as the goal.
+
+The objective is to determine the minimum provenance required to explain
+or reproduce materially different behavior.
+
+Classify undocumented conditions as:
+
+- Known and reproducible
+- Known but not reproducible
+- Unknown but potentially material
+- Unlikely to materially affect the result
+
+Treat materially undisclosed execution conditions as a limitation on the
+strength of the finding, not automatically as evidence that the underlying
+result is invalid.
+
 
 ---
 ### Loop-Based Execution

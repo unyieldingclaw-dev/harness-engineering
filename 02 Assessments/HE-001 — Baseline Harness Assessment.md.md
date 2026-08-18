@@ -38,10 +38,15 @@ Branch: main
 12. Who owns context selection, context compaction, persistence, and retrieval?
 13. What minimum execution metadata would allow us to explain or reproduce materially different AI behavior?
 14. Which harness behaviors depend on provider-specific capabilities versus provider-independent abstractions?
-15. How does PMB handle multiple concurrent sessions working on different features within the same project?
+15. How does PMB handle multiple concurrent sessions working on different features within the same project? Include whether code/worktree isolation and context/session isolation
+    are separate concerns, and whether solving one actually addresses the
+    other.
 16. Can session-specific handoff state be isolated without losing access to authoritative project-level context, and can a session reliably determine which state belongs to it?
 17. Which persistent instructions constrain model judgment unnecessarily, and which constraints protect intentional project behavior or deterministic requirements?
-18. How does information flow from repository inputs to final model context, and how are stable instructions, current project state, resource maps, and historical records selected and distinguished along that path?
+18. How does information flow from repository inputs to final model context, and how are stable instructions, current project state, resource maps, and historical records selected and distinguished along that path?  Evaluate whether execution can distinguish project context, task
+    brief, session state, evidence produced during execution, and
+    evaluation results without unnecessarily merging them into a single
+    context layer.
 19. Which current workflows are procedural because the workflow itself
     provides value, and which are procedural primarily because multiple
     capabilities have been coupled together?
@@ -55,8 +60,17 @@ Branch: main
 23. Can the same underlying capability enter the harness through
     multiple supply paths, and if so, how are those paths identified,
     owned, selected, and prevented from creating unnecessary or
-    conflicting capability exposure?
-24. How are PMB capabilities distributed and discovered when multiple
+    conflicting capability exposure?     Include skills, connectors, hooks, commands, plugins, MCP/tool
+    surfaces, and other capability interfaces where applicable.
+
+    Determine whether each surface represents:
+    - an implementation;
+    - an interface;
+    - a discovery mechanism;
+    - an execution mechanism;
+    - an enforcement mechanism;
+    - or a distribution mechanism.
+1. How are PMB capabilities distributed and discovered when multiple
     PMB installations, versions, or capability surfaces are available,
     including global and project-local installations and plugin,
     command, skill, and other harness surfaces?
@@ -120,6 +134,7 @@ Examples include:
 - Development harness
 - Underlying model
 
+Determine whether context management materially changes effective model capability, including context selection, retention, compaction, recovery, and long-running task continuity.
 ### Context and Capability Cost
 
 Evaluate the operational cost of harness surfaces in addition to their
@@ -400,6 +415,24 @@ iteration loop of:
 
 goal → action → evidence → evaluation → next action.
 
+   Evaluate whether the workflow provides an explicit evidence-acquisition
+   step between generation and evaluation.
+
+   Evidence may include:
+   - tests;
+   - static analysis;
+   - application execution;
+   - browser or UI inspection;
+   - logs;
+   - network behavior;
+   - diffs;
+   - external system state;
+   - human inspection.
+
+   Do not treat additional inspection mechanisms as inherently valuable.
+   Determine whether the evidence is relevant to the acceptance criteria
+   and whether it materially reduces the risk of undetected failure.
+
 For each identified loop, determine:
 
 - what establishes the goal;
@@ -417,6 +450,68 @@ For each identified loop, determine:
 Do not introduce autonomous looping merely because a workflow can be
 expressed as a loop. Require demonstrated value, measurable verification,
 and explicit termination conditions.
+
+Evaluate whether the workflow's goals, guardrails, evidence requirements, and exit criteria are sufficient to allow model discretion in execution, or whether procedural instructions are necessary because of demonstrated failure modes or deterministic requirements.
+
+Evaluate whether any identified loop separates generation from
+evaluation sufficiently to avoid self-grading.
+
+For loops involving iterative improvement, determine:
+
+- whether the component producing an artifact also evaluates that artifact;
+- whether evaluation is performed by an independent model, process, test,
+  or other mechanism;
+- whether the evaluator has access to information that could bias it toward
+  accepting the producer's assumptions;
+- whether the evaluation criterion is externally grounded, testable, or
+  otherwise resistant to subjective self-approval;
+- whether the loop can continue indefinitely because the success criterion
+  is subjective or model-defined;
+- whether the cost of additional iterations is bounded relative to the
+  demonstrated value of further improvement.
+
+Where a loop uses multiple agents, determine whether decomposition into
+specialist workers and evaluators provides measurable value over a simpler
+single-agent verification loop.
+
+Do not assume independent critics, sub-agents, or recursive iteration
+improve quality. Require evidence that the additional execution materially
+improves the result relative to its cost and complexity.
+
+### Independent Evaluation and Quality Bars
+
+For iterative workflows, determine whether generation and evaluation are
+appropriately separated.
+
+Evaluate:
+
+- whether the component producing an artifact also determines whether it
+  is acceptable;
+- whether evaluation is performed by an independent model, agent,
+  deterministic test, human, or other mechanism;
+- whether the evaluator has access to objective or externally grounded
+  acceptance criteria;
+- whether the acceptance bar is established before iteration begins or
+  can be changed by the producing agent during execution;
+- whether failure produces actionable evidence that can drive the next
+  iteration;
+- whether the workflow distinguishes "not yet acceptable" from
+  "acceptable but improvable";
+- whether repeated iteration produces measurable improvement;
+- whether the additional workers, critics, and iterations justify their
+  context, token, latency, and orchestration cost.
+
+Do not assume that a separate critic, sub-agent, or higher quality bar
+improves the result. Determine whether the evaluation mechanism is
+actually capable of detecting the failure it is intended to prevent.
+
+Where a workflow uses a subjective quality bar, determine who establishes
+the bar and whether it is sufficiently concrete to produce a bounded
+termination condition.
+
+Do not allow an iterative workflow to optimize indefinitely toward an
+undefined or model-generated quality standard.
+
 
 ## Deliverables
 

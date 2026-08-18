@@ -128,6 +128,34 @@ for workflows that benefit from iterative refinement. Builder/critic
 loops and subagent fan-out remain execution mechanisms to justify
 against observed needs rather than default Harness architecture.
 
+### Matt Shumer
+
+Primary reference:
+https://somethingbig.ai/gauntlet-loop
+
+YouTube / secondary demonstrations should be treated as supporting
+material rather than the authoritative description of the technique.
+
+Focus:
+- Agentic execution loops
+- Builder / critic separation
+- Long-running agent workflows
+- External quality bars
+- Sub-agent decomposition
+- AI coding workflow evolution
+
+Primary reference:
+https://somethingbig.ai/gauntlet-loop
+
+Use for:
+Research into iterative agent execution, evaluation boundaries,
+sub-agent orchestration, and externally grounded quality criteria.
+
+Assessment rule:
+Treat demonstrated techniques as research evidence. Do not adopt
+Gauntlet Loops, sub-agent fleets, or recursive execution solely because
+they produce impressive demonstrations. Evaluate measurable quality
+improvement, cost, boundedness, and applicability to PMB/ACR.
 ## Core Concepts
 
 Persistent context should continuously justify its existence.
@@ -421,17 +449,6 @@ No architectural decisions made.
 Await HE-001 evidence.
 
 ---
-## Research Sources and Observations
-Core Concepts
-Potential Impact
-Candidate Architectural Decisions
-Open Questions
-Assessment Observations
-Status
-
-Matt Pocock / Eric Tech — Modular AI Engineering Skills
-...
-DeepSeek Harness — Developer Preview
 ## Matt Pocock / Eric Tech — Modular AI Engineering Skills
 
 ### Source
@@ -688,6 +705,253 @@ Capture these observations:
 - Capability modularity should be evaluated against workflow coupling, context cost, maintenance, and routing complexity.
 
 **Source:** Matt Pocock `skills` repository and the skills ecosystem.
+
+## Greg Isenberg — Claude Code AI Employee Model
+
+### Source
+
+Research reviewed from:
+
+- Greg Isenberg — "Claude Code New Features, Explained"
+- YouTube: https://www.youtube.com/watch?v=SkY-tR9kf-k
+
+This research is evaluated as evidence about emerging Claude Code
+workflow patterns. It is not being adopted as PMB or ACR architecture.
+
+### Core Model
+
+Isenberg describes an AI coding workflow as an operating system around
+the model rather than a single prompt.
+
+The model consists of:
+
+- workspace;
+- memory;
+- brief;
+- ticket;
+- eyes;
+- review;
+- schedule;
+- permissions;
+- skills;
+- connectors;
+- hooks.
+
+The useful Harness Engineering question is whether these represent
+distinct responsibilities in PMB/ACR or merely different names for
+existing capabilities.
+
+### Context and Working State
+
+The proposed model separates several forms of project information:
+
+- persistent working instructions;
+- current roadmap / priorities;
+- customer or domain context;
+- task-specific briefs;
+- review standards;
+- historical or operational information.
+
+The research reinforces the HE-001 requirement to determine which
+information is:
+
+- always loaded;
+- conditionally loaded;
+- retrieved;
+- persisted;
+- session-specific;
+- project-level;
+- authoritative;
+- advisory.
+
+The proposed `CLAUDE.md`, `roadmap.md`, and `review.md` pattern should
+not be reproduced automatically. HE-001 should determine whether PMB
+already provides equivalent mechanisms and whether introducing
+additional artifacts would create duplication.
+
+### Brief → Ticket → Execution → Verification → Review
+
+The workflow describes a useful distinction between:
+
+1. understanding the assignment;
+2. planning the change;
+3. defining a bounded ticket;
+4. implementing the change;
+5. inspecting the resulting system;
+6. reviewing the diff;
+7. determining whether human review is required.
+
+This reinforces the existing HE-001 investigation of:
+
+- workflow orchestration;
+- capability boundaries;
+- deterministic verification;
+- independent evaluation;
+- bounded execution;
+- human decision points.
+
+The sequence should not be treated as a mandatory universal workflow.
+
+The assessment should determine which transitions provide demonstrated
+value and which exist primarily because the example workflow was designed
+as a fixed sequence.
+
+### "Eyes" as Evidence Acquisition
+
+The research uses "eyes" to describe the ability of an agent to inspect
+the result of its work through mechanisms such as:
+
+- application preview;
+- browser interaction;
+- test execution;
+- console inspection;
+- network inspection;
+- user-flow verification.
+
+This is useful terminology for HE-001 because it distinguishes
+**generation** from **evidence acquisition**.
+
+A harness should not assume that successful file modification means the
+requested outcome was achieved.
+
+Evaluate whether PMB/ACR workflows currently provide sufficient access
+to relevant evidence and whether evidence is:
+
+- deterministic;
+- externally observable;
+- model-generated;
+- trusted;
+- independently verified.
+
+### Review as a Separate Quality Boundary
+
+The research describes review as a separate stage from implementation.
+
+It emphasizes:
+
+- reviewing the diff;
+- checking against project standards;
+- identifying unexpected changes;
+- separating must-fix, should-fix, and acceptable findings;
+- escalating higher-risk changes to deeper review.
+
+This reinforces HE-001's investigation of independent evaluation and
+quality bars.
+
+It does not establish that every change requires a separate reviewer,
+agent, or review workflow.
+
+### Scheduled Work / Routines
+
+The research describes recurring agent work such as:
+
+- morning briefs;
+- weekly issue reviews;
+- pull-request reviews.
+
+The important Harness Engineering observation is that scheduled execution
+can operate on durable project artifacts without requiring continuous
+interactive model sessions.
+
+Evaluate whether PMB or ACR has a legitimate need for recurring execution
+and, if so, whether existing automation mechanisms are sufficient.
+
+Do not introduce autonomous scheduled execution merely because Claude Code
+supports it.
+
+### Parallel Sessions and Isolation
+
+The research describes multiple concurrent Claude Code sessions using
+separate worktrees so that each session can operate on an independently
+scoped assignment.
+
+This is directly relevant to HE-001's known concurrent-session problem.
+
+Evaluate:
+
+- whether PMB session state is isolated;
+- whether project-level context can remain shared;
+- whether session-specific state has an explicit identity;
+- whether separate execution environments prevent state collision;
+- whether handoff artifacts can identify their originating session;
+- whether worktree isolation solves code isolation without solving
+  context/handoff isolation.
+
+Worktree isolation should not be assumed to solve PMB's handoff collision
+problem. They address different forms of concurrency.
+
+### Permissions as Bounded Authority
+
+The research divides actions into:
+
+- safe actions;
+- actions requiring approval;
+- human-owned actions.
+
+This reinforces the HE-001 distinction between deterministic enforcement
+and model-mediated judgment.
+
+Evaluate whether current PMB/ACR permissions and execution boundaries
+provide explicit authority limits or merely rely on persistent instructions.
+
+Do not replace deterministic enforcement with model judgment where the
+boundary can be enforced mechanically.
+
+### Skills, Connectors, and Hooks
+
+The research distinguishes:
+
+**Skills**
+- reusable ways of performing bounded work.
+
+**Connectors**
+- access to external systems and information.
+
+**Hooks**
+- deterministic actions around execution, such as formatting,
+  validation, or checks.
+
+This distinction is directly relevant to HE-001 Question 23 concerning
+multiple capability supply paths.
+
+The assessment should determine whether PMB currently exposes equivalent
+capabilities through multiple surfaces and whether those surfaces are:
+
+- implementations;
+- interfaces;
+- discovery mechanisms;
+- enforcement mechanisms;
+- distribution mechanisms.
+
+Do not treat skills, connectors, and hooks as interchangeable.
+
+### Engineering Implications
+
+The strongest Harness Engineering observations from this research are:
+
+- project context should explain the system before task execution;
+- task scope should be bounded enough to permit meaningful review;
+- generation should be followed by evidence acquisition;
+- review should have an explicit quality boundary;
+- concurrent execution requires isolation;
+- authority should be bounded;
+- reusable capabilities should be distinguished from orchestration;
+- recurring work should be evaluated as a workflow capability rather
+  than assumed to require autonomous agents.
+
+These observations reinforce existing HE-001 questions rather than
+establishing new architecture.
+
+### Assessment Status
+
+Research input only.
+
+No PMB or ACR architecture should be changed solely because of this
+workflow.
+
+HE-001 should determine whether these concepts correspond to existing
+capabilities, duplicated capabilities, missing capabilities, or merely
+different terminology for existing mechanisms.
 
 # Harness Engineering — Research Sources
 

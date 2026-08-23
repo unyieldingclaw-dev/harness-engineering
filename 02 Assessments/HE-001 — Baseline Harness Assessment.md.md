@@ -169,6 +169,33 @@ cost, record the relevant conditions as part of execution provenance rather
 than embedding provider-specific cost assumptions into PMB or ACR
 architecture.
 
+### Cost Attribution
+
+Where measurable execution cost is identified, determine whether the cost
+can be attributed to a specific context source, capability, execution
+configuration, workflow, or runtime behavior.
+
+Prefer measured execution evidence over estimated or assumed cost.
+
+Where cost cannot be measured reliably, classify it as UNKNOWN rather than
+inferring a value from configuration size or theoretical behavior.
+
+Assessment should distinguish:
+
+- context volume;
+- repeated context transmission;
+- tool-definition overhead;
+- tool output;
+- model inference;
+- delegated execution;
+- cache creation;
+- cache reads;
+- cache misses;
+- orchestration overhead;
+- rework caused by insufficient or incorrect context.
+
+Do not optimize for token count alone. Determine whether reducing a measured
+cost changes total execution cost, latency, reliability, or output quality.
 ### Modular Capability Assessment
 
 HE-001 must distinguish between:
@@ -195,6 +222,28 @@ Evaluate whether modular capability composition would:
 Also evaluate whether a prescribed workflow currently provides benefits that
 would be lost by moving toward modular capability composition.
 
+### Dependency and Topology Assessment
+
+For each multi-step workflow, identify the information and artifact
+dependencies between stages.
+
+Determine:
+
+- which stages require outputs from prior stages;
+- which stages only appear sequential because of workflow design;
+- which stages can execute independently;
+- which outputs must converge before subsequent work can proceed;
+- whether parallel execution would duplicate work or lose required context;
+- whether conditional routing reduces unnecessary capability exposure;
+- whether the workflow contains unnecessary serialization;
+- whether additional orchestration complexity provides measurable value.
+
+Use dependency relationships rather than assumed workflow order to determine
+whether sequential, parallel, conditional, or iterative execution is
+appropriate.
+
+Do not optimize topology solely for speed. Consider correctness, context
+availability, failure isolation, observability, cost, and maintainability.
 ### Capability Contribution / Ablation Assessment
 
 Where a capability, skill, instruction set, or context source appears

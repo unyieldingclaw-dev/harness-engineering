@@ -109,6 +109,12 @@ verification, independent review, and continuous improvement.
 Subagents and additional orchestration remain mechanisms to evaluate
 against observed problems rather than default architectural components.
 
+### Disposition
+
+- Graph topology: ASSESS
+- Graph framework: PARK
+- Five-branch heuristic: REJECT as a hard constraint
+- Infinite-loop protection: ASSESS
 ### RoboNuggets — Gauntlet Loop
 
 - Separating builder and evaluator perspectives can reduce self-approval.
@@ -1176,3 +1182,16 @@ influence Harness Engineering architecture.
 
 Review this list periodically as the quality and relevance of sources
 change.
+
+## Research Disposition
+
+Research findings are classified as:
+
+- ADOPT — incorporated into documented Harness principles or decisions.
+- ASSESS — incorporated into HE-001 or another formal assessment.
+- PARK — retained as relevant research without current implementation
+  justification.
+- REJECT — explicitly determined not applicable or insufficiently supported.
+
+A parked or rejected finding may be reconsidered if new evidence,
+requirements, or observed operational problems change its relevance.

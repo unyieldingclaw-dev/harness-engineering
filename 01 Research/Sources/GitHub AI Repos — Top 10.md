@@ -207,6 +207,32 @@ Question:
 
 > What architectural boundaries are emerging in alternative agent harnesses, and which differences are materially useful?
 
+## Additional Batch Items to Preserve
+
+These were not promoted to separate follow-up repositories, but we should keep them in the research queue so they are not forgotten if related work later makes them relevant:
+
+### Five Candidate Threads
+
+- **OpenViking** — context and memory organization; investigate hierarchical, file-oriented retrieval and whether it offers useful evidence for PMB without requiring a new memory subsystem.
+- **Needle** — tiny specialized local models; keep as a reference for local classification, extraction, tool selection, and edge execution if a concrete PMB/HE need appears.
+- **SwitchYard** — model routing and escalation; investigate whether evidence-driven escalation belongs in the harness, inference gateway, or another layer.
+- **Modular / Mojo** — watch the AI runtime/compiler trajectory; revisit only if local inference or execution architecture becomes relevant.
+- **Aura Code** — compare alternative agent-harness boundaries and model/provider/tool/skill/memory separation.
+
+### Independent Evaluation Pattern
+
+**5-Persona Advisory Board** should remain in the queue specifically as a test of whether multiple *different analytical functions* are useful. Do not treat fixed personalities, famous-person simulation, or a five-agent count as requirements.
+
+Potential future evaluation dimensions could include:
+
+- evidence / factual challenge;
+- skeptical failure analysis;
+- operational practicality;
+- architectural tradeoffs;
+- future consequences / reversibility.
+
+These are research hypotheses only, not a prescribed PMB or ACR design.
+
 ## Disposition Summary
 
 | Candidate | Disposition | Current reason |
@@ -221,6 +247,13 @@ Question:
 | Semantica | PARK | Knowledge graph may be premature |
 | Minto Pyramid Skill | REINFORCE | Useful communication pattern |
 | Diagram Design | REINFORCE | Useful documentation pattern |
+
+## Research Threads to Revisit
+
+1. **Context & Memory** — OpenViking, Shockwave
+2. **Model Routing & Escalation** — SwitchYard, Needle
+3. **Independent Evaluation** — 5-Persona Advisory Board, Unlazy, ACR
+4. **Agent Harness Architecture** — Aura Code, Shockwave, Modular/Mojo
 
 ## Guardrail
 

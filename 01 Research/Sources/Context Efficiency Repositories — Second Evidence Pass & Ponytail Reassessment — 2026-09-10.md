@@ -39,7 +39,7 @@ Ponytail's root `AGENTS.md` defines a seven-rung decision ladder:
 
 The source explicitly says the ladder runs **after understanding the problem**, including reading touched code and tracing the real flow. It also defines bug-fix guidance around fixing root cause in the shared function rather than patching every named symptom path.
 
-The source explicitly protects trust-boundary validation, data-loss handling, security, accessibility, hardware calibration, and explicitly requested behavior from the simplification rule.
+The source explicitly protects trust-boundary validation, data-loss handling, security, accessibility, hardware calibration, and explicitly requested behavior from the simplification rule. fileciteturn522file0L2-L2
 
 The current README also corrects an earlier benchmark framing: the old 80–94% single-shot reduction was recognized as partly reflecting a weak conversational baseline. The newer real-agent comparison reports a 54% mean LOC reduction, 22% token reduction, 20% cost reduction, and 27% time reduction across 12 feature tasks, while retaining 100% safety in its separate safety evaluation. The README explicitly states that the objective is not the fewest tokens; lower token/cost/time usage is a side effect when the ladder prevents over-building.
 
@@ -109,7 +109,7 @@ Therefore “original data exists” is insufficient proof of context usefulness
 
 ### LeanCTX — loss-tolerance routing is a more useful abstraction than generic compression
 
-The current README provides a particularly strong refinement: content is classified by loss tolerance. Code, stack traces, tool linkage, JSON, and edit payloads can be protected verbatim while documentation/log/prose segments can be compressed. It includes an explicit fallback to the original when validation fails or times out.
+The current README provides a particularly strong refinement: content is classified by loss tolerance. Code, stack traces, tool linkage, JSON, and edit payloads can be protected verbatim while documentation/log/prose segments can be compressed. It includes an explicit fallback to the original when validation fails or times out. fileciteturn523file0L2-L2
 
 The benchmark reporting also illustrates why compression claims require careful decomposition: the headline 503-item result is layered on top of another structural compressor; the README distinguishes the contribution of each layer and records accuracy deltas and CPU/GPU differences.
 
@@ -121,7 +121,7 @@ The important Harness principle is therefore not “use LeanCTX.” It is:
 
 ### Graphify — strict mode reveals a useful enforcement pattern
 
-The current README adds an important detail: default installation nudges the assistant to query the graph before reading source, while strict mode blocks the first raw source read of a session and redirects it to the graph, then relaxes after the first intervention.
+The current README adds an important detail: default installation nudges the assistant to query the graph before reading source, while strict mode blocks the first raw source read of a session and redirects it to the graph, then relaxes after the first intervention. It also states that code is parsed locally with tree-sitter and that relationships are tagged `EXTRACTED` versus `INFERRED`. fileciteturn525file0L2-L2
 
 That is a bounded enforcement pattern rather than a permanent prohibition:
 
@@ -129,13 +129,31 @@ That is a bounded enforcement pattern rather than a permanent prohibition:
 
 This is useful because it limits governance friction while still creating an opportunity to establish the preferred context path.
 
+### Architecture visualization — useful when it remains an evidenced projection
+
+The Graphify finding also supports a separate human-facing Harness capability: **accurate architecture visualization is useful even when the visualization itself is not authoritative.**
+
+The desired separation is:
+
+1. **Declared/intended architecture** — what the project says the architecture should be.
+2. **Actual architecture projection** — what deterministic analysis says the implementation currently contains.
+3. **Visualization** — a presentation layer over either projection.
+
+The visualization should not become the source of truth. A useful architecture diagram should be traceable to an identified source revision and should distinguish deterministic/extracted relationships from inferred ones where applicable.
+
+Potential useful outputs include subsystem/component diagrams, dependency/boundary diagrams, call-flow views, service relationships, and before/after architecture projections.
+
+The value test is not whether an interactive graph is impressive. It is whether the visualization helps humans understand the system, exposes unexpected coupling/boundaries, supports architecture review, or provides useful before/after comparison without requiring manual diagram maintenance.
+
+**Disposition:** ADOPT DESIGN PRINCIPLE — visualization as presentation over evidenced architecture projection; HIGH-VALUE RESEARCH — automatically maintained architecture diagrams; CANDIDATE EXPERIMENT — generate diagrams for Harness Engineering and test whether they improve architecture exploration/review; DO NOT ADOPT — graph visualization as architecture truth.
+
 Graphify also clearly labels `EXTRACTED` versus `INFERRED` relationships, reinforcing provenance-aware structural projections.
 
 **Disposition:** ADOPT BOUNDARY — projections must distinguish extracted from inferred relationships; CANDIDATE EXPERIMENT — bounded graph-first exploration; DO NOT ADOPT — graph as source-of-truth replacement.
 
 ### codebase-memory-mcp — the operational coordination model is as interesting as the graph
 
-The current README contains unusually detailed runtime coordination behavior: one shared per-account daemon, exact-build/ABI/cache-root admission, crash-safe barriers, finite activation shutdown, separate ordinary CLI mode, and durable owner-only diagnostics.
+The current README contains unusually detailed runtime coordination behavior: one shared per-account daemon, exact-build/ABI/cache-root admission, crash-safe barriers, finite activation shutdown, separate ordinary CLI mode, and durable owner-only diagnostics. fileciteturn526file0L2-L2
 
 This is not merely “a code graph.” It is evidence for a broader Harness concern: **shared background services require explicit ownership, admission, lifecycle, and activation boundaries when multiple agent sessions coexist.**
 
@@ -145,7 +163,7 @@ The project also separates structural parsing from the agent's reasoning and mai
 
 ### Token Optimizer MCP — zero-turn refusal is a distinct optimization primitive
 
-The current README describes a mechanism where an expensive read can be denied while the refusal itself carries a cached/diffed replacement, avoiding the ordinary “tool call → denial → re-plan → replacement tool” sequence.
+The current README describes a mechanism where an expensive read can be denied while the refusal itself carries a cached/diffed replacement, avoiding the ordinary “tool call → denial → re-plan → replacement tool” sequence. It also separates verified transport savings from modeled graph savings and accounts for later expansions. fileciteturn524file0L2-L2
 
 This is more interesting than simply “blocking expensive calls.” It is a **zero-turn substitution** pattern:
 
@@ -249,7 +267,7 @@ The second pass does **not** supersede the original synthesis. It sharpens it.
 - Headroom: **ADOPT EVALUATION PRINCIPLE** — counterfactual/content-aware measurement; **PRIORITY RESEARCH** — reversible compression.
 - Magic Compact: **ADOPT DESIGN PRINCIPLE** — recoverable structured compaction.
 - LeanCTX: **HIGH-VALUE RESEARCH** — loss-tolerance routing.
-- Graphify: **ADOPT BOUNDARY** — extracted/inferred distinction; **CANDIDATE EXPERIMENT** — bounded graph-first exploration.
+- Graphify: **ADOPT BOUNDARY** — extracted/inferred distinction; **ADOPT DESIGN PRINCIPLE** — visualization as presentation over evidenced architecture projection; **CANDIDATE EXPERIMENT** — bounded graph-first exploration and architecture visualization.
 - codebase-memory-mcp: **HIGH-VALUE RESEARCH** — shared local service coordination/admission.
 - Token Optimizer MCP: **ADOPT DESIGN PRINCIPLE** — zero-turn substitution where safe.
 - pxpipe: **ORTHOGONAL / SHARPENS** — representation-dependent loss surfaces.

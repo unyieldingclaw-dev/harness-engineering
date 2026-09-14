@@ -85,9 +85,9 @@ Do not collapse all of these into "prompt injection."
 
 ### Simon's claims and observations
 
-On August 26 Simon wrote that the key skill for productive coding-agent use is confidently instructing an agent and then confidently **verifying that the requested changes were applied correctly**. He explicitly noted that reviewing every line is not necessarily the best validation method.
+On August 22 Simon wrote that the key skill for productive coding-agent use is confidently instructing an agent and then confidently **verifying that the requested changes were applied correctly**. He explicitly noted that reviewing every line is not necessarily the best validation method.
 
-- https://simonwillison.net/2026/Aug/26/verification-coding-agents/
+- https://simonwillison.net/2026/Aug/22/more-than-just-code-review/
 
 Simon also highlighted Paul Dix's observation that if a team can build a verification system and provide proper direction, AI can produce and refine highly complex software until it works.
 
@@ -173,7 +173,7 @@ Promote to Guided Engineering Planning research. Do not turn it into an architec
 
 Simon shared Linus Torvalds' account of an AI-assisted debugging session where the AI repeatedly concluded the problem was impossible, but continued adding instrumentation and analyzing results when Linus pushed it. The model was useful, but its initial judgment to give up was not reliable.
 
-- https://simonwillison.net/2026/Aug/22/linus-torvalds-ai-debugging/
+- https://simonwillison.net/2026/Aug/22/linus-torvalds/
 
 ### Analysis
 
@@ -227,7 +227,6 @@ Reinforce the existing SwitchYard/model-routing research. This is evidence for r
 Simon released LLM 0.32 with reasoning traces, server-side provider tools, typed streaming events for reasoning/tool calls/results, and redesigned content-addressable SQLite logs. His Anthropic plugin exposes server-side WebSearch, WebFetch, CodeExecution, and AnthropicMCP tools through the same interface.
 
 - https://simonwillison.net/2026/Aug/4/new-release-of-llm/
-- https://simonwillison.net/2026/Aug/4/llm-anthropic/
 
 ### Analysis
 
@@ -309,7 +308,7 @@ Reinforce HE-001's model/harness boundary research. No architecture change follo
 
 Simon tasked Claude Fable 5 with evaluating smolvm/smolmachines as a sandbox for untrusted Python and JavaScript. The research examined hardware-isolated VMs, no-network execution, CPU/RAM limits, timeouts, storage quotas, read-only inputs, writable outputs, and unprivileged execution. Fable could not run the VM inside its Claude Code for web environment because nested virtualization was unavailable, so it moved the test battery to a GitHub Actions runner exposing `/dev/kvm`.
 
-- https://simonwillison.net/2026/Aug/19/smolvm/
+- https://simonwillison.net/2026/Aug/19/
 
 ### Analysis
 
@@ -331,7 +330,7 @@ Keep as a security/sandbox reference alongside agent-authority research.
 
 On August 28 Simon highlighted Anil Madhavapeddy's report that automated exploitation attempts against OCaml projects began appearing within roughly ten minutes of a security issue being discussed publicly. The examples show modern coding agents finding and exploiting vulnerabilities from limited clues; the discussion also notes that existing open-source disclosure/embargo practices may not be designed for this speed.
 
-- https://simonwillison.net/2026/Aug/28/ai-security-ocaml/
+- https://simonwillison.net/2026/Aug/28/
 
 ### Analysis
 

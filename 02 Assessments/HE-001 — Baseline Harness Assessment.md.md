@@ -70,7 +70,7 @@ Branch: main
     - an execution mechanism;
     - an enforcement mechanism;
     - or a distribution mechanism.
-1. How are PMB capabilities distributed and discovered when multiple
+24. How are PMB capabilities distributed and discovered when multiple
     PMB installations, versions, or capability surfaces are available,
     including global and project-local installations and plugin,
     command, skill, and other harness surfaces?
@@ -430,6 +430,7 @@ workflow, including:
 
 - Model and model version
 - Inference provider/runtime
+- Backend/serving provider when it may differ from the advertised model endpoint
 - Relevant model configuration
 - Harness/workflow version
 - Context sources and significant context selection
@@ -454,6 +455,36 @@ Classify undocumented conditions as:
 Treat materially undisclosed execution conditions as a limitation on the
 strength of the finding, not automatically as evidence that the underlying
 result is invalid.
+
+When an endpoint can route the same advertised model through multiple
+backends, do not assume those executions are equivalent. Determine whether
+backend identity, serving behavior, reasoning-setting interpretation, or
+available capabilities could materially affect the result before requiring
+provider pinning or additional provenance.
+
+### Effective Authority and Security Composition
+
+For workflows with meaningful execution authority, assess both declared
+permissions and effective authority created by capability composition.
+
+Where relevant, evaluate combinations of:
+
+- filesystem and workspace access;
+- network access, proxy behavior, DNS, and host configuration;
+- credentials and environment variables;
+- package managers and dependency resolution;
+- process execution and supervision;
+- writable configuration or startup paths;
+- tools that can transform read access into external write capability.
+
+Do not treat a deterministic control as effective merely because it is
+mechanically enforced. Determine whether adjacent capabilities can bypass,
+reinterpret, or expand the intended boundary.
+
+Distinguish prompt injection, malicious tool output, confused-deputy
+behavior, confused-environment attacks, excessive authority, and unsafe
+runtime configuration. Related mitigations should not be assumed to cover
+all of these failure modes.
 
 
 ---

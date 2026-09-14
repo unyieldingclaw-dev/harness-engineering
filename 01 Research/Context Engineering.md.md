@@ -108,17 +108,53 @@ The Second Brain implementation itself is not currently a Harness Engineering re
 
 ### Simon Willison — Agentic Engineering Patterns
 
-- Coding agents should be understood as harnesses combining models, system prompts, tools, execution, and iterative feedback.
-- Context isolation through subagents can preserve primary working context for bounded exploration or specialized tasks.
-- Preserve proven, reusable knowledge rather than repeatedly rediscovering solutions.
-- Completed work can feed a compound engineering loop where useful lessons improve future agent execution.
-- Small, high-leverage instructions may activate existing model capabilities more effectively than extensive procedural guidance.
-- Agent-generated code still requires verification, reviewable scope, and evidence that the implementation works.
-- Reduced implementation cost increases the importance of engineering judgment rather than eliminating it.
+Evidence trail:
 
-Harness implication:
+- `01 Research/Sources/Simon Willison - Harness Engineering Findings - August 2026.md`
+- `01 Research/Sources/Simon Willison — Harness Engineering Findings — 2026-09-01 through 2026-09-14.md`
+- Earlier Agentic Engineering Patterns research retained in this synthesis.
 
-These patterns reinforce existing HE-001 investigation areas around context isolation, durable knowledge, progressive disclosure, verification, independent review, and continuous improvement. Subagents and additional orchestration remain mechanisms to evaluate against observed problems rather than default architectural components.
+#### Durable findings
+
+**The harness is the behavioral unit.** Coding-agent behavior emerges from the model, provider/runtime, persistent and task context, tools, skills, authority, execution environment, and feedback loop. Model identity alone is insufficient when any of those conditions materially differ.
+
+**Execution provenance should be minimal but discriminating.** Capture only what is needed to explain or reproduce a material behavioral difference. Provider/backend identity, reasoning configuration, available capabilities, security boundaries, repository state, and evaluation method may matter. This is not a mandate for general-purpose telemetry or hidden reasoning capture.
+
+**Effective authority is compositional.** The authority available to an agent may exceed the explicit tool list when filesystem, networking, DNS/host configuration, proxies, package systems, credentials, and command execution can be combined. Security assessment must evaluate the composed environment rather than each permission in isolation.
+
+**Deterministic enforcement belongs below model judgment where practical.** A model or model-adjacent classifier may contribute risk signals, but it should not be the sole boundary for safety-critical authority when filesystem, network, credential, process, or sandbox constraints can enforce the boundary mechanically.
+
+**Verification must produce relevant evidence.** An agent performing an inspection step or claiming completion does not establish correctness. Tests, invariants, acceptance checks, runtime observations, targeted inspection, and reproducible commands should be selected according to the property being verified.
+
+**Independent executable evidence is stronger than another model opinion.** A workflow in which one actor demonstrates a defect with a failing test and another repairs it provides a clearer boundary than model-to-model approval alone. Multiple models do not automatically create independent verification.
+
+**Verification should be risk-directed.** Review effort should concentrate on semantic-risk boundaries and required properties, not raw change volume or line-by-line inspection by default.
+
+**Cheap implementation raises the value of scope discipline.** When agents reduce implementation cost, cost stops acting as a natural constraint against unnecessary features. Planning must still protect conceptual integrity and determine whether a change belongs in the system.
+
+**Tool interfaces should be legible to the model.** Self-describing tool output may reduce errors, especially for weaker models, but can consume more context. Interface shape should be evaluated against reliability and total execution cost rather than token compactness alone.
+
+**Skills are bounded capabilities, not automatically agents.** Narrow reusable skills and context isolation can be useful mechanisms. Subagents, fleets, and orchestration remain mechanisms to justify against demonstrated need, verification value, and execution cost.
+
+**Persistent guidance needs continuing justification.** Guidance may compensate for current model limitations, encode intentional behavior, enforce deterministic requirements, or prevent demonstrated failures. Newer model capability is not sufficient evidence for removal.
+
+#### Harness implications
+
+These findings reinforce HE-001 investigation of context isolation, durable knowledge, execution provenance, provider/runtime conditions, effective authority, deterministic enforcement, evidence acquisition, independent evaluation, model-legible tools, and conceptual integrity.
+
+They do not establish requirements for a VM, observability platform, provider router, subagent fleet, universal provider pinning, or preservation of hidden chain-of-thought.
+
+#### Research disposition
+
+- **REINFORCE:** Treat model + context + tools + authority + runtime + verification as the evaluated execution system.
+- **REINFORCE:** Separate generation, evidence acquisition, and evaluation where the distinction improves confidence.
+- **REINFORCE:** Preserve valuable, proven knowledge outside transient conversation.
+- **ASSESS:** Minimum provenance needed to distinguish provider/backend and runtime effects in controlled evaluation.
+- **ASSESS:** Effective authority created by combinations of otherwise ordinary capabilities.
+- **ASSESS:** Whether ACR findings can produce independently reproducible evidence of failure and closure.
+- **ASSESS:** Whether tool schemas trade a small context increase for a material reduction in model error.
+- **PARK:** Hardware-isolated sandboxing, model routing infrastructure, and additional orchestration until an observed requirement justifies them.
+- **REJECT:** Treating model assertion, nominal model name, more agents, or more review tokens as sufficient evidence of correctness or reproducibility.
 
 ### Austin Marchese — Loop / Graph Engineering
 

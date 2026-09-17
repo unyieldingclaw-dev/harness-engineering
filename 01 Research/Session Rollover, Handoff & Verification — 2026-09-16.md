@@ -14,6 +14,7 @@ Related HE research:
 - `01 Research/Sources/Claude Token Limits & Master Prompt — Context Efficiency Lessons.md`
 - `01 Research/Sources/Agent Skills & Context Efficiency — Reputable Guidance.md`
 - `01 Research/Sources/FreeLLMAPI — Gateway Routing, Failover & Context Compression — 2026-09-14.md`
+- `01 Research/Source Preservation & Evidence Durability — 2026-09-16.md`
 
 This is research synthesis only. It does not authorize PMB or HE implementation changes.
 
@@ -78,292 +79,303 @@ Compaction preserves continuity inside the same logical session by reducing olde
 
 Useful when:
 
-- required state exists primarily in the conversation;
-- work cannot cleanly stop yet;
-- context exhaustion is approaching;
-- a fresh session would require expensive reconstruction.
+- the current session remains coherent;
+- a transition is inconvenient;
+- the host/runtime performs it safely;
+- durable project state is already current enough to recover if compaction loses detail.
 
 Risks:
 
-- lossy synthesis;
-- accidental retention of stale/noisy state;
-- continued dependence on a long conversational lineage.
+- semantic compression can omit details;
+- compaction itself consumes context/tokens;
+- repeated compaction can preserve stale assumptions or conversational debris.
 
 ## Fresh-session handoff
 
-A handoff ends one execution context and starts another with selected state.
+A fresh-session handoff intentionally resets conversational history while transferring only required state.
 
 Useful when:
 
-- durable project state already exists externally;
-- a natural task boundary exists;
-- the current context contains substantial stale/redundant history;
-- the successor can re-open authoritative artifacts.
-
-Risks:
-
-- missing ephemeral state;
-- broken file/source references;
-- duplicating authoritative project truth into the handoff;
-- stale handoff artifacts being mistaken for current truth.
+- the task is long-running;
+- context pressure is high;
+- the next unit of work is clear;
+- authoritative project state already exists outside the conversation;
+- the successor can re-read durable artifacts.
 
 ### HE principle
 
-> **Use compaction to preserve necessary conversational continuity; use handoff to transfer only the state a fresh execution cannot reconstruct from authoritative artifacts.**
+> **Prefer durable state + narrow handoff over reconstructing an entire project from conversation history.**
+
+For PMB specifically, `memory-bank/` should remain authoritative for durable project truth. A handoff artifact should contain only ephemeral in-flight state that is not naturally represented there.
 
 ---
 
-# 3. Handoff quality depends on destination and reachability
+# 3. Handoff should be successor-goal-aware
 
-The inspected Refresh skill makes an important distinction between a handoff that remains in the same environment and one that travels to another person/machine/context.
+The inspected Refresh skill asks for the goal of the next session before deciding what to carry forward.
 
-This yields a durable HE principle:
-
-> **A handoff pointer is valid only if the successor can resolve it.**
-
-For repository-backed work, preferred references are generally:
-
-1. repo-relative paths;
-2. shared remote identifiers/URLs;
-3. explicit embedded state only when no durable/shared home exists;
-4. machine-local absolute paths only for genuinely local continuation.
-
-A handoff should never assume that an ephemeral sandbox path survives.
-
-### PMB implication to assess
-
-PMB's handoff protocol should verify the reachability of any ephemeral-state pointer it emits, but should not silently copy/write files to create that reachability. Any new persistent write remains an explicit governed action.
-
----
-
-# 4. Successor-goal-aware transfer is stronger than transcript summarization
-
-Refresh asks what the next session is intended to accomplish before deciding what to carry forward.
-
-This is useful because relevance is destination-dependent.
-
-A summary asks:
-
-> What happened?
-
-A handoff should ask:
-
-> What does the successor need to accomplish the next goal without redoing or contradicting prior work?
+This is stronger than a generic session summary because relevance is destination-dependent.
 
 ### HE principle
 
-> **Generate transfer context against the successor's job, not against the source session's chronology.**
+> **A handoff should be shaped by the successor's job, not by the desire to summarize the predecessor's history.**
 
-This is progressive disclosure applied across session boundaries.
+The successor generally needs:
+
+- the immediate goal;
+- current in-flight state;
+- relevant artifacts and paths;
+- unresolved blockers;
+- the next executable action;
+- dead ends only when retry risk is material;
+- enough provenance to know what was actually verified.
+
+The successor generally does not need:
+
+- a transcript recap;
+- every decision already persisted in authoritative project state;
+- stale alternatives;
+- repeated background already loaded by the project harness.
 
 ---
 
-# 5. Durable state should not be re-summarized into handoff state
+# 4. Handoff pointers require reachability
 
-Generic Refresh must reconstruct project state from the conversation because it cannot assume a durable project memory system exists.
+A path or reference is useful only if the successor can resolve it.
 
-PMB can.
-
-Therefore PMB should preserve its stronger separation:
-
-- durable decisions/constraints/progress -> Memory Bank;
-- exact interrupted work / uncommitted state / immediate resume command -> handoff;
-- startup instructions -> loaded normally by the environment;
-- large references -> reopened on demand.
+The inspected Refresh skill explicitly distinguishes same-machine and cross-machine transfers and checks whether referenced files/data will survive the transition.
 
 ### HE principle
 
-> **Do not create a second summary of information that already has an authoritative durable owner.**
+> **A handoff reference is valid only when the successor can resolve it.**
 
-Duplication creates drift and increases context cost.
+Examples of fragile references:
+
+- `/tmp/...`;
+- transient Cowork scratch space;
+- absolute local paths transferred to another machine;
+- uncommitted files when the successor works from a fresh checkout;
+- authenticated links unavailable to the successor;
+- tool-specific ephemeral IDs.
+
+The handoff should either persist/copy the required artifact with explicit authority or clearly state the prerequisite for resolving it.
+
+Do not silently copy project files merely to make a handoff self-contained.
 
 ---
 
-# 6. Clarification should target high-impact unknowns
+# 5. Verification ritual vs evidence-directed verification
 
-The inspected Interview Me skill and Anthropic's field guide converge on a practical pattern:
+The source correctly identifies a real anti-pattern:
 
-- inspect existing artifacts first;
-- ask one question at a time;
-- prioritize answers that would materially change architecture/scope/output;
-- stop after a bounded number of questions;
-- skip interviewing when the task is already clear.
+```text
+"double-check everything"
+"verify twice"
+"be maximally thorough"
+```
 
-### HE refinement
+These can cause redundant self-review/tool calls, especially on models already trained to self-check.
 
-The source's rule that everything the user does not explicitly claim becomes the model's decision is too broad.
+That does **not** establish that explicit verification is generally wasteful.
 
-A governed harness should instead distinguish:
+Useful verification is tied to a property or risk:
 
-- routine, reversible implementation choices -> agent may decide inside approved scope;
-- scope, architecture, security boundaries, irreversible operations, external side effects, acceptance criteria -> retain explicit escalation/approval when material.
+- run the affected tests;
+- reproduce the defect before changing it;
+- verify acceptance criteria;
+- inspect a security/enforcement boundary;
+- challenge an architectural premise;
+- confirm a deployment/runtime condition;
+- use independent executable evidence where possible.
 
 ### HE principle
 
-> **Ask only for unknowns that materially change the work; do not convert unspecified decisions into unlimited model authority.**
+> **Remove ritualized repetition; preserve verification that acquires evidence about a required property.**
+
+A model saying "I checked" is not evidence. A targeted test, invariant, runtime observation, reproducible failure, or focused independent review can be.
 
 ---
 
-# 7. Verification ritual versus evidence-directed verification
+# 6. Opposition review is not redundant self-checking
 
-This is the most important correction to the source material.
+PMB's Opposition/Opp Review mechanism should not be conflated with generic instructions such as "double-check your work."
 
-Anthropic's current Opus 5 guidance does say that generic instructions to double-check/re-verify can produce redundant work because Opus 5 self-corrects strongly.
+The distinction is structural:
 
-But Anthropic's general current-model guidance still recommends verification against explicit test criteria and identifies Opus 5 as a model-specific exception for migrated self-check instructions.
+- **redundant self-checking** asks the same actor to revisit its own conclusion without a changed evaluation target;
+- **opposition review** deliberately changes the review objective to challenge premises, scope, architecture, hidden assumptions, and failure modes.
 
-The inspected Prompt Master skill itself preserves evidence checks on long runs, requiring progress claims to point to actual tool results.
+Operationally, the user reports that Opp Review has repeatedly surfaced material issues in real PMB work. The repository also contains a documented incident where repeated self-review did not catch a faulty review-gate design premise and a separate Opus review did.
 
-The durable distinction is therefore:
+That is not controlled benchmark evidence, but it is direct operational evidence that the mechanism is doing non-trivial work in this environment.
 
-## Verification ritual
+### Current research disposition
 
-- repeat the same reasoning with no new evidence;
-- generic "double-check everything" language;
-- unconditional verifier subagent with no explicit property to check;
-- repeated review passes that share the same assumptions and evidence.
+- **REINFORCE:** preserve Opp Review for tasks where a wrong premise or semantic defect is expensive.
+- **REINFORCE:** evaluate it by defects discovered and downstream corrections, not merely by tokens consumed.
+- **ASSESS:** whether triggers can be narrowed further without losing observed defect-detection value.
+- **REJECT:** removing adversarial/independent review solely because frontier models may over-verify when given generic self-check instructions.
+- **REJECT:** invoking Opposition mechanically for trivial edits where there is no meaningful premise to challenge.
 
-## Evidence-directed verification
+---
 
-- executable tests;
-- reproduced failures;
-- acceptance criteria;
-- invariants;
-- runtime observations;
-- targeted security/enforcement inspection;
-- independent evidence sources;
-- review aimed at a load-bearing premise;
-- faithful audit of progress claims against tool results.
+# 7. Read before asking; ask one high-value question at a time
+
+Interview Me contains a useful interaction pattern:
+
+1. inspect existing artifacts first;
+2. identify unresolved decisions;
+3. ask one question at a time;
+4. cap the interview;
+5. prioritize questions whose answers materially change scope, architecture, risk, or proof of done.
+
+### HE implication
+
+Clarification should not become ritual questioning.
+
+Ask when the answer changes the work materially. Otherwise proceed with a stated assumption or use existing project evidence.
+
+This aligns with HE's preference for bounded interaction and avoiding speculative process overhead.
+
+---
+
+# 8. Rules with reasons are useful; eliminating hard rules is not
+
+Prompt Master encourages rewriting unexplained emphatic rules into normal-language rules with reasons.
+
+Useful:
+
+```text
+Do not modify CI in this task because CI changes require separate approval and can affect every contributor.
+```
+
+Less useful:
+
+```text
+CRITICAL!!! NEVER TOUCH CI!!!
+```
+
+However, the existence of a reason does not eliminate the need for hard enforcement when consequences are expensive.
+
+### HE implication
+
+Use:
+
+- plain-language guidance where model judgment is sufficient;
+- reasons where they improve generalization;
+- deterministic hooks/CI/permissions where failure must not depend on model judgment.
+
+Prompt style is not a substitute for enforcement.
+
+---
+
+# 9. Self-modifying skills create governance drift
+
+Prompt Master's self-improvement section instructs the skill to edit its own behavior after user corrections or positive feedback.
+
+This is attractive because it appears to learn preferences automatically, but it creates a new authority path:
+
+```text
+one interaction
+    -> inferred durable rule
+    -> skill rewrites itself
+    -> future tasks inherit the change
+```
+
+Risks include:
+
+- overfitting to a one-off correction;
+- accidental policy changes;
+- silent behavioral drift;
+- weak provenance;
+- hard-to-reproduce regressions;
+- conflicts with higher-authority project guidance.
 
 ### HE principle
 
-> **Remove redundant verification instructions; preserve verification that acquires or evaluates relevant evidence.**
+> **A reusable capability should not silently promote one session's feedback into durable governing instructions.**
 
-This is compatible with existing HE findings:
+Candidate improvements should be proposed, reviewed, and versioned rather than self-installed by default.
 
-- verification must produce relevant evidence;
-- independent executable evidence is stronger than another model opinion;
-- verification should be risk-directed.
+This does not reject learning from failures. It places the durable correction in the component that owns the incorrect information and keeps the change inspectable.
 
 ---
 
-# 8. Model-specific prompting guidance must stay model-specific
+# 10. Skill conformance and task quality are different evaluations
 
-Prompt Master takes Opus 5 guidance about over-verification and phrases it as a broader Claude 5 rule.
+Prompt Master's included eval asks agents to test whether the skill obeys its own prompt-rewriting rules.
 
-That is exactly the kind of drift HE should guard against.
+That can establish conformance, but not necessarily downstream task quality.
 
-### HE principle
+Useful evaluation dimensions should remain distinct:
 
-> **Do not promote model-specific behavior into a cross-model harness rule without evaluation evidence.**
+1. **instruction conformance** — did the skill follow its specification?
+2. **task success** — did the resulting prompt/work produce the required result?
+3. **evidence quality** — was correctness demonstrated?
+4. **efficiency** — tokens, time, retries, and human intervention;
+5. **regression** — did a change harm previously working cases?
 
-Persistent harness instructions should distinguish:
-
-- model/runtime fact;
-- model-family observation;
-- cross-model invariant;
-- local workflow preference.
-
-When the source only establishes one of those scopes, retain that scope.
+Multiple agents applying the same rubric are not automatically independent evidence.
 
 ---
 
-# 9. Self-improving instruction files require governance
+# 11. PMB-specific research candidate
 
-Prompt Master instructs itself to modify its own rule/reference files after user corrections, positive feedback, and upstream guidance changes.
+PMB already contains a policy-level Handoff trigger at reported context >=40% and Claude auto-compaction at a later configured percentage.
 
-That is not an acceptable default for a governed harness.
+The observed gap is that the 40% condition currently depends on someone noticing/reporting context pressure.
 
-### Risks
+A minimal candidate experiment is therefore:
 
-- single-example overfitting;
-- accumulated instruction bloat;
-- hidden behavior changes;
-- untrusted-context poisoning;
-- unclear ownership and provenance;
-- a success in one task becoming a bad global rule.
+> expose the runtime-reported context percentage in the status line and observe whether the existing 40% handoff candidate threshold predicts useful rollover points.
 
-### HE principle
+Do **not** initially:
 
-> **Learning may propose a durable correction; it should not silently become the durable correction.**
+- force a handoff automatically;
+- add a cumulative 300K-token counter;
+- create multiple warning tiers;
+- change the 65% auto-compaction setting;
+- redesign memory/handoff state;
+- claim 40% is optimal before measuring it.
 
-Durable rule changes should identify:
-
-- the observed/reproducible failure or supported improvement;
-- the owning component;
-- the smallest durable correction;
-- verification that the correction fixes the original failure without regressions.
-
-This is consistent with existing HE failure-analysis guidance.
+Measure whether the signal changes behavior and whether handoffs preserve task continuity better than waiting for compaction.
 
 ---
 
-# 10. Skill conformance is not outcome quality
-
-Prompt Master's supplied eval checks whether its own procedure executed correctly and whether expected prompt text appeared/disappeared.
-
-That is useful as a smoke test.
-
-It does not prove that the rewritten prompt performs better on real tasks.
-
-### HE evaluation split
-
-1. **Conformance** — did the capability execute its documented procedure?
-2. **Task outcome** — did the produced result meet the external success criteria?
-3. **Operational cost** — what did the procedure cost in context, latency, retries, and human intervention?
-4. **Regression** — did the improvement damage other supported workflows?
-
-A capability can pass conformance while making task outcomes worse.
-
----
-
-# Research disposition
+# 12. Research disposition
 
 ## REINFORCE
 
-- Context is a managed resource and should be observable.
-- Host-reported context occupancy is preferable to arbitrary absolute-token rollover rules.
-- Fresh-session handoff and compaction are distinct mechanisms.
-- Handoff pointers need persistence and reachability semantics.
-- Successor-goal-aware context selection is a useful progressive-disclosure pattern.
-- Durable state and transient transfer state should have different owners.
-- Clarification should target high-impact unknowns only.
-- Verification should be evidence-directed and risk-directed.
-- Model-specific guidance should not silently become a universal harness rule.
-- Durable instruction changes require explicit governance.
-- Skill conformance and outcome evaluation must be separated.
+- Direct runtime context-pressure measurement over cumulative-token guessing.
+- New task -> new session where practical.
+- Durable project state + narrow ephemeral handoff.
+- Successor-goal-aware transfer.
+- Reachability checks for handoff references.
+- Read-before-ask and one-question-at-a-time clarification.
+- Evidence-directed verification.
+- Opposition/adversarial review where wrong premises are expensive and observed defect-detection value remains high.
+- Plain-language rules with reasons where model judgment is appropriate.
+- Explicit scope/deliverable/report-back bounds.
 
 ## ASSESS
 
-- A minimal context-pressure status indicator for PMB using Claude Code's status-line data.
-- Whether PMB's existing 40% handoff candidate threshold is useful in controlled sessions.
-- Successor-goal and artifact-reachability checks in the PMB handoff process.
-- Fresh-session handoff versus targeted compaction on equivalent long tasks.
-- PMB instruction wording that removes generic duplicate-checking language while preserving tests, evidence, review, and acceptance criteria.
+- PMB status-line exposure of `context_window.used_percentage`.
+- Whether 40% is a useful empirical handoff candidate threshold.
+- Which failed approaches merit preservation across session rollover.
+- Whether current Opp Review triggers can be narrowed without reducing material issue detection.
 
 ## PARK
 
-- Automatic context-threshold rollover.
-- Multiple handoff fidelity modes.
-- Portable bundling/cross-machine transfer machinery until there is an observed need.
-- New interview/prompt-master skills when existing planning mechanisms already cover the operational need.
+- Automatic handoff initiation.
+- Multiple handoff fidelity modes in PMB.
+- Generic Interview Me / Prompt Master capabilities inside HE.
 
 ## REJECT
 
-- Universal 300K/500K context-rot thresholds.
-- "Never verify" as a general rule.
-- Automatic project mutation by a handoff operation.
-- Automatic self-modification of persistent skill instructions from single-session feedback.
-- Self-referential multi-agent evaluation as sufficient proof of outcome quality.
-
----
-
-# Candidate PMB hypothesis, not implementation authorization
-
-A low-risk experiment is now evident:
-
-> **Expose Claude Code's actual context percentage in the status line and visibly mark the existing handoff-candidate threshold, without automatically triggering handoff or changing compaction behavior.**
-
-This would make an existing PMB policy observable without adding autonomous authority.
-
-The pilot could then determine whether the threshold correlates with useful handoff timing before PMB changes session behavior around it.
+- Universal 300K/500K token rollover rules.
+- Treating cumulative usage as active-context pressure.
+- Removing targeted verification because generic self-check prompting can be wasteful.
+- Removing Opp Review solely from token-efficiency guidance aimed at redundant self-checking.
+- Silent skill self-modification from one-off feedback.
+- Writing/copying files during handoff without explicit authority.
+- Treating model-to-model agreement or self-eval alone as proof of correctness.

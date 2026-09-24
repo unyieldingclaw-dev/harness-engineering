@@ -7,6 +7,7 @@ Synthesize the durable Harness Engineering implications from the first-party Cla
 Primary evidence:
 
 - `01 Research/Sources/Claude Academy AI-Native SDLC — First-Party Deep Pass — 2026-09-22.md`
+- `01 Research/Sources/Anthropic Opus 5.5 Prompting — Harness-Relevant Runtime Guidance — 2026-09-24.md`
 
 Related HE research:
 
@@ -325,6 +326,72 @@ Evaluate production error visibility separately. If a real app has invisible pro
 
 ---
 
+# 12. Effort/model configuration should be evaluated as harness behavior
+
+Anthropic's Opus 5.5 guidance explicitly recommends starting at the model's default `medium` effort and then testing effort levels against the workload's own evals rather than carrying forward an old default.
+
+This is a concrete example of behavioral harness evaluation.
+
+A useful effort sweep should use more than a toy prompt. Prefer a small representative set such as:
+
+```text
+routine bounded implementation
+difficult debugging/reasoning
+review/architecture task
+```
+
+For each run, hold constant what can reasonably be held constant:
+
+- starting repository state;
+- task instructions;
+- files/context supplied;
+- tool/capability surface;
+- fresh session/start state;
+- verification method.
+
+Observe:
+
+- accepted/correct outcome;
+- deterministic verification;
+- independent review findings when relevant;
+- elapsed time;
+- provider usage/cost when available;
+- retries/corrective turns;
+- human intervention.
+
+The goal is not to crown a universal “best” effort level. It is to find the **lowest effort that preserves the required behavior for the workload class**.
+
+### Candidate principle
+
+> **Model and effort configuration should be treated as evaluated harness configuration, not preference.**
+
+**Disposition: REINFORCE.**
+
+---
+
+# 13. Behavioral guidance needs a model/version lifecycle
+
+Anthropic's Opus 5.5 guide documents behaviors and mitigations that differ from Opus 5, including effort defaults, cache behavior, long-run turn termination, progress handling, and prompt patterns that may no longer be needed.
+
+This gives behavioral evals another job: detect when persistent instructions have become unnecessary or harmful after a model/runtime change.
+
+Before retaining a model-specific instruction, ask whether it still:
+
+- prevents an observed current failure;
+- encodes intentional project/team behavior;
+- enforces a safety/deterministic requirement;
+- materially improves an evaluated outcome.
+
+Do not preserve a workaround merely because it was once useful.
+
+### Candidate principle
+
+> **Behavior-shaping guidance should be revalidated when the model/runtime changes materially.**
+
+**Disposition: STRONGLY REINFORCE Model Capability Drift.**
+
+---
+
 # Candidate HE principles — research status
 
 > **Accepted artifacts should define stage transitions.**
@@ -341,14 +408,16 @@ Evaluate production error visibility separately. If a real app has invisible pro
 
 > **Collect a metric only when a known engineering decision consumes it.**
 
+> **Model and effort configuration should be treated as evaluated harness configuration, not preference.**
+
+> **Behavior-shaping guidance should be revalidated when the model/runtime changes materially.**
+
 ---
 
 # Bottom line
 
-The Claude Academy material strengthens the case for artifact-gated work, behavioral harness evals, explicit verification semantics, and evidence-driven maintenance.
+The Claude Academy and Opus 5.5 first-party material strengthens the case for artifact-gated work, behavioral harness evals, explicit verification semantics, evaluated model/effort configuration, and evidence-driven maintenance.
 
-For the current HE/PMB environment, the right metrics strategy is deliberately small:
+For the current HE/PMB environment, the right strategy remains deliberately small:
 
-> **measure observed workflow outcomes from systems that already own the facts; add external observability only when a concrete runtime problem cannot be diagnosed reliably without it.**
-
-That keeps observability subordinate to engineering need instead of turning telemetry into another governance product.
+> **measure real workflow outcomes from systems that already own the facts; use those evals to tune harness/model configuration; add external observability or new infrastructure only when a concrete problem cannot be diagnosed or controlled reliably without it.**

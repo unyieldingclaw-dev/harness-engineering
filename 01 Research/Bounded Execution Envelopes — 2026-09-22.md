@@ -2,11 +2,12 @@
 
 ## Purpose
 
-Capture a cross-source Harness Engineering concept that became explicit during the 2026-09-22 mining pass on Eli the Computer Guy's orchestration discussion.
+Capture a cross-source Harness Engineering concept that became explicit during the 2026-09-22 mining pass on Eli the Computer Guy's orchestration discussion and was materially corroborated by Anthropic's first-party Opus 5.5 harness guidance on 2026-09-24.
 
-Primary source:
+Primary/source evidence:
 
 - `01 Research/Sources/Eli the Computer Guy — Orchestration, Bounded Runs & Productized AI — 2026-09-22.md`
+- `01 Research/Sources/Anthropic Opus 5.5 Prompting — Harness-Relevant Runtime Guidance — 2026-09-24.md`
 
 Related HE research:
 
@@ -172,6 +173,54 @@ Before changing PMB, inspect current implementation and pilot evidence for a dem
 
 ---
 
+# 2026-09-24 first-party corroboration: completion and budgets
+
+Anthropic's Opus 5.5 prompting guidance provides concrete runtime evidence for two parts of this model.
+
+## Turn end is not task completion
+
+Anthropic documents long unattended runs where a progress update may end a model turn while work remains. Its recommended harness behavior is to keep explicit task/checklist state and treat text-only turn termination as a report rather than proof of completion.
+
+If no blocker exists and work remains, an automatic continuation may be appropriate — but Anthropic recommends stopping after roughly two or three automatic continuations rather than looping indefinitely.
+
+This sharpens the execution-envelope model:
+
+```text
+model turn ended
+      ≠
+task complete
+
+explicit open work + no blocker
+      → bounded continuation
+
+repeated continuation without closure
+      → stop / review
+```
+
+### Durable implication
+
+> **Completion state belongs to the task/harness contract, not to the model's decision to end a turn.**
+
+## Advisory time signal is not a hard timeout
+
+Anthropic also recommends model-visible elapsed-time/budget signals for some multi-agent workloads, but explicitly states that the budget is advisory and does not stop the model at the limit. A real hard stop requires an external timeout.
+
+```text
+model-visible budget
+      → pacing guidance
+
+runtime timeout
+      → enforceable boundary
+```
+
+### Durable implication
+
+> **Advisory budgets may guide model behavior; hard execution limits belong outside the model.**
+
+This is now first-party corroboration for the existing HE distinction between prompt guidance and deterministic execution controls.
+
+---
+
 # Candidate HE principle — research status
 
 > **Autonomy must operate inside an externally enforced execution envelope.**
@@ -180,7 +229,13 @@ A fuller working form is:
 
 > **Give the worker freedom inside scope; keep authority expansion, resource ceilings, stop conditions, and consequential effect verification outside the worker.**
 
-Do not promote this to formal HE doctrine until it survives comparison against existing runtime capabilities, PMB/ACR evidence, and counterexamples.
+Supporting refinements:
+
+> **Completion state belongs to the task/harness contract, not to model turn termination.**
+
+> **Advisory budgets may guide model behavior; hard execution limits belong outside the model.**
+
+The concept now has stronger cross-source support, including first-party Anthropic runtime guidance, but implementation should still follow observed workload needs and available enforcement points rather than becoming a universal HE control plane.
 
 ---
 
@@ -194,12 +249,16 @@ Do not promote this to formal HE doctrine until it survives comparison against e
 - Source-owned observability.
 - Effect verification for consequential actions.
 - Native/deterministic enforcement over prompt-only guidance.
+- Explicit task completion state distinct from model turn termination.
+- Bounded automatic continuation rather than open-ended retry.
+- External timeout for a genuinely hard wall-time limit.
 
 ## ASSESS
 
 - Which runtime/provider limits are actually available in Claude, Codex, local models, and ACR.
 - Whether PMB has an observed continuation/runaway-work failure that bounded-run metadata would solve.
 - Whether ACR already enforces adequate timeout/retry ceilings or needs stronger run budgets.
+- Whether task/checklist state already provides enough completion evidence in the current PMB + Superpowers workflow.
 
 ## PARK
 
@@ -213,6 +272,8 @@ Do not promote this to formal HE doctrine until it survives comparison against e
 - Model self-policing as the only budget/control mechanism.
 - Adding governance fields without an owning runtime or demonstrated consumer.
 - Treating a timeout as proof of safe termination.
+- Treating `end_turn` as proof that the assigned task is complete.
+- Infinite automatic continuation.
 - Full transcript dumping as bounded-run continuation state.
 
 ---
@@ -223,4 +284,4 @@ Bounded runs are a useful HE concept because they preserve autonomy without gran
 
 The right implementation pattern is decentralized ownership:
 
-> **put each limit at the component that can actually enforce it, preserve only the continuation state that must survive the stop, and avoid building a new control plane until a real workload requires one.**
+> **put each limit at the component that can actually enforce it, keep completion state outside model self-reporting, preserve only the continuation state that must survive the stop, and avoid building a new control plane until a real workload requires one.**

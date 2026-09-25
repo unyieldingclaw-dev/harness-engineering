@@ -87,6 +87,24 @@ Branch: main
     - Whether distribution, discovery, and execution ownership are
       clearly separated.
 
+    Also record the actual client/runtime version and instruction-discovery
+    mode used during observation. Test whether behavior changes when a
+    project-local instruction file, a global instruction file, and a
+    compatible fallback file are present or absent. Treat client upgrades as
+    possible changes to discovery and precedence even when repository content
+    is unchanged.
+
+    For skill or capability routing, test at least:
+
+    - an obvious request that should activate the capability;
+    - a paraphrase that should also activate it;
+    - a neighboring request that should activate a different capability;
+    - an unrelated request that should not activate it.
+
+    Record both the capability selected and the implementation that actually
+    executed. A correct file with incorrect discovery is still a harness
+    failure.
+
     Treat observed precedence behavior as a correctness concern, not
     merely a usability issue.
 
@@ -222,6 +240,17 @@ Evaluate whether modular capability composition would:
 Also evaluate whether a prescribed workflow currently provides benefits that
 would be lost by moving toward modular capability composition.
 
+When a repeated task produces a candidate utility, script, validator, or
+reference, assess whether it has enough repeated, stable, verified value to
+justify durable ownership. Do not promote every successful one-off. Before
+editing a durable capability after a failure, identify whether the owner is
+the capability, its metadata, project configuration, discovery/installation,
+deterministic implementation, runtime, or the one-time execution itself.
+
+Where a correction is made, rerun the original task in a fresh session and
+check direct, paraphrased, neighboring, and unrelated routing so that a local
+improvement does not create false positives or capability collisions.
+
 ### Dependency and Topology Assessment
 
 For each multi-step workflow, identify the information and artifact
@@ -303,6 +332,12 @@ Distinguish between:
 - historical records;
 - external reference material;
 - model-generated knowledge.
+
+Treat model-generated compaction, handoff, and memory summaries as derived
+context unless an explicit reconciliation step promotes them. Test whether
+they can omit, distort, or introduce instructions and whether any path can
+silently replace authoritative project state, acceptance criteria, policy, or
+source artifacts.
 
 Do not assume that newer, more recently ingested, or more frequently
 retrieved information is more authoritative.
@@ -477,6 +512,11 @@ Where relevant, evaluate combinations of:
 - writable configuration or startup paths;
 - tools that can transform read access into external write capability.
 
+Also assess whether credentials can be used by the required bounded process
+without exposing their values to model context, generated artifacts, logs,
+shell history, or unrelated tools. Record where authentication, service
+selection, and audit logging are owned.
+
 Do not treat a deterministic control as effective merely because it is
 mechanically enforced. Determine whether adjacent capabilities can bypass,
 reinterpret, or expand the intended boundary.
@@ -550,6 +590,16 @@ For loops involving iterative improvement, determine:
 - whether the cost of additional iterations is bounded relative to the
   demonstrated value of further improvement.
 
+For any producer-driven improvement loop, establish the acceptance criteria
+from the user request, authoritative specification, or an independently
+owned quality bar before the first iteration. Do not allow the producing
+component to silently weaken the criteria after seeing its own output.
+
+Distinguish evidence-producing checks from additional model inspection. A
+separate persona or subagent may provide a useful signal, but its agreement is
+not external proof unless it is grounded in an independently verifiable
+criterion or observation.
+
 Where a loop uses multiple agents, determine whether decomposition into
 specialist workers and evaluators provides measurable value over a simpler
 single-agent verification loop.
@@ -580,6 +630,10 @@ Evaluate:
 - whether repeated iteration produces measurable improvement;
 - whether the additional workers, critics, and iterations justify their
   context, token, latency, and orchestration cost.
+
+Require the producer to return a concise record of what was checked and what
+remains unverified. Verify the same task in a fresh session when a durable
+correction, routing change, or promoted utility is involved.
 
 Do not assume that a separate critic, sub-agent, or higher quality bar
 improves the result. Determine whether the evaluation mechanism is
@@ -618,3 +672,4 @@ Harness into an observability platform.
 ## Status
 
 IN PROGRESS
+

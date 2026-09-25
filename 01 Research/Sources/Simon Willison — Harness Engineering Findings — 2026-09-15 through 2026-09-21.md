@@ -218,4 +218,3 @@ logging, and enforcement.
   authority correctness, or quality.
 
 No architecture decision follows automatically from this source review.
-

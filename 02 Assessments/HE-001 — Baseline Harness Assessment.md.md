@@ -672,4 +672,3 @@ Harness into an observability platform.
 ## Status
 
 IN PROGRESS
-

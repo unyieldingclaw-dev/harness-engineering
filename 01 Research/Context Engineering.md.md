@@ -112,6 +112,7 @@ Evidence trail:
 
 - `01 Research/Sources/Simon Willison - Harness Engineering Findings - August 2026.md`
 - `01 Research/Sources/Simon Willison — Harness Engineering Findings — 2026-09-01 through 2026-09-14.md`
+- `01 Research/Sources/Simon Willison — Harness Engineering Findings — 2026-09-15 through 2026-09-21.md`
 - Earlier Agentic Engineering Patterns research retained in this synthesis.
 
 #### Durable findings
@@ -138,6 +139,32 @@ Evidence trail:
 
 **Persistent guidance needs continuing justification.** Guidance may compensate for current model limitations, encode intentional behavior, enforce deterministic requirements, or prevent demonstrated failures. Newer model capability is not sufficient evidence for removal.
 
+**Model-generated continuation state is derived context.** Compaction,
+handoff, and memory summaries can omit, distort, or introduce instructions.
+They should not silently outrank authoritative project state, acceptance
+criteria, policy, or source artifacts. A summary may be useful without being
+authoritative.
+
+**Instruction behavior has a client-owned discovery layer.** Repository
+artifacts, discovery rules, precedence, and executed implementation are
+different ownership boundaries. A client or runtime version can change which
+instructions are loaded without changing the repository file.
+
+**Voluntary restraint is not containment.** A model stopping after recognizing
+that it reached a real system is a useful behavior signal, not a deterministic
+security boundary. Effective authority must be assessed from the capabilities
+the environment permits and composes.
+
+**Secret usability and secret exposure are separate properties.** A bounded
+process may need to use a credential without exposing the value to model
+context, generated artifacts, logs, or unrelated tools. This is an assessment
+question, not a requirement to adopt a particular credential UI.
+
+**Generated artifact volume can exceed human understanding.** Faster production
+of specifications, code, tests, and reports does not itself create conceptual
+integrity, shared understanding, or safe delivery. Human-owned acceptance and
+meaningful evidence remain necessary for consequential work.
+
 #### Harness implications
 
 These findings reinforce HE-001 investigation of context isolation, durable knowledge, execution provenance, provider/runtime conditions, effective authority, deterministic enforcement, evidence acquisition, independent evaluation, model-legible tools, and conceptual integrity.
@@ -153,8 +180,76 @@ They do not establish requirements for a VM, observability platform, provider ro
 - **ASSESS:** Effective authority created by combinations of otherwise ordinary capabilities.
 - **ASSESS:** Whether ACR findings can produce independently reproducible evidence of failure and closure.
 - **ASSESS:** Whether tool schemas trade a small context increase for a material reduction in model error.
+- **ASSESS:** Whether generated summaries or handoffs can silently replace authoritative state; how client/version discovery and precedence affect executed instructions; whether credential paths minimize model-context exposure; and whether generated artifacts remain understandable and reviewable.
 - **PARK:** Hardware-isolated sandboxing, model routing infrastructure, and additional orchestration until an observed requirement justifies them.
 - **REJECT:** Treating model assertion, nominal model name, more agents, or more review tokens as sufficient evidence of correctness or reproducibility.
+
+### Anthropic — Agent Skills and Skills-First Engineering
+
+Evidence trail:
+
+- `01 Research/Sources/Anthropic — Agent Skills and Skills-First Engineering — 2026-09-25.md`
+- Anthropic, [Equipping agents for the real world with Agent Skills](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills)
+- Anthropic, [Skill authoring best practices](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices)
+- [Agent Skills open format](https://agentskills.io/home)
+- User-provided secondary video: [Anthropic Engineer Explains: What to Build Instead of AI Agents](https://www.youtube.com/watch?v=HIRDzMtuWFk)
+
+This is an incremental synthesis of the existing Skills and progressive-
+disclosure research, not a new architecture proposal.
+
+**Capability before actor.** A general-purpose runtime plus a bounded,
+task-specific capability can be simpler than a separate agent for every job.
+An independent actor remains justified only when independent context,
+authority, state, objective, parallelism, or evaluation is the demonstrated
+requirement.
+
+**Progressive disclosure is a context-supply property.** Skill metadata,
+activation, full instructions, references, scripts, and enforcement are
+separate stages. Discovery descriptions should identify both what a capability
+does and when it applies. Direct, paraphrased, neighboring, and unrelated
+prompts are useful routing tests.
+
+**Reusable utilities need promotion criteria.** Saving a proven script can
+reduce regeneration and variation, but a one-off success is not enough to make
+code durable. Promotion should require repeated, stable, verified usefulness,
+an owner, versioning, and regression coverage. The script is executable code
+and a possible supply-chain boundary, not merely a prompt fragment.
+
+**Corrections belong in the owning layer.** A failed run may implicate a Skill,
+metadata, project configuration, discovery/installation, deterministic code,
+runtime, or a one-time execution error. Diagnose and reproduce before editing;
+make the smallest durable correction; rerun in a fresh session; and check that
+the change does not create routing regressions. This is controlled knowledge
+maintenance, not autonomous self-improvement.
+
+**Format portability does not prove behavior portability.** An open Skill
+folder can move between compatible harnesses while model, provider, tools,
+runtime, and instruction-precedence differences still change execution. A
+cross-harness result needs the conditions required to interpret the comparison.
+
+**Verification is evidence-directed.** Establish acceptance criteria from the
+request, authoritative specification, or independently established quality bar
+before iteration. Use artifact-relevant evidence, fix demonstrated failures,
+rerun, and report what remains unverified. Additional model personas can add
+signals for subjective work but do not become external proof merely by being
+separate agents.
+
+#### Research disposition
+
+- **REINFORCE:** Bounded capabilities, progressive disclosure, model-legible
+  routing metadata, durable knowledge outside transient conversation, and
+  evidence before completion.
+- **ASSESS:** Capability-versus-actor boundaries; promotion criteria for
+  reusable utilities; owning-layer diagnosis; routing regression tests; and
+  runtime conditions for cross-model or cross-harness portability.
+- **PARK:** Universal Skill registries, automatic self-modifying Skills,
+  persona consensus as proof, and the claim that agents are generally obsolete.
+- **REJECT:** Treating the video's headline, a successful one-off, or an
+  agent's self-inspection as sufficient architecture or verification evidence.
+
+No PMB, ACR, or HE architecture change follows automatically from this
+material. It refines the existing modular-capability and verification
+questions for HE-001.
 
 ### Austin Marchese — Loop / Graph Engineering
 
@@ -529,6 +624,16 @@ Questions to evaluate during HE-001:
 - Which information should become references instead of instructions?
 - Which instructions are duplicated?
 - What should always load vs be discovered?
+- Which client/runtime owns capability discovery, instruction precedence, and
+  the implementation that actually executes?
+- Which generated summaries or handoffs are derived context rather than
+  authoritative project state, and how is reconciliation established?
+- What evidence is sufficient to promote a repeated utility or correction into
+  durable capability content?
+- Which routing tests distinguish true activation from false positives and
+  neighboring capability overlap?
+- Which acceptance criteria and verification evidence are established before
+  a producer begins iterating?
 
 ## Candidate Architectural Decisions
 
@@ -571,6 +676,9 @@ Evidence Required
 - What information should survive a session boundary?
 - How should PMB distinguish project-level durable state from session-specific working state?
 - How should multiple concurrent sessions contribute to shared project state without unnecessary context duplication or conflicting authority?
+- How should PMB/ACR keep generated compaction and handoff summaries from silently outranking authoritative artifacts?
+- Which credential paths allow required work without exposing secret values to model context, logs, or unrelated tools?
+- When does a reusable utility have enough repeated, verified value to justify durable ownership and maintenance?
 
 ## Assessment Observations
 
@@ -1101,3 +1209,4 @@ Research findings are classified as:
 - **REINFORCE** — confirms or strengthens an existing Harness principle or assessment without creating a new requirement.
 
 A parked or rejected finding should retain enough context to explain why it was not pursued and may be reconsidered if new evidence, requirements, or observed operational problems change its relevance.
+

@@ -1209,4 +1209,3 @@ Research findings are classified as:
 - **REINFORCE** — confirms or strengthens an existing Harness principle or assessment without creating a new requirement.
 
 A parked or rejected finding should retain enough context to explain why it was not pursued and may be reconsidered if new evidence, requirements, or observed operational problems change its relevance.
-

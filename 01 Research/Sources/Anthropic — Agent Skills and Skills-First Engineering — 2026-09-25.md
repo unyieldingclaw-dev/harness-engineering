@@ -209,4 +209,3 @@ top-level architecture:
 No PMB, ACR, or HE architecture change follows automatically from this
 source. HE-001 should determine whether these mechanisms solve an observed
 problem and which existing component, if any, should own them.
-

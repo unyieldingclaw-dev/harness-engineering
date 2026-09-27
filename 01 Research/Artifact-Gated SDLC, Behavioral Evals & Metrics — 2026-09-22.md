@@ -8,6 +8,7 @@ Primary evidence:
 
 - `01 Research/Sources/Claude Academy AI-Native SDLC — First-Party Deep Pass — 2026-09-22.md`
 - `01 Research/Sources/Anthropic Opus 5.5 Prompting — Harness-Relevant Runtime Guidance — 2026-09-24.md`
+- `01 Research/Sources/CoderOne — Jev-Style Fine-Tuning, Decision Models & Evaluation Isolation — 2026-09-26.md`
 
 Related HE research:
 
@@ -15,6 +16,7 @@ Related HE research:
 - `01 Research/Bounded Execution Envelopes — 2026-09-22.md`
 - `01 Research/AI Engineering Observability & Dashboard Boundary — 2026-09-18.md`
 - `01 Research/Session Rollover, Handoff & Verification — 2026-09-16.md`
+- `01 Research/Model-Tiered Workflows & Independent Factory Assurance — 2026-09-24.md`
 
 ---
 
@@ -32,7 +34,8 @@ It is a staged lifecycle in which:
 6. deterministic checks absorb deterministic review work;
 7. consequential actions remain behind explicit gates;
 8. real solved work becomes behavioral regression evidence;
-9. metrics close the loop only when they change an engineering decision.
+9. evaluation isolation matches the real leakage boundary when independence matters;
+10. metrics close the loop only when they change an engineering decision.
 
 This maps cleanly onto Superpowers + PMB + ACR without requiring another workflow framework.
 
@@ -310,7 +313,7 @@ Do not add unsupported pass/fail thresholds just to create a dashboard.
 
 ## HE
 
-Document metrics semantics and artifact-gated transitions as research principles. Do not build an observability platform.
+Document metrics semantics, evaluation isolation and artifact-gated transitions as research principles. Do not build an observability platform or generic eval control plane.
 
 ## PMB
 
@@ -318,7 +321,7 @@ Use pilot evidence and existing CLI/CI sources. Assess behavioral evals after th
 
 ## ACR
 
-Continue benchmark-style measurement around finding quality, false positives/fabrication, timeouts, clustering, and accepted outcomes. External telemetry platform not justified by current evidence.
+Continue benchmark-style measurement around finding quality, false positives/fabrication, timeouts, clustering, and accepted outcomes. Inspect fixture grouping/derivation before calling a corpus independent. External telemetry platform not justified by current evidence.
 
 ## User-facing applications
 
@@ -392,6 +395,77 @@ Do not preserve a workaround merely because it was once useful.
 
 ---
 
+# 14. The split boundary must match the leakage boundary
+
+CoderOne's Jev-style fine-tuning experiment provides a concrete behavioral-eval example.
+
+Instead of a simple random row split, the experiment keeps every logical `group_id` entirely in training or holdout. That matters when multiple records are variants or derivatives of the same underlying scenario.
+
+The durable rule is broader than model training:
+
+```text
+row independence?       -> row split may be adequate
+shared source/case?     -> group by source/case
+same repo/incident?     -> group by the derivation boundary that could leak behavior
+```
+
+### Candidate principle
+
+> **The split boundary must match the leakage boundary.**
+
+A holdout is only as independent as the dependency structure it excludes.
+
+**Disposition: STRONGLY REINFORCE behavioral-eval design.**
+
+---
+
+# 15. Evaluation isolation should be structural when exposure would invalidate it
+
+CoderOne's final holdout remains outside the Modal training volume. The training environment cannot casually inspect the final evaluation labels.
+
+This is stronger than a prose instruction saying “do not use the holdout.”
+
+Related HE examples include Ponytail's contaminated control arm and independent acceptance authority.
+
+### Candidate principle
+
+> **Evaluation isolation should be structural when practical and when exposure would materially weaken the evidence.**
+
+This does not imply hiding every test. Structural isolation is justified when the thing being optimized could overfit, game, rewrite or consume the evidence that is supposed to remain independent.
+
+**Disposition: STRONGLY REINFORCE.**
+
+---
+
+# 16. Structural validity and semantic correctness need separate metrics
+
+CoderOne's evaluator constrains generation to legal option letters, making invalid labels difficult/impossible by construction. Native typed decision systems can provide even stronger schema guarantees.
+
+A structural guarantee is valuable, but it must be attributed correctly.
+
+A controlled September 2026 study of Jev and Jev-like typed decision heads found 0% type errors even in conditions where semantic decision quality degraded sharply under option-name/rubric interventions.
+
+### Candidate principles
+
+> **Attribute a metric to the layer that actually guarantees it.**
+
+> **Schema/type validity is a structural property; semantic correctness requires separate evidence.**
+
+Therefore a benchmark for typed decisions should not treat “0 malformed outputs” as semantic quality evidence when the decoder/head enforces the legal output space.
+
+Potential semantic tests include:
+
+- label/rubric permutation where semantics should remain invariant;
+- neutral-label controls;
+- known-positive and known-negative decision cases;
+- calibration/reliability checks when probability semantics matter.
+
+Use only tests relevant to the consequential failure mode. Do not turn this into a universal adversarial-test framework.
+
+**Disposition: STRONGLY REINFORCE.**
+
+---
+
 # Candidate HE principles — research status
 
 > **Accepted artifacts should define stage transitions.**
@@ -412,12 +486,20 @@ Do not preserve a workaround merely because it was once useful.
 
 > **Behavior-shaping guidance should be revalidated when the model/runtime changes materially.**
 
+> **The split boundary must match the leakage boundary.**
+
+> **Evaluation isolation should be structural when practical and when exposure would materially weaken the evidence.**
+
+> **Attribute a metric to the layer that actually guarantees it.**
+
+> **Schema/type validity is a structural property; semantic correctness requires separate evidence.**
+
 ---
 
 # Bottom line
 
-The Claude Academy and Opus 5.5 first-party material strengthens the case for artifact-gated work, behavioral harness evals, explicit verification semantics, evaluated model/effort configuration, and evidence-driven maintenance.
+The Claude Academy, Opus 5.5 and Jev-style evaluation material strengthens the case for artifact-gated work, behavioral harness evals, explicit verification semantics, evaluated model/effort configuration, leakage-aware holdouts and evidence-driven maintenance.
 
 For the current HE/PMB environment, the right strategy remains deliberately small:
 
-> **measure real workflow outcomes from systems that already own the facts; use those evals to tune harness/model configuration; add external observability or new infrastructure only when a concrete problem cannot be diagnosed or controlled reliably without it.**
+> **measure real workflow outcomes from systems that already own the facts; isolate evaluation evidence only where contamination would invalidate it; distinguish structural validity from semantic correctness; use those evals to tune harness/model configuration; and add new infrastructure only when a concrete problem cannot be diagnosed or controlled reliably without it.**

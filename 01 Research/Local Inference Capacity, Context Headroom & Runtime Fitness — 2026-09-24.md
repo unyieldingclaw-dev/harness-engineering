@@ -44,18 +44,22 @@ artifact provenance when material
 runtime/version
 context configuration
 active runtime features
-hardware/backend
+hardware/backend/device class
 memory placement/offload
 topology/headroom
 ```
 
-This leads to three durable rules:
+This leads to five durable rules:
 
 > **Compatibility qualifies a candidate; workload evidence selects it.**
 
 > **A local model configuration is an execution artifact, not just a model name.**
 
 > **A declared capability is not evidence that the runtime activated it or that it improved the workload.**
+
+> **A hardware family name is not a reproducible execution identity when memory, device class or power envelope can differ.**
+
+> **Hardware capacity enables execution configurations; it is not a direct model-intelligence score.**
 
 ---
 
@@ -124,7 +128,8 @@ Two runs against “the same model” may differ materially because of:
 - speculative/MTP configuration;
 - cold/warm state;
 - concurrency;
-- chat template and harness/tool surface.
+- chat template and harness/tool surface;
+- accelerator device class, memory and power envelope when material.
 
 ### Candidate principle
 
@@ -283,6 +288,7 @@ A bounded research pass should inspect whether existing calibration artifacts al
 - Ollama/runtime version;
 - actual configured/allocated context;
 - KV mode/precision if relevant;
+- exact accelerator/device class and VRAM/power envelope where material;
 - CPU/GPU residency or offload;
 - reasoning and speculative/MTP settings if used;
 - cold/warm status;
@@ -462,6 +468,96 @@ Retain the method; let the numbers expire.
 
 ---
 
+# 16. Hardware marketing names are not reproducible execution identity
+
+Local inference can be materially constrained by device details hidden behind a family name.
+
+Laptop and desktop GPUs that share a product-family label may differ in:
+
+- VRAM capacity;
+- CUDA/core count;
+- clock range;
+- power/TGP envelope;
+- memory bandwidth;
+- thermal behavior;
+- OEM-specific configuration.
+
+The exact hardware inventory should remain outside HE unless repeated experiments require it. But when hardware explains benchmark variance, the evidence needs enough device identity to reproduce the execution path.
+
+### Candidate principle
+
+> **Record the actual accelerator configuration that constrains the run, not only the marketing family name.**
+
+This is the hardware analogue of recording an exact quantized artifact instead of only a base model name.
+
+**Disposition: NEW / STRONGLY MINE.**
+
+---
+
+# 17. Agent viability is a working-set boundary, not a VRAM-tier label
+
+Statements such as “4–6 GB is autocomplete only” are useful intuition but poor durable policy.
+
+A local runtime's viable workload class depends on whether the complete working set fits with acceptable behavior:
+
+```text
+model state
++ required context/KV state
++ runtime buffers
++ harness/tool overhead
++ placement/offload
++ latency budget
+```
+
+A constrained machine may still be valuable for narrow completion, extraction, classification or bounded transforms even when repository-scale agent work is not viable. Likewise, crossing a nominal VRAM threshold does not prove that a full agent loop is viable.
+
+### Candidate principle
+
+> **Classify local-runtime fitness by the workload's required working set and verified behavior, not by a fixed memory tier.**
+
+**Disposition: NEW / STRONGLY MINE.**
+
+---
+
+# 18. Hardware capacity enables configurations; it does not directly score model intelligence
+
+Running the same base model family on a larger memory envelope may allow:
+
+- less aggressive quantization;
+- larger allocated context;
+- full accelerator residency;
+- different KV precision;
+- larger batches/concurrency;
+- additional runtime features.
+
+Those changes can improve measured task outcomes. The causal chain is therefore:
+
+```text
+more hardware capacity
+        ↓
+more feasible execution configurations
+        ↓
+potentially better fidelity / context / latency / reliability
+        ↓
+measured workload outcome
+```
+
+not:
+
+```text
+more VRAM
+        ↓
+intrinsically smarter base model
+```
+
+### Candidate principle
+
+> **When hardware changes a result, identify the execution variable it enabled rather than treating capacity itself as intelligence evidence.**
+
+**Disposition: NEW / STRONGLY MINE.**
+
+---
+
 # Consolidated disposition
 
 ## STRONGLY REINFORCE / MINE
@@ -476,12 +572,16 @@ Retain the method; let the numbers expire.
 - benchmark exact configurations, not marketing labels;
 - capability declaration must be followed by activation/effect evidence;
 - prefill and decode are distinct performance dimensions;
-- completed-task outcomes outrank isolated throughput.
+- completed-task outcomes outrank isolated throughput;
+- exact hardware identity matters when device class, memory or power envelope affects the run;
+- workload class is determined by required working set and behavior, not a fixed VRAM tier;
+- hardware capacity is an enabler of configurations, not a direct capability score.
 
 ## ASSESS
 
 - minimum local-inference provenance needed for ACR model evaluation;
 - actual allocated Ollama context for current ACR local runs;
+- exact material accelerator identity for controlled ACR comparisons;
 - phase-level timing when ACR timeouts/variance cannot otherwise be explained;
 - controlled context and quantization sweeps using existing ACR fixtures;
 - whether residency/offload data materially predicts timeout or quality behavior;
@@ -494,7 +594,9 @@ Retain the method; let the numbers expire.
 - multi-GPU/SSD-streaming optimization;
 - generalized hardware telemetry in HE;
 - fixed GPU-tier recommendations;
+- fixed 4–6 GB autocomplete/agent boundary;
 - fixed rent-versus-buy break-even numbers;
+- time-sensitive frontier model picks such as a specific 128GB+ recommendation;
 - unpinned community throughput and low-bit score claims.
 
 ## REJECT
@@ -507,6 +609,8 @@ Retain the method; let the numbers expire.
 - active-parameter count as storage footprint;
 - MTP/speculative support as proof of acceleration;
 - universal reasoning-effort defaults;
+- GPU family name alone as reproducible hardware identity;
+- VRAM amount as a direct model-intelligence score;
 - changing ACR defaults from a hardware/model chart alone.
 
 ---
@@ -530,9 +634,10 @@ workload
 + runtime
 + allocated/effective context
 + active runtime features
++ exact material hardware identity
 + placement/headroom
         ↓
 measured correctness + latency + failure behavior
 ```
 
-That keeps hardware optimization subordinate to task success instead of letting “it loads” or “the feature exists” become architecture evidence.
+That keeps hardware optimization subordinate to task success instead of letting “it loads,” “the feature exists,” or “the GPU name matches” become architecture evidence.

@@ -4,9 +4,10 @@
 
 Synthesize the durable Harness Engineering implications from Cole Medin's model-mixing video and current repositories without adopting his specific software-factory stack, model choices, or control plane.
 
-Primary source:
+Primary sources:
 
 - `01 Research/Sources/Cole Medin — Model Mixing, AI Software Factory & GitHub Ecosystem — 2026-09-24.md`
+- `01 Research/Sources/CoderOne — Jev-Style Fine-Tuning, Decision Models & Evaluation Isolation — 2026-09-26.md`
 
 Related HE research:
 
@@ -15,8 +16,9 @@ Related HE research:
 - `01 Research/Risk-Directed Review & Release Proof — 2026-09-24.md`
 - `01 Research/Supervised Agent Orchestration & Effect Verification — 2026-09-21.md`
 - `01 Research/Harness Portability, Exit Cost & Inspectability — 2026-09-24.md`
+- `01 Research/Local Inference Capacity, Context Headroom & Runtime Fitness — 2026-09-24.md`
 
-This is research. It does **not** authorize a model router, software factory, autonomous merge pipeline, or PMB redesign.
+This is research. It does **not** authorize a model router, software factory, autonomous merge pipeline, custom classifier, Jev/Laya adoption, or PMB redesign.
 
 ---
 
@@ -31,22 +33,26 @@ workload class
     +
 required judgment
     +
+output variability / contract
+    +
 verification strength
     +
 consequence / reversibility
     +
-measured model fitness
+measured mechanism fitness
         ↓
-model + effort choice
+inference mechanism + model + effort choice
 ```
 
 That selection can vary by stage, but stage names are only proxies for the actual capability requirement.
 
-Separately, unattended or semi-autonomous delivery becomes credible only when the producer cannot define, weaken, or self-certify the acceptance boundary.
+The Jev/Jef/Tev research adds an important refinement: the correct substitution may not be a cheaper general model. For some workloads the better fit is a narrower decision model or conventional classifier that does not perform open-ended generation at all.
+
+Separately, unattended or semi-autonomous delivery becomes credible only when the producer cannot define, weaken, inspect when harmful, or self-certify the acceptance boundary.
 
 The combined HE direction is therefore:
 
-> **Use the cheapest verified capability that satisfies the workload, while keeping acceptance authority, negative tests, scope boundaries, and consequential gates outside the producer.**
+> **Use the least-general verified mechanism that satisfies the workload, while keeping acceptance authority, negative tests, scope boundaries, and consequential gates outside the producer.**
 
 ---
 
@@ -118,7 +124,7 @@ The safer ordering is:
 ```text
 1. define required outcome and risk
 2. define verification strong enough to detect bad execution
-3. measure candidate model/effort combinations
+3. measure candidate model/effort/mechanism combinations
 4. choose the lowest-cost configuration that preserves required behavior
 5. revalidate after model/runtime changes
 ```
@@ -127,9 +133,9 @@ Do not start with price and retrofit acceptance afterward.
 
 ### Candidate principle
 
-> **Capability substitution is safe only to the degree that the surrounding verification can detect the substituted model's failure modes.**
+> **Capability substitution is safe only to the degree that the surrounding verification can detect the substituted mechanism's failure modes.**
 
-This connects model routing directly to harness quality.
+This connects routing directly to harness quality.
 
 **Disposition: REINFORCE.**
 
@@ -201,7 +207,8 @@ Useful identity may include:
 - build identifier;
 - deployment revision;
 - model/runtime/version for behavioral evals;
-- exact fixture version.
+- exact fixture version;
+- training/quantized artifact identity when relevant.
 
 ### Candidate principle
 
@@ -311,6 +318,7 @@ Do **not** add:
 - hidden holdout state;
 - automated transcript extraction;
 - Archon integration;
+- decision-model infrastructure;
 
 without observed need.
 
@@ -326,9 +334,107 @@ Possible future experiments:
 2. compare a strong reviewer + cheaper evidence/formatting stages where deterministic boundaries exist;
 3. expand known-negative verifier calibration;
 4. ensure every benchmark result records exact model/runtime/configuration identity;
-5. preserve clean cases to detect noise/fabrication regressions.
+5. preserve clean cases to detect noise/fabrication regressions;
+6. inspect benchmark fixture families for group/derivation leakage before claiming a clean holdout;
+7. assess whether any repeated narrow typed decision inside ACR would benefit from a decision-model-shaped mechanism before adding another general LLM call.
 
-Do not add a generic model router merely because cost pressure exists.
+Do not add a generic model router or decision model merely because cost pressure exists.
+
+---
+
+# 12. Route by inference class before routing by model tier
+
+The Jev/Jef/Tev research makes a previously implicit distinction explicit.
+
+Some workloads do not need open-ended text generation at all.
+
+A useful routing ladder is:
+
+```text
+Does the task require open-ended generation,
+changing instructions, or explanation?
+        |
+       yes
+        ↓
+generative / fine-tuned LLM
+
+       no
+        |
+Do questions/options vary while output remains
+a bounded typed decision?
+        |
+       yes
+        ↓
+decision-model-shaped mechanism
+
+       no
+        |
+Is the output ontology stable and repeatedly labelled?
+        |
+       yes
+        ↓
+fixed classifier / deterministic mechanism where possible
+```
+
+This is not a claim that Jev, Laya or any particular classifier is automatically better. It is a mechanism-selection question.
+
+### Candidate principle
+
+> **Use the least-general inference mechanism that still matches the variability, output contract and evidence requirements of the task.**
+
+This is stronger than “use the smallest model” because a smaller generative model may still be unnecessarily general for a fixed decision problem.
+
+**Disposition: NEW / STRONGLY MINE.**
+
+---
+
+# 13. Evaluation isolation should follow the leakage boundary
+
+CoderOne's experiment improves on the upstream development evaluation in two useful ways:
+
+1. it keeps complete `group_id` families on only one side of the train/holdout split;
+2. the untouched final holdout stays local and is not uploaded to the training environment.
+
+The first addresses derivation leakage. The second addresses evaluation exposure.
+
+This generalizes Ponytail's treatment-contamination lesson:
+
+```text
+control must not inherit treatment
+trainer must not see final holdout
+producer must not silently weaken verifier
+optimizer must not consume final benchmark feedback
+```
+
+### Candidate principles
+
+> **The split boundary must match the leakage boundary.**
+
+> **Evaluation isolation should be structural when practical, not merely procedural.**
+
+Structural isolation is not required for every test. Use it when exposure would materially weaken the evidence.
+
+**Disposition: NEW / STRONGLY MINE.**
+
+---
+
+# 14. Structural output guarantees and semantic quality are separate evidence
+
+CoderOne's evaluator constrains vLLM generation to valid option letters. Therefore a 0% invalid-output rate is partly a runtime/schema guarantee, not evidence that the model learned perfect output behavior.
+
+The distinction is even more important for native typed decision models. A September 2026 controlled study of Jev and Jev-like models demonstrated that a 0% type-error rate can coexist with large semantic decision failures under option-name/rubric interventions.
+
+This yields two HE rules:
+
+> **Attribute observed behavior to the layer that actually guarantees it.**
+
+> **Schema/type validity is a structural property; semantic correctness requires separate evidence.**
+
+A type-safe system can eliminate an entire class of malformed outputs while still choosing the wrong legal answer.
+
+For consequential typed decisions, evals should test semantic invariants and adversarial label/rubric conditions where relevant, not merely schema validity.
+
+**Disposition: NEW / STRONGLY MINE.**
 
 ---
 
@@ -336,9 +442,11 @@ Do not add a generic model router merely because cost pressure exists.
 
 > **Route by demonstrated workload fitness, not by model reputation or stage label.**
 
+> **Use the least-general inference mechanism that still matches the variability, output contract and evidence requirements of the task.**
+
 > **A planning artifact transfers judgment forward; its quality determines how safely later stages can use cheaper capability.**
 
-> **Capability substitution is safe only to the degree that surrounding verification can detect the substituted model's failure modes.**
+> **Capability substitution is safe only to the degree that surrounding verification can detect the substituted mechanism's failure modes.**
 
 > **The component under evaluation should not be able to loosen the acceptance mechanism that evaluates it.**
 
@@ -348,6 +456,14 @@ Do not add a generic model router merely because cost pressure exists.
 
 > **Use verifier-only evidence only when producer visibility materially weakens the test.**
 
+> **The split boundary must match the leakage boundary.**
+
+> **Evaluation isolation should be structural when practical, not merely procedural.**
+
+> **Attribute observed behavior to the layer that actually guarantees it.**
+
+> **Schema/type validity is a structural property; semantic correctness requires separate evidence.**
+
 > **Autonomous scope needs explicit negative boundaries when plausible adjacent work would otherwise look valid.**
 
 > **Prefer deterministic lifecycle ownership, but use the lightest mechanism that reliably owns it.**
@@ -356,24 +472,26 @@ Do not add a generic model router merely because cost pressure exists.
 
 # Bottom line
 
-The useful response to rate limits is not a bigger routing architecture.
+The useful response to rate limits and inference cost is not a bigger routing architecture.
 
 It is a measured capability-allocation loop:
 
 ```text
 classify the work
         ↓
+choose the least-general viable mechanism
+        ↓
 set acceptance semantics
         ↓
-measure model/effort options
+measure model/effort/runtime options if a model is needed
         ↓
 use the least expensive option that preserves required behavior
         ↓
 independently verify
         ↓
-revalidate when the model/runtime changes
+revalidate when the model/runtime/decision contract changes
 ```
 
-For unattended delivery, add stronger assurance only where the autonomy actually requires it: protected acceptance authority, known-negative verifier calibration, candidate identity, bounded repair, and explicit negative scope.
+For unattended delivery, add stronger assurance only where the autonomy actually requires it: protected acceptance authority, known-negative verifier calibration, candidate identity, bounded repair, explicit negative scope, and structural evaluation isolation where contamination would invalidate the evidence.
 
 That keeps model economics subordinate to correctness instead of turning cost optimization into a new control plane.

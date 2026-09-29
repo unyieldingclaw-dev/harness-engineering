@@ -8,6 +8,9 @@ Primary evidence:
 
 - `01 Research/Sources/Cloud Codes — Local Coding Models, VRAM Headroom & Runtime Fit — 2026-09-24.md`
 - `01 Research/Sources/Kai — Local Coding AI, KV Cache & Runtime Envelope — 2026-09-26.md`
+- `01 Research/Sources/Prompt Engineering — Bonsai 2 Compression, Agentic Horizon & Trace Failure — 2026-09-28.md`
+- `01 Research/Sources/Coding Horizon — Local AI Total Cost, Ownership & Hybrid Routing — 2026-09-28.md`
+- `01 Research/Sources/Stacked Podcast — Naive-N0.5-Flash, AI-Centered R&D & Capability Step-Down — 2026-09-28.md`
 
 Related research:
 
@@ -15,6 +18,8 @@ Related research:
 - `01 Research/FreeLLMAPI — Gateway Boundaries & Runtime Routing — 2026-09-14.md`
 - `01 Research/Context Engineering.md.md`
 - `01 Research/Sources/Qwen3.8 27B — Harness Comparison.md`
+- `01 Research/Sources/Cloud Codes — HySparse2, DeepSeek V4.1 Flash & Agent Observation Economics — 2026-09-26.md`
+- `01 Research/Sources/The Stack — DeepSeek V4.1 Flash, HySparse2 & Million-Token Recall — 2026-09-28.md`
 
 This is research only. It does not authorize model changes, hardware purchases, ACR implementation changes, or a new routing subsystem.
 
@@ -60,6 +65,16 @@ This leads to five durable rules:
 > **A hardware family name is not a reproducible execution identity when memory, device class or power envelope can differ.**
 
 > **Hardware capacity enables execution configurations; it is not a direct model-intelligence score.**
+
+The September 28 compression/economics pass adds four refinements:
+
+> **Compression fidelity is horizon-dependent: short-task parity does not prove long-agent control.**
+
+> **A runtime dependency can be part of correctness, not merely performance.**
+
+> **Local-AI economics require explicit acquisition, incremental, operational and alternative-service boundaries.**
+
+> **Open weights, local execution and private execution are separate properties.**
 
 ---
 
@@ -558,6 +573,101 @@ intrinsically smarter base model
 
 ---
 
+# 19. Compression fidelity has a workload horizon
+
+Bonsai 2 provides a concrete case where an aggressively compressed Qwen3.8-27B-derived artifact retains approximately 98% of a broad vendor benchmark average while retaining only about three-quarters of full-precision performance on Terminal-Bench 2.1 and SWE-bench Verified.
+
+An independent hands-on comparison reported near-parity on short tasks but severe failure on six long agentic builds, with traces showing repeated observation/search behavior and poor transition into productive execution.
+
+The exact hands-on comparison is not a pure model-only A/B because local and hosted runtimes differ, but PrismML's own long-agent benchmarks show the same direction.
+
+### Candidate principle
+
+> **Compression fidelity must be evaluated at the task horizon and interaction topology that matter to deployment.**
+
+Short-task parity can coexist with degraded long-horizon state tracking, recovery or control.
+
+For agentic workloads, relevant evaluation may therefore need both:
+
+```text
+end-state task success
++
+loop/progress failure behavior when diagnosis requires it
+```
+
+**Disposition: NEW / STRONGLY MINE.**
+
+---
+
+# 20. Runtime compatibility can be a correctness boundary
+
+Bonsai 2's densest released GGUF formats require PrismML's custom llama.cpp runtime because the model stores weights in a rotated basis that needs a corresponding activation transform.
+
+Some unsupported formats fail safely; a development Q2_0 artifact can be more dangerous because a stock runtime may recognize the file type and architecture yet lack the required transform, producing garbage rather than a clean compatibility error.
+
+### Candidate principle
+
+> **When model semantics depend on custom runtime interpretation, model artifact + compatible runtime form the executable correctness identity.**
+
+A successful load is not sufficient execution evidence.
+
+This extends HE's runtime feature ladder from “feature active?” to the more fundamental question “is this artifact being interpreted correctly?”
+
+**Disposition: NEW / STRONGLY MINE.**
+
+---
+
+# 21. Local-AI economics need explicit accounting boundaries
+
+The Coding Horizon cost pass reinforces that “no API bill” is not the same as “free.”
+
+A useful decision separates at least:
+
+```text
+new acquisition cost caused by local AI
+incremental cost on hardware already owned
+operational / setup / maintenance effort
+electricity / storage / upgrades
+value from privacy, offline use and provider independence
+shared value from the same machine doing non-AI work
+```
+
+The comparison must also name the actual alternative being displaced. A $20 consumer subscription, usage-billed API and local open-weight deployment may provide materially different models, tools, context, support and reliability.
+
+### Candidate principles
+
+> **Distinguish sunk/shared infrastructure from new cost incurred because of the AI decision.**
+
+> **Break-even arithmetic is meaningful only when the compared alternatives satisfy the same required workload and service boundary.**
+
+> **Prefer cost per accepted/verified outcome when model quality changes retries or completion.**
+
+Fixed hardware prices, electricity rates and payback periods remain timestamped evidence, not HE policy.
+
+**Disposition: NEW / STRONGLY MINE METHOD; PARK NUMBERS.**
+
+---
+
+# 22. Open weights, local execution and private execution are separate properties
+
+The Naive-N0.5-Flash release is a useful counterexample to conflating these labels.
+
+The model is open-weight and downloadable under MIT, yet its FP8 weights are approximately 315 GB before additional inference memory. “Open” therefore proves portability/inspection rights, not laptop-local practicality.
+
+Separately, Coding Horizon correctly notes that even a model running on local hardware can leak data through a cloud-connected client, tool, MCP server, telemetry path or external integration.
+
+### Candidate principles
+
+> **Open/downloadable is a portability property; it is not a local-hardware fitness claim.**
+
+> **Local inference is not a privacy guarantee; privacy depends on the complete data path.**
+
+Use these distinctions only when they affect a real requirement. HE does not need a universal privacy inventory for every local run.
+
+**Disposition: NEW / STRONGLY MINE.**
+
+---
+
 # Consolidated disposition
 
 ## STRONGLY REINFORCE / MINE
@@ -575,7 +685,11 @@ intrinsically smarter base model
 - completed-task outcomes outrank isolated throughput;
 - exact hardware identity matters when device class, memory or power envelope affects the run;
 - workload class is determined by required working set and behavior, not a fixed VRAM tier;
-- hardware capacity is an enabler of configurations, not a direct capability score.
+- hardware capacity is an enabler of configurations, not a direct capability score;
+- compression fidelity is conditional on task horizon and interaction topology;
+- runtime interpretation can be part of model correctness;
+- local-AI economics need explicit accounting and alternative-service boundaries;
+- open weights, local execution and private execution must not be conflated.
 
 ## ASSESS
 
@@ -585,7 +699,8 @@ intrinsically smarter base model
 - phase-level timing when ACR timeouts/variance cannot otherwise be explained;
 - controlled context and quantization sweeps using existing ACR fixtures;
 - whether residency/offload data materially predicts timeout or quality behavior;
-- whether one specifically identified Qwen3.6-35B-A3B or Qwen3.8 quant deserves a bounded ACR benchmark arm.
+- whether one specifically identified Qwen3.6-35B-A3B, Qwen3.8 quant or Bonsai 2 configuration deserves a bounded ACR benchmark arm;
+- if an aggressive compression candidate is tested, whether bounded review quality survives better than long autonomous coding behavior.
 
 ## PARK
 
@@ -597,7 +712,9 @@ intrinsically smarter base model
 - fixed 4–6 GB autocomplete/agent boundary;
 - fixed rent-versus-buy break-even numbers;
 - time-sensitive frontier model picks such as a specific 128GB+ recommendation;
-- unpinned community throughput and low-bit score claims.
+- unpinned community throughput and low-bit score claims;
+- hardware shopping recommendations from current product/pricing examples;
+- a generic loop-pathology telemetry subsystem without an observed failure requiring it.
 
 ## REJECT
 
@@ -611,7 +728,12 @@ intrinsically smarter base model
 - universal reasoning-effort defaults;
 - GPU family name alone as reproducible hardware identity;
 - VRAM amount as a direct model-intelligence score;
-- changing ACR defaults from a hardware/model chart alone.
+- changing ACR defaults from a hardware/model chart alone;
+- broad benchmark retention as proof of long-agent equivalence;
+- model-file load success as proof of correct runtime interpretation;
+- “no API bill” as zero cost;
+- open weights as proof of consumer-local viability;
+- local hardware execution as an automatic privacy guarantee.
 
 ---
 
@@ -630,14 +752,16 @@ It is:
 ```text
 workload
 + required evidence
++ task horizon / interaction topology
 + exact model artifact
-+ runtime
++ compatible runtime
 + allocated/effective context
 + active runtime features
 + exact material hardware identity
 + placement/headroom
++ economic/privacy/availability boundary when relevant
         ↓
-measured correctness + latency + failure behavior
+measured correctness + latency + failure behavior + verified-task economics
 ```
 
-That keeps hardware optimization subordinate to task success instead of letting “it loads,” “the feature exists,” or “the GPU name matches” become architecture evidence.
+That keeps hardware and compression optimization subordinate to task success instead of letting “it loads,” “the feature exists,” “the average benchmark is close,” or “the GPU name matches” become architecture evidence.

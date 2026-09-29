@@ -11,6 +11,7 @@ Primary evidence:
 - `01 Research/Sources/Prompt Engineering — Bonsai 2 Compression, Agentic Horizon & Trace Failure — 2026-09-28.md`
 - `01 Research/Sources/Coding Horizon — Local AI Total Cost, Ownership & Hybrid Routing — 2026-09-28.md`
 - `01 Research/Sources/Stacked Podcast — Naive-N0.5-Flash, AI-Centered R&D & Capability Step-Down — 2026-09-28.md`
+- `01 Research/Sources/The Stack — Local Coding Model Memory Tiers, Headroom & Artifact Fit — 2026-09-29.md`
 
 Related research:
 
@@ -75,6 +76,10 @@ The September 28 compression/economics pass adds four refinements:
 > **Local-AI economics require explicit acquisition, incremental, operational and alternative-service boundaries.**
 
 > **Open weights, local execution and private execution are separate properties.**
+
+The September 29 tiering pass adds one guardrail:
+
+> **A hardware/model tier chart can generate candidates; it cannot select the deployment configuration.**
 
 ---
 
@@ -668,6 +673,37 @@ Use these distinctions only when they affect a real requirement. HE does not nee
 
 ---
 
+# 23. Hardware/model tier charts are candidate generators, not selection policy
+
+The Stack's 4–512 GB guide is useful precisely because it repeatedly labels its rows as researched starting points rather than proven optima.
+
+The same nominal tier can hide material differences in:
+
+- usable versus marketed memory;
+- dedicated versus unified memory;
+- model artifact/uploader/quantization;
+- runtime support and tool protocol compatibility;
+- context and KV allocation;
+- resident versus conditional/SSD-backed state;
+- interconnect/topology;
+- source-model benchmark configuration versus the exact local artifact.
+
+Qwen3.8-27B's published coding scores, for example, belong to Qwen's evaluated source-model configuration and harness. They do not establish the behavior of every community Q4 GGUF. Ornith's published Terminal-Bench results have the same boundary.
+
+The guide also highlights a useful drift problem: community artifacts and recommended footprints can change after an older guide is published.
+
+### Candidate principles
+
+> **Use memory/model charts to generate feasible candidates; select only after verifying the exact artifact, runtime, placement and target workload.**
+
+> **Bind artifact-dependent feasibility claims to a date/revision when drift could change whether the configuration still fits or behaves as expected.**
+
+This is not a reason to maintain an HE GPU recommendation table. It is a reason not to mistake one for architecture.
+
+**Disposition: NEW WORDING / STRONGLY REINFORCE.**
+
+---
+
 # Consolidated disposition
 
 ## STRONGLY REINFORCE / MINE
@@ -689,7 +725,9 @@ Use these distinctions only when they affect a real requirement. HE does not nee
 - compression fidelity is conditional on task horizon and interaction topology;
 - runtime interpretation can be part of model correctness;
 - local-AI economics need explicit accounting and alternative-service boundaries;
-- open weights, local execution and private execution must not be conflated.
+- open weights, local execution and private execution must not be conflated;
+- hardware/model tier charts are candidate discovery aids only;
+- artifact-dependent fit claims should be timestamped when drift matters.
 
 ## ASSESS
 
@@ -699,7 +737,7 @@ Use these distinctions only when they affect a real requirement. HE does not nee
 - phase-level timing when ACR timeouts/variance cannot otherwise be explained;
 - controlled context and quantization sweeps using existing ACR fixtures;
 - whether residency/offload data materially predicts timeout or quality behavior;
-- whether one specifically identified Qwen3.6-35B-A3B, Qwen3.8 quant or Bonsai 2 configuration deserves a bounded ACR benchmark arm;
+- whether one specifically identified Qwen3.6-35B-A3B, Qwen3.8 quant, Ornith 1.5-9B quant or Bonsai 2 configuration deserves a bounded ACR benchmark arm;
 - if an aggressive compression candidate is tested, whether bounded review quality survives better than long autonomous coding behavior.
 
 ## PARK
@@ -714,7 +752,8 @@ Use these distinctions only when they affect a real requirement. HE does not nee
 - time-sensitive frontier model picks such as a specific 128GB+ recommendation;
 - unpinned community throughput and low-bit score claims;
 - hardware shopping recommendations from current product/pricing examples;
-- a generic loop-pathology telemetry subsystem without an observed failure requiring it.
+- a generic loop-pathology telemetry subsystem without an observed failure requiring it;
+- permanent model-per-memory ladders derived from current September 2026 releases.
 
 ## REJECT
 
@@ -733,7 +772,9 @@ Use these distinctions only when they affect a real requirement. HE does not nee
 - model-file load success as proof of correct runtime interpretation;
 - “no API bill” as zero cost;
 - open weights as proof of consumer-local viability;
-- local hardware execution as an automatic privacy guarantee.
+- local hardware execution as an automatic privacy guarantee;
+- source-model benchmark scores as proof of arbitrary local quant behavior;
+- treating architecture-specific SSD lookup-table residency as generic dense-model offload.
 
 ---
 
@@ -763,5 +804,7 @@ workload
         ↓
 measured correctness + latency + failure behavior + verified-task economics
 ```
+
+Hardware/model charts can help populate candidate configurations, but they do not change the selection rule.
 
 That keeps hardware and compression optimization subordinate to task success instead of letting “it loads,” “the feature exists,” “the average benchmark is close,” or “the GPU name matches” become architecture evidence.

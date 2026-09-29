@@ -9,6 +9,7 @@ Primary/source evidence:
 - `01 Research/Sources/Eli the Computer Guy — Orchestration, Bounded Runs & Productized AI — 2026-09-22.md`
 - `01 Research/Sources/Anthropic Opus 5.5 Prompting — Harness-Relevant Runtime Guidance — 2026-09-24.md`
 - `01 Research/Sources/The Next New Thing — Needle, Bounded Tool Calling & Confidence-Gated Local Automation — 2026-09-29.md`
+- `01 Research/Sources/TestGuild — Semantic Assertions, Verifier Calibration & Production-Derived Evaluation — 2026-09-29.md`
 
 Related HE research:
 
@@ -254,6 +255,36 @@ Needle's calibrated confidence also demonstrates a separate boundary. A confiden
 
 ---
 
+# 2026-09-29 Security Lab corroboration: autonomous exploration needs resource and isolation envelopes
+
+GitHub Security Lab's fuzzing taskflow provides a concrete long-running autonomous workload with two externally owned boundaries.
+
+First, the fuzz/coverage loop increases time budgets only while the workload continues to produce useful progress. Budgets double from short exploratory runs to longer campaigns, and the loop stops after two consecutive iterations remain below a configurable coverage-improvement threshold.
+
+That is not a universal stop heuristic. It is an example of a stronger pattern:
+
+```text
+objective signal exists
+        ↓
+cheap exploration first
+        ↓
+increase spend while marginal evidence improves
+        ↓
+stop on externally measured diminishing returns
+```
+
+Second, the taskflow can select arbitrary build commands and directly invoke AFL/clang through execution tools. GitHub therefore explicitly recommends disposable environments, no elevated privileges and scoped network access because prompt injection could otherwise exercise the user's host authority.
+
+### Durable implications
+
+> **When a long autonomous workload has a meaningful objective progress signal, an externally measured diminishing-return condition can bound exploration more reliably than “keep trying.”**
+
+> **When autonomous work can choose arbitrary shell/build actions, isolation of the execution environment is part of the authority boundary.**
+
+The same project reinforces separation of responsibilities: the model owns fuzzing decisions, tools own execution primitives, durable campaign state lives in SQLite outside model memory, and generated remediation remains review-required rather than self-authorizing.
+
+---
+
 # Candidate HE principle — research status
 
 > **Autonomy must operate inside an externally enforced execution envelope.**
@@ -272,7 +303,11 @@ Supporting refinements:
 
 > **Confidence can inform escalation; it does not own authority.**
 
-The concept now has stronger cross-source support, including first-party Anthropic runtime guidance and a concrete constrained-tool local-model implementation, but implementation should still follow observed workload needs and available enforcement points rather than becoming a universal HE control plane.
+> **When a meaningful objective progress signal exists, externally measured diminishing returns may provide a valid stop condition.**
+
+> **Arbitrary autonomous shell/build authority requires an isolation boundary appropriate to the consequences.**
+
+The concept now has stronger cross-source support, including first-party Anthropic runtime guidance, a constrained-tool local-model implementation, and an open-source autonomous security workflow with explicit resource and host-isolation boundaries. Implementation should still follow observed workload needs and available enforcement points rather than becoming a universal HE control plane.
 
 ---
 
@@ -292,6 +327,8 @@ The concept now has stronger cross-source support, including first-party Anthrop
 - Declared tool/action surfaces as part of effective authority.
 - Structural capability restriction when the runtime can enforce it.
 - Confidence as escalation evidence rather than permission.
+- Objective progress/plateau signals as candidate stop conditions for suitable autonomous exploration.
+- Disposable/sandboxed execution environments when model-selected commands can materially affect the host.
 
 ## ASSESS
 
@@ -300,6 +337,7 @@ The concept now has stronger cross-source support, including first-party Anthrop
 - Whether ACR already enforces adequate timeout/retry ceilings or needs stronger run budgets.
 - Whether task/checklist state already provides enough completion evidence in the current PMB + Superpowers workflow.
 - Whether any current tool-routing path silently changes consequential authority in ways that should be made explicit.
+- Whether any HE workload has an objective progress signal strong enough to justify adaptive-budget/plateau stopping.
 
 ## PARK
 
@@ -308,6 +346,7 @@ The concept now has stronger cross-source support, including first-party Anthrop
 - New orchestration/control-plane product.
 - Dashboard implementation before existing start criteria are met.
 - Confidence-driven autonomous side-effect policy without workload calibration and deterministic authorization.
+- Generic autonomous fuzzing infrastructure in HE.
 
 ## REJECT
 
@@ -318,6 +357,7 @@ The concept now has stronger cross-source support, including first-party Anthrop
 - Infinite automatic continuation.
 - Full transcript dumping as bounded-run continuation state.
 - A high confidence score as permission to exceed the externally declared action boundary.
+- Arbitrary model-selected host commands without an isolation strategy appropriate to the risk.
 
 ---
 
@@ -327,4 +367,4 @@ Bounded runs are a useful HE concept because they preserve autonomy without gran
 
 The right implementation pattern is decentralized ownership:
 
-> **put each limit at the component that can actually enforce it, expose only the capabilities the worker is allowed to use, keep completion state outside model self-reporting, preserve only the continuation state that must survive the stop, and avoid building a new control plane until a real workload requires one.**
+> **put each limit at the component that can actually enforce it, expose only the capabilities the worker is allowed to use, isolate high-authority execution where consequences demand it, keep completion state outside model self-reporting, preserve only the continuation state that must survive the stop, and avoid building a new control plane until a real workload requires one.**

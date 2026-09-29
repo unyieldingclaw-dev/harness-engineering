@@ -10,6 +10,7 @@ Primary/source evidence:
 - `01 Research/Sources/Anthropic Opus 5.5 Prompting — Harness-Relevant Runtime Guidance — 2026-09-24.md`
 - `01 Research/Sources/The Next New Thing — Needle, Bounded Tool Calling & Confidence-Gated Local Automation — 2026-09-29.md`
 - `01 Research/Sources/TestGuild — Semantic Assertions, Verifier Calibration & Production-Derived Evaluation — 2026-09-29.md`
+- `01 Research/Sources/Austin Marchese — Karpathy LLM Wiki, Autoresearch & Context Engineering — 2026-09-29.md`
 
 Related HE research:
 
@@ -285,6 +286,39 @@ The same project reinforces separation of responsibilities: the model owns fuzzi
 
 ---
 
+# 2026-09-29 Austin/Karpathy refinement: trigger authority depends on side effect
+
+Austin Marchese's Karpathy-method implementation uses hooks, loops and schedules to make maintenance/improvement work recur. The most useful detail is that his demonstrated `SessionStart` hooks can act as **reminders** to run a command such as `/improve-system`, leaving the durable change as a separate explicit action.
+
+That should not be treated as equivalent to a hook that directly rewrites durable knowledge, skills or project instructions.
+
+```text
+reminder hook
+    event → attention signal → explicit follow-up action
+
+mutation hook
+    event → durable state change
+```
+
+### Durable implication
+
+> **Trigger mechanism does not determine authority; the side effect does. A reminder hook and a mutation hook have different execution envelopes.**
+
+The same distinction applies to schedules and loops. They answer **when** work runs, not what it may change or what evidence is required before a durable mutation is accepted.
+
+A low-authority trigger may safely:
+
+- surface a reminder;
+- report stale state;
+- flag pending ingestion;
+- schedule a bounded read-only analysis.
+
+A durable mutation should inherit the authority/evidence requirements of the state it changes.
+
+This reinforces the existing rule that each boundary should be owned by the component that can actually enforce it.
+
+---
+
 # Candidate HE principle — research status
 
 > **Autonomy must operate inside an externally enforced execution envelope.**
@@ -307,7 +341,11 @@ Supporting refinements:
 
 > **Arbitrary autonomous shell/build authority requires an isolation boundary appropriate to the consequences.**
 
-The concept now has stronger cross-source support, including first-party Anthropic runtime guidance, a constrained-tool local-model implementation, and an open-source autonomous security workflow with explicit resource and host-isolation boundaries. Implementation should still follow observed workload needs and available enforcement points rather than becoming a universal HE control plane.
+> **Trigger mechanism does not determine authority; the side effect does.**
+
+The concept now has stronger cross-source support, including first-party Anthropic runtime guidance, a constrained-tool local-model implementation, an open-source autonomous security workflow with explicit resource and host-isolation boundaries, and a practical hook-based maintenance workflow that separates reminders from durable mutation.
+
+Implementation should still follow observed workload needs and available enforcement points rather than becoming a universal HE control plane.
 
 ---
 
@@ -329,6 +367,8 @@ The concept now has stronger cross-source support, including first-party Anthrop
 - Confidence as escalation evidence rather than permission.
 - Objective progress/plateau signals as candidate stop conditions for suitable autonomous exploration.
 - Disposable/sandboxed execution environments when model-selected commands can materially affect the host.
+- Distinguishing low-authority reminder hooks from hooks that directly mutate durable state.
+- Evaluating schedules/loops/hooks by their actual side effects rather than treating the trigger mechanism itself as the authority boundary.
 
 ## ASSESS
 
@@ -338,6 +378,7 @@ The concept now has stronger cross-source support, including first-party Anthrop
 - Whether task/checklist state already provides enough completion evidence in the current PMB + Superpowers workflow.
 - Whether any current tool-routing path silently changes consequential authority in ways that should be made explicit.
 - Whether any HE workload has an objective progress signal strong enough to justify adaptive-budget/plateau stopping.
+- Which existing hooks merely surface attention versus which can mutate durable project/harness state.
 
 ## PARK
 
@@ -358,6 +399,7 @@ The concept now has stronger cross-source support, including first-party Anthrop
 - Full transcript dumping as bounded-run continuation state.
 - A high confidence score as permission to exceed the externally declared action boundary.
 - Arbitrary model-selected host commands without an isolation strategy appropriate to the risk.
+- Treating a reminder trigger as implicit permission to perform a durable mutation.
 
 ---
 

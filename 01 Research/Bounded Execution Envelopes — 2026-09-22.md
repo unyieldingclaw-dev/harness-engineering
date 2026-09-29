@@ -8,6 +8,7 @@ Primary/source evidence:
 
 - `01 Research/Sources/Eli the Computer Guy — Orchestration, Bounded Runs & Productized AI — 2026-09-22.md`
 - `01 Research/Sources/Anthropic Opus 5.5 Prompting — Harness-Relevant Runtime Guidance — 2026-09-24.md`
+- `01 Research/Sources/The Next New Thing — Needle, Bounded Tool Calling & Confidence-Gated Local Automation — 2026-09-29.md`
 
 Related HE research:
 
@@ -221,6 +222,38 @@ This is now first-party corroboration for the existing HE distinction between pr
 
 ---
 
+# 2026-09-29 Needle corroboration: action surface is authority
+
+Needle provides a concrete local-model example where the harness narrows authority structurally rather than merely asking the model to behave.
+
+The model is bound to a declared toolset. Its schema grammar permits only calls inside that set, and when more than five tools exist Needle retrieves a top-five subset and rebuilds the grammar over only those tools. An unselected tool is therefore unreachable for that turn.
+
+That sharpens the bounded-execution model:
+
+```text
+all environment capability
+        ↓
+externally declared tool/action surface
+        ↓
+optional retrieval narrows active surface
+        ↓
+model chooses only inside that surface
+```
+
+### Durable implication
+
+> **The capabilities exposed to a model are part of its effective authority; tool routing can therefore change authority as well as context.**
+
+This is stronger than a prose instruction such as "do not call X." It still does not make model-side tool selection a complete safety boundary: the action/tool implementation should independently own permission, side effects and postcondition verification where consequences matter.
+
+Needle's calibrated confidence also demonstrates a separate boundary. A confidence score may help choose `act / confirm / refuse`, but it is advisory evidence tied to a particular model/calibration/workload. It is not an enforceable permission boundary and should not replace deterministic authorization.
+
+### Durable implication
+
+> **Confidence can inform escalation; it does not own authority.**
+
+---
+
 # Candidate HE principle — research status
 
 > **Autonomy must operate inside an externally enforced execution envelope.**
@@ -235,7 +268,11 @@ Supporting refinements:
 
 > **Advisory budgets may guide model behavior; hard execution limits belong outside the model.**
 
-The concept now has stronger cross-source support, including first-party Anthropic runtime guidance, but implementation should still follow observed workload needs and available enforcement points rather than becoming a universal HE control plane.
+> **The capabilities exposed to a model are part of its effective authority; routing those capabilities can narrow or expand the execution envelope.**
+
+> **Confidence can inform escalation; it does not own authority.**
+
+The concept now has stronger cross-source support, including first-party Anthropic runtime guidance and a concrete constrained-tool local-model implementation, but implementation should still follow observed workload needs and available enforcement points rather than becoming a universal HE control plane.
 
 ---
 
@@ -252,6 +289,9 @@ The concept now has stronger cross-source support, including first-party Anthrop
 - Explicit task completion state distinct from model turn termination.
 - Bounded automatic continuation rather than open-ended retry.
 - External timeout for a genuinely hard wall-time limit.
+- Declared tool/action surfaces as part of effective authority.
+- Structural capability restriction when the runtime can enforce it.
+- Confidence as escalation evidence rather than permission.
 
 ## ASSESS
 
@@ -259,6 +299,7 @@ The concept now has stronger cross-source support, including first-party Anthrop
 - Whether PMB has an observed continuation/runaway-work failure that bounded-run metadata would solve.
 - Whether ACR already enforces adequate timeout/retry ceilings or needs stronger run budgets.
 - Whether task/checklist state already provides enough completion evidence in the current PMB + Superpowers workflow.
+- Whether any current tool-routing path silently changes consequential authority in ways that should be made explicit.
 
 ## PARK
 
@@ -266,6 +307,7 @@ The concept now has stronger cross-source support, including first-party Anthrop
 - HE-owned token accounting service.
 - New orchestration/control-plane product.
 - Dashboard implementation before existing start criteria are met.
+- Confidence-driven autonomous side-effect policy without workload calibration and deterministic authorization.
 
 ## REJECT
 
@@ -275,6 +317,7 @@ The concept now has stronger cross-source support, including first-party Anthrop
 - Treating `end_turn` as proof that the assigned task is complete.
 - Infinite automatic continuation.
 - Full transcript dumping as bounded-run continuation state.
+- A high confidence score as permission to exceed the externally declared action boundary.
 
 ---
 
@@ -284,4 +327,4 @@ Bounded runs are a useful HE concept because they preserve autonomy without gran
 
 The right implementation pattern is decentralized ownership:
 
-> **put each limit at the component that can actually enforce it, keep completion state outside model self-reporting, preserve only the continuation state that must survive the stop, and avoid building a new control plane until a real workload requires one.**
+> **put each limit at the component that can actually enforce it, expose only the capabilities the worker is allowed to use, keep completion state outside model self-reporting, preserve only the continuation state that must survive the stop, and avoid building a new control plane until a real workload requires one.**

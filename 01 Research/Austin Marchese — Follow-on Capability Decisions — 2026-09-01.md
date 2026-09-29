@@ -155,3 +155,149 @@ The key architectural principle is **replaceable capability behind an explicit b
 - Crawl4AI repository: https://github.com/unclecode/crawl4ai
 - Crawl4AI Docker/MCP server documentation: https://github.com/unclecode/crawl4ai/blob/main/deploy/docker/README.md
 - Crawlee repository: https://github.com/apify/crawlee
+
+---
+
+## 2026-09-29 addendum — Karpathy LLM Wiki, Autoresearch & context-engineering video
+
+Source note:
+
+- `01 Research/Sources/Austin Marchese — Karpathy LLM Wiki, Autoresearch & Context Engineering — 2026-09-29.md`
+
+This follow-up largely reinforces existing HE direction, but it sharpens several boundaries that should remain attached to the Austin material.
+
+### Raw evidence, derived synthesis and schema are different owners
+
+Karpathy's first-party LLM Wiki pattern explicitly separates:
+
+```text
+immutable raw sources
+        ↓
+LLM-maintained wiki / synthesis
+        ↓
+schema / operating instructions
+```
+
+That is stronger than treating a knowledge folder as one undifferentiated memory store.
+
+The raw layer carries source authority. The wiki is derived and revisable. The schema governs maintenance behavior but is neither the evidence nor the synthesis.
+
+**HE refinement:** durable knowledge can compound without collapsing evidence, synthesis and instructions into one authority layer.
+
+### Reminder hooks are not mutation hooks
+
+Austin's screenshots show `SessionStart` hooks that remind him to run commands such as `/improve-system`; he then manually invokes the durable-learning pass.
+
+That is materially different from a hook that automatically rewrites a skill, rule or knowledge artifact.
+
+```text
+reminder hook
+    event → attention signal → explicit action
+
+mutation hook
+    event → durable state change
+```
+
+**HE refinement:** hook authority should be assessed by the state it can change, not merely by the fact that it is a hook.
+
+A low-authority reminder can often be automated safely. Durable mutation needs the same ownership, evidence and rollback discipline as the state it changes.
+
+### Conversation history is a candidate-learning source, not a fixed evaluator
+
+Austin proposes using back-and-forth editing history as a proxy for what made an output better, then feeding the lesson into `/improve-system`.
+
+That is useful as evidence discovery, but it is weaker than Karpathy's Autoresearch loop because the evaluator is no longer fixed or objective.
+
+A correction can represent a reusable lesson, a one-off preference, missing context, changed requirements, or an execution error.
+
+Therefore:
+
+```text
+conversation correction
+       ↓
+candidate lesson
+       ↓
+ownership + recurrence + consequence analysis
+       ↓
+smallest proposed durable change
+       ↓
+evaluation / replay / later corroboration
+       ↓
+promotion if earned
+```
+
+**HE refinement:** subjective adaptation loops must not inherit the evidentiary claims of fixed-evaluator experiment loops.
+
+### Autoresearch remains the stronger pattern when a real evaluator exists
+
+Karpathy's Autoresearch pattern remains valuable because the mutable surface, baseline, metric and resource budget are fixed outside the candidate change.
+
+For work such as conversion experiments, delayed business metrics may support a legitimate experiment even when the result is not immediate.
+
+For aesthetic/editorial work, model or user preference can still provide useful feedback, but confidence in the resulting durable lesson should be bounded by evaluator quality and repeatability.
+
+### Progressive disclosure, not a fixed CLAUDE.md line count
+
+Austin demonstrates a prompt asking Claude to keep `CLAUDE.md` under 50 lines, while explicitly acknowledging that the number is arbitrary.
+
+Do not retain the numeric rule.
+
+Retain the mechanism:
+
+> **Always-loaded project guidance should earn its place; specialized frameworks, examples and procedures should be retrieved only when relevant.**
+
+His `expert-advice` routing example is another progressive-disclosure implementation: classify the question, load a small relevant framework set, then answer.
+
+### Ingestion automation should stop short of silent truth promotion
+
+Automating deterministic source handling is attractive:
+
+- normalize/source metadata;
+- hash and catalog;
+- update deterministic indexes;
+- identify pending ingestion;
+- maintain links where rules are mechanical.
+
+Semantic operations deserve more caution:
+
+- deciding that a new source supersedes prior conclusions;
+- promoting interpretation into durable project truth;
+- changing governing skills/rules based on one conversation.
+
+**HE refinement:** automate bookkeeping aggressively; require evidence to earn durable semantic or behavioral change.
+
+### Updated disposition
+
+**REINFORCE**
+
+- `improve-system` as an evidence-backed review/capture workflow;
+- raw evidence vs derived synthesis vs schema ownership;
+- progressive disclosure;
+- reminder hooks as low-authority automation;
+- fixed-evaluator Autoresearch where the workload supports it;
+- source ingestion as a replaceable capability boundary.
+
+**ASSESS**
+
+- whether an `/improve-system`-style periodic review adds value beyond incident-driven learning;
+- whether PMB/HE has enough source-ingestion friction to justify more automation;
+- stable rubrics or delayed outcome measures for subjective improvement loops.
+
+**PARK**
+
+- automatic semantic ingestion of every source;
+- automatic rule/skill rewriting from conversation history;
+- an HE-wide Obsidian/wiki product;
+- arbitrary line-count limits for project instruction files.
+
+**REJECT**
+
+- treating conversational edits as validated durable rules;
+- treating subjective self-evaluation as equivalent to Karpathy's fixed evaluator;
+- allowing ingestion hooks to silently rewrite authoritative project truth.
+
+### Bottom line
+
+The durable extension to the original Austin research is:
+
+> **Use automation to lower the cost of maintenance and discovery; use evidence to decide what deserves promotion into durable synthesis, rules or behavior.**

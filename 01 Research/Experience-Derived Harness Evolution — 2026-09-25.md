@@ -8,6 +8,7 @@ Primary evidence:
 
 - `01 Research/Sources/Cole Medin — Conversation Mining & Harness Evolution — 2026-09-25.md`
 - `coleam00/skills` at commit `dfaa9105741fc5ba9b16b6a72551cad4bad70415`
+- `01 Research/Sources/Austin Marchese — Anthropic Growth Workflows, Sub-Threshold Work & Bespoke Tools — 2026-09-29.md`
 
 Related HE research:
 
@@ -50,6 +51,12 @@ The central rule is:
 > **History can tell us where to look; only evaluated evidence should decide what becomes permanent.**
 
 This creates a practical closed loop between observability, diagnosis, ownership, behavioral evals and harness maintenance.
+
+A 2026-09-29 extension adds a complementary proactive question:
+
+> **What valuable work is absent from the trace because humans previously decided it was too expensive to perform?**
+
+This matters because cheaper AI execution changes the feasibility frontier. It does not automatically change the value of the work.
 
 ---
 
@@ -124,6 +131,36 @@ The proactive loop should not promote something simply because it occurred frequ
 > **Separate single-run failure learning from cross-run pattern mining.**
 
 This prevents a one-off mistake from becoming permanent scar tissue and prevents broad trend analysis from losing the evidence detail needed for root cause.
+
+### Proactive opportunity discovery has a blind spot
+
+Trace mining can only inspect work that happened.
+
+Some valuable work may leave no trace because humans historically skipped it when the manual economics were unfavorable.
+
+Examples may include:
+
+- exhaustive consistency scans;
+- large-scale stale-reference or broken-link review;
+- broad anomaly detection over many artifacts;
+- cross-repository drift checks;
+- recurring evidence assembly that is currently sampled instead of exhaustive;
+- low-frequency quality checks that are useful but too tedious to perform manually.
+
+Those opportunities may require evidence outside run history:
+
+- explicit user/team interviews;
+- abandoned backlog items;
+- repeated statements such as “we do not have time to check all of this”;
+- known manual sampling thresholds;
+- evidence sources whose volume exceeds normal human review;
+- prior decisions to skip work specifically because labor cost exceeded expected value.
+
+### Candidate principle
+
+> **Continuous improvement should inspect both performed work and intentionally omitted work whose economics may have changed.**
+
+But lower execution cost is only a reason to reconsider the work, not a reason to adopt it.
 
 ---
 
@@ -242,6 +279,8 @@ one-off mistake            → maybe nothing persistent
 
 This is Single Ownership applied to feedback loops.
 
+The same rule applies to opportunity discovery. A newly feasible recurring workflow does not automatically imply “make a Skill.” The smallest owner may instead be a script, deterministic query, read-only report, existing platform feature, or no new artifact at all.
+
 ---
 
 # 7. A recommendation is not a validated improvement
@@ -273,6 +312,12 @@ Useful proof mechanisms may include:
 
 This is the most important guardrail against self-reinforcing prompt scar tissue.
 
+The same evidence boundary applies to newly cheap work:
+
+> **Opportunity discovery creates hypotheses; repeated operational value earns permanence.**
+
+Do not measure success by the number of new AI use cases, automations or Skills created.
+
 ---
 
 # 8. Harness evolution includes deletion
@@ -295,6 +340,8 @@ Ablation is the complementary operation to opportunity discovery.
 > **Continuous improvement includes removing scaffolding that no longer changes evaluated behavior.**
 
 This ties transcript mining directly to Model Capability Drift and context-budget maintenance.
+
+The same discipline should apply to bespoke local tools: if repeated use no longer justifies their maintenance cost, local specificity is not a reason to keep them forever.
 
 ---
 
@@ -370,6 +417,7 @@ Historical evidence used to answer:
 - what are we correcting manually?
 - which rule/skill/tool should change?
 - which configuration no longer earns its cost?
+- which valuable checks/workflows are absent because they were historically too expensive?
 
 ## Dashboard / cockpit
 
@@ -400,7 +448,14 @@ Potential value from history mining:
 - find memory that is frequently loaded but never useful;
 - identify handoff/debugging state that is repeatedly reconstructed.
 
-But the output should be **candidate PMB improvements**, not automatic memory mutation.
+Potential below-threshold candidates from opportunity discovery may include:
+
+- stale pointer/link scans;
+- orphan-state detection;
+- contradiction candidates;
+- broad integrity checks previously skipped for manual cost reasons.
+
+But the output should be **candidate PMB improvements**, not automatic memory mutation or a generalized knowledge-maintenance daemon.
 
 No PMB implementation change is justified yet.
 
@@ -422,7 +477,15 @@ A history-mining loop could later identify:
 - evidence mismatch classes;
 - real incidents that should become committed regression cases.
 
-The durable output should be a **candidate fixture/experiment**, not an automatically changed reviewer prompt or threshold.
+Opportunity discovery additionally suggests asking which useful calibration/review work is currently skipped because it is too expensive to run frequently, such as:
+
+- historical false-positive family mining;
+- candidate regression-fixture generation;
+- reviewer-overlap analysis;
+- model/runtime bakeoffs;
+- broader evidence-quality scans.
+
+The durable output should still be a **candidate fixture/experiment**, not an automatically changed reviewer prompt or threshold.
 
 This fits the existing ACR direction: real failures should become calibration evidence when reproducible.
 
@@ -454,13 +517,31 @@ change in owning component
 future-run observation
 ```
 
+Opportunity discovery adds a second input path:
+
+```text
+abandoned / sampled / never-attempted work
+          ↓
+reason historically uneconomic
+          ↓
+new AI-enabled marginal cost
+          ↓
+value + lifecycle-cost reassessment
+          ↓
+small read-only or reversible pilot
+          ↓
+measured operational value
+```
+
 Do not start with:
 
 - cloud lakehouse;
 - dashboard;
 - universal transcript schema;
 - autonomous self-editing;
-- permanent raw retention.
+- permanent raw retention;
+- an automation marketplace;
+- a generalized platform for every newly feasible task.
 
 Start with the smallest question that real evidence can answer.
 
@@ -479,14 +560,20 @@ Useful outcome measures include:
 - recommendation rejected as unsupported;
 - parser coverage/degradation;
 - wall time/token cost of analysis;
-- whether a durable regression case was created.
+- whether a durable regression case was created;
+- previously skipped work whose realized value exceeds lifecycle cost;
+- useful evidence surfaced that humans would otherwise not inspect;
+- false positives / review burden introduced by high-volume analysis;
+- whether a bespoke capability remains useful after repeated runs.
 
 Do not optimize for:
 
 - number of recommendations;
 - number of rules added;
 - amount of history retained;
-- number of tables/events captured.
+- number of tables/events captured;
+- number of AI use cases identified;
+- number of Skills or bespoke tools created.
 
 Those are activity metrics, not improvement.
 
@@ -499,13 +586,16 @@ Those are activity metrics, not improvement.
 - real work should feed continuous harness improvement;
 - traces are evidence, not memory/truth;
 - reactive failure learning and proactive pattern mining are different loops;
+- proactive improvement should also inspect useful work historically omitted because of cost;
 - deterministic reduction before semantic analysis;
 - provenance through normalization/analysis;
 - unknown parser state must remain visible;
 - recommendations must map to owning components;
 - behavioral eval/ablation before durable changes;
 - deletion of obsolete scaffolding is improvement;
-- local/private handling by default.
+- local/private handling by default;
+- narrow bespoke capabilities can be valid when local value exceeds lifecycle cost;
+- decision-support systems should expand inspection/attention before expanding mutation authority.
 
 ## ASSESS
 
@@ -513,7 +603,9 @@ Those are activity metrics, not improvement.
 - conversion of real recurring failures into behavioral regression cases;
 - minimal evidence retention needed after raw transcripts expire;
 - ACR history-to-calibration-case workflow;
-- whether a periodic proactive scan provides unique value beyond incident-driven review.
+- whether a periodic proactive scan provides unique value beyond incident-driven review;
+- a bounded "sub-threshold work" discovery exercise for HE/PMB/ACR;
+- read-only high-volume scans that were historically skipped for cost reasons.
 
 ## PARK
 
@@ -522,7 +614,9 @@ Those are activity metrics, not improvement.
 - organization-wide history analytics;
 - universal cross-agent event schema;
 - Dashboard ownership of historical trace storage;
-- autonomous harness self-editing.
+- autonomous harness self-editing;
+- generalized automation marketplace;
+- automatic conversion of recurring workflows into Skills.
 
 ## REJECT
 
@@ -531,7 +625,9 @@ Those are activity metrics, not improvement.
 - promoting high-frequency patterns without consequence/ownership analysis;
 - using the same model's recommendation as proof its fix is correct;
 - turning every user correction into a permanent rule;
-- measuring harness evolution by artifact count.
+- measuring harness evolution by artifact count;
+- assuming lower implementation cost proves a newly feasible task is worth doing;
+- treating a source-grounded simulated person as the actual person's judgment.
 
 ---
 
@@ -541,9 +637,13 @@ Those are activity metrics, not improvement.
 
 > **Separate single-run failure learning from cross-run pattern mining.**
 
+> **Continuous improvement should inspect both performed work and intentionally omitted work whose economics may have changed.**
+
 > **Use deterministic reduction for structural facts; spend model context on interpretation.**
 
 > **History proposes harness changes; experiments earn them.**
+
+> **Opportunity discovery creates hypotheses; repeated operational value earns permanence.**
 
 > **Experience should improve the owning component, not merely expand startup instructions.**
 
@@ -557,8 +657,12 @@ These should remain research principles until corroborated by additional indepen
 
 # Bottom line
 
-This source provides a concrete mechanism for HE's Continuous Improvement principle:
+The original source provides a concrete mechanism for HE's Continuous Improvement principle:
 
 > **mine what the harness actually did, reduce it to auditable evidence, propose the smallest owner-correct change, prove that change against real behavior, and only then make it durable.**
 
-That is much stronger than either “let the model learn from its chats” or “store every transcript forever.”
+The 2026-09-29 extension adds:
+
+> **also look for valuable work the harness never did because humans historically judged it too expensive. Re-evaluate that work under the new cost structure, but make it earn adoption through the same value, ownership, authority and verification discipline.**
+
+That is stronger than either “let the model learn from its chats,” “store every transcript forever,” or “automate everything that is newly cheap.”

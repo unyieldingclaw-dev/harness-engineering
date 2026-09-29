@@ -10,6 +10,8 @@ Primary sources:
 - `01 Research/Sources/CoderOne — Jev-Style Fine-Tuning, Decision Models & Evaluation Isolation — 2026-09-26.md`
 - `01 Research/Sources/Prompt Engineering — Bonsai 2 Compression, Agentic Horizon & Trace Failure — 2026-09-28.md`
 - `01 Research/Sources/Stacked Podcast — Naive-N0.5-Flash, AI-Centered R&D & Capability Step-Down — 2026-09-28.md`
+- `01 Research/Sources/The Next New Thing — Needle, Bounded Tool Calling & Confidence-Gated Local Automation — 2026-09-29.md`
+- `01 Research/Sources/Coding Horizon — Local Jev-Style Decision Models, Structured State & Harness Compilation — 2026-09-29.md`
 
 Related HE research:
 
@@ -20,7 +22,7 @@ Related HE research:
 - `01 Research/Harness Portability, Exit Cost & Inspectability — 2026-09-24.md`
 - `01 Research/Local Inference Capacity, Context Headroom & Runtime Fitness — 2026-09-24.md`
 
-This is research. It does **not** authorize a model router, software factory, autonomous merge pipeline, custom classifier, Jev/Laya adoption, recursive self-improvement loop or PMB redesign.
+This is research. It does **not** authorize a model router, software factory, autonomous merge pipeline, custom classifier, Jev/Needle adoption, recursive self-improvement loop or PMB redesign.
 
 ---
 
@@ -52,11 +54,13 @@ The Jev/Jef/Tev research adds an important refinement: the correct substitution 
 
 The Bonsai/NaiveAI follow-on adds another refinement: capability reduction is often **non-linear and failure-mode-specific**. “Move down one model tier” is not a predictable small percentage decrement. A cheaper/compressed configuration can preserve one-shot quality while losing long-horizon control.
 
+The Needle/local-Jev pass adds another layer: the harness can sometimes reduce the inference requirement itself before model selection by computing deterministic state, enumerating legal actions, structurally constraining outputs, allowing abstention, and reserving the model only for the residual semantic choice. For repeated workloads, a strong authoring model can sometimes turn that design into an explicit frozen harness that executes with a much narrower runtime mechanism.
+
 Separately, unattended or semi-autonomous delivery becomes credible only when the producer cannot define, weaken, inspect when harmful, or self-certify the acceptance boundary.
 
 The combined HE direction is therefore:
 
-> **Use the least-general verified mechanism that satisfies the workload, while keeping acceptance authority, negative tests, scope boundaries, and consequential gates outside the producer.**
+> **Use the least-general verified mechanism that satisfies the workload, while keeping acceptance authority, legal-action boundaries, negative tests, scope boundaries, and consequential gates outside the producer.**
 
 ---
 
@@ -341,7 +345,8 @@ Possible future experiments:
 5. preserve clean cases to detect noise/fabrication regressions;
 6. inspect benchmark fixture families for group/derivation leakage before claiming a clean holdout;
 7. assess whether any repeated narrow typed decision inside ACR would benefit from a decision-model-shaped mechanism before adding another general LLM call;
-8. if aggressive compression is tested, include enough long/repeated review behavior to detect state/control degradation rather than relying only on single findings.
+8. if aggressive compression is tested, include enough long/repeated review behavior to detect state/control degradation rather than relying only on single findings;
+9. before adding a decision model, identify whether deterministic code can compute the relevant state and legal options so the model sees only the residual semantic choice.
 
 Do not add a generic model router or decision model merely because cost pressure exists.
 
@@ -381,7 +386,7 @@ Is the output ontology stable and repeatedly labelled?
 fixed classifier / deterministic mechanism where possible
 ```
 
-This is not a claim that Jev, Laya or any particular classifier is automatically better. It is a mechanism-selection question.
+This is not a claim that Jev, Needle or any particular classifier is automatically better. It is a mechanism-selection question.
 
 ### Candidate principle
 
@@ -429,6 +434,8 @@ CoderOne's evaluator constrains vLLM generation to valid option letters. Therefo
 
 The distinction is even more important for native typed decision models. A September 2026 controlled study of Jev and Jev-like models demonstrated that a 0% type-error rate can coexist with large semantic decision failures under option-name/rubric interventions.
 
+Needle provides another concrete implementation: a byte-level grammar can guarantee that the output conforms to the declared tool schema while the selected tool or argument can still be semantically wrong.
+
 This yields two HE rules:
 
 > **Attribute observed behavior to the layer that actually guarantees it.**
@@ -462,6 +469,8 @@ The durable mechanism is good. The implied smoothness is not.
 There is no general reason to expect a sequence such as frontier -> mid-tier -> small/open model to lose a predictable 1–3% of useful capability at each step.
 
 Bonsai 2 is a concrete counterexample: broad short-form benchmark retention can remain near parity while long-horizon agentic capability drops much more sharply.
+
+NanoJev supplies the same warning from another direction: a specialized 0.6B model can dominate a narrow shooting task and still lose to a different system on the maze.
 
 ### Candidate principle
 
@@ -581,11 +590,131 @@ Likewise, a provider's current token price says little without workload mix, cac
 
 ---
 
+# 20. Shape the decision surface before selecting the model
+
+Needle, NanoJev and SemIf all point to the same design opportunity: some apparently “AI-heavy” work becomes much smaller once deterministic state and legal actions are supplied explicitly.
+
+A useful decomposition is:
+
+```text
+raw environment
+        ↓
+deterministic extraction / bookkeeping where reliable
+        ↓
+structured state
++ bounded legal options / tools
+        ↓
+residual semantic judgment
+        ↓
+trusted action executor
+```
+
+This can reduce both required model generality and the chance that the model invents an action outside the intended contract.
+
+### Candidate principle
+
+> **Before spending more model capability on a repeated decision, ask whether deterministic code can shrink the problem to the actual uncertain judgment.**
+
+The goal is not to force everything into a classifier. Open-ended reasoning remains appropriate when the task genuinely requires it.
+
+**Disposition: NEW / STRONGLY MINE.**
+
+---
+
+# 21. Decision-native inference can remove generation that the application immediately discards
+
+SemIf demonstrates the same frozen Qwen3.5-4B answering 21 binary criteria through two paths:
+
+```text
+direct option-logit readout
+vs
+autoregressive compact JSON generation
+```
+
+The direct path is substantially faster because it does not generate answer tokens. But the two paths disagree on some decisions, so the faster mechanism is not semantically interchangeable by assumption.
+
+### Candidate principles
+
+> **When generated prose/JSON is immediately reduced to a bounded choice, evaluate a decision-native mechanism before paying for unnecessary generation.**
+
+> **Treat a new readout/cache/inference path as a new behavioral configuration until equivalence on the target workload is demonstrated.**
+
+This is mechanism selection, not a mandate to bypass generation everywhere.
+
+**Disposition: NEW / STRONGLY MINE.**
+
+---
+
+# 22. Broad reasoning can be compiled into a reusable narrow harness for repeated work
+
+JevHarness provides a concrete example of an author-once / execute-many pattern.
+
+A capable authoring LLM can design:
+
+- feature construction;
+- explicit code and control flow;
+- state/memory;
+- decision questions and criteria;
+- composition of narrow judgments.
+
+The selected harness is then frozen and reused without invoking the authoring LLM for every runtime decision.
+
+The critical authority boundary is external:
+
+```text
+trusted task adapter owns
+  observations
+  legal actions
+  side effects
+  reward / scoring
+
+candidate harness owns
+  feature construction
+  decision questions
+  decision logic
+```
+
+The candidate can improve its decision strategy without silently rewriting what actions exist or what counts as success.
+
+### Candidate principles
+
+> **For stable repeated workloads, open-ended reasoning can sometimes be moved to harness authoring time and preserved as explicit reviewable code/state/criteria for cheaper runtime execution.**
+
+> **The optimized harness should not own the environment, legal-action contract or evaluator that selects it.**
+
+This is not chain-of-thought persistence. The durable artifact is explicit engineering state that can be inspected, tested and versioned.
+
+JevHarness also explicitly notes that its Pokémon Eval set was used for candidate selection. That makes the result selection evidence, not an untouched final estimate of unseen performance.
+
+**Disposition: NEW / STRONGLY MINE.**
+
+---
+
+# 23. Confidence and abstention belong to the decision contract, not to authority
+
+Needle and imajev both make uncertainty explicit through confidence, suppression or an unknown/abstain outcome.
+
+That is useful only if the number is calibrated for the exact configuration and target workload. Needle's own local fine-tuning path is a concrete lifecycle warning: local LoRA tuning does not retrain its confidence head, so the tuned export does not inherit the base model's calibrated score.
+
+### Candidate principles
+
+> **Confidence thresholds are configuration- and workload-specific evidence; revalidate them after material model/calibration/runtime changes.**
+
+> **Use confidence to route `act / confirm / refuse`; do not let the model's confidence expand the externally authorized action surface.**
+
+The consequence of the action belongs in the routing policy. A reversible label and an irreversible purchase should not share a threshold merely because one model produced both probabilities.
+
+**Disposition: NEW / STRONGLY MINE.**
+
+---
+
 # Candidate HE principles — research status
 
 > **Route by demonstrated workload fitness, not by model reputation or stage label.**
 
 > **Use the least-general inference mechanism that still matches the variability, output contract and evidence requirements of the task.**
+
+> **Before spending more model capability on a repeated decision, ask whether deterministic code can shrink the problem to the actual uncertain judgment.**
 
 > **A planning artifact transfers judgment forward; its quality determines how safely later stages can use cheaper capability.**
 
@@ -615,6 +744,12 @@ Likewise, a provider's current token price says little without workload mix, cac
 
 > **Optimize the end-to-end verified property; use local metrics to diagnose, not to redefine success.**
 
+> **When generated output is immediately reduced to a bounded choice, evaluate whether a decision-native mechanism can remove unnecessary generation.**
+
+> **For stable repeated workloads, broad reasoning can sometimes be compiled into an explicit reviewable harness for cheaper bounded runtime decisions.**
+
+> **Confidence thresholds are configuration- and workload-specific evidence; confidence can route escalation but does not own authority.**
+
 > **Do not generalize a platform-specific adoption or cost statistic beyond the population and execution conditions that produced it.**
 
 > **Autonomous scope needs explicit negative boundaries when plausible adjacent work would otherwise look valid.**
@@ -630,7 +765,11 @@ The useful response to rate limits and inference cost is not a bigger routing ar
 It is a measured capability-allocation loop:
 
 ```text
-classify the work
+shape the task first
+        ↓
+compute deterministic state / legal actions where reliable
+        ↓
+classify the residual inference work
         ↓
 choose the least-general viable mechanism
         ↓
@@ -640,11 +779,13 @@ measure exact model/effort/runtime options if a model is needed
         ↓
 step down only while required behavior remains inside the boundary
         ↓
+freeze reusable decision logic when the workload is stable and evidence supports it
+        ↓
 independently verify
         ↓
 revalidate when the model/runtime/decision contract changes
 ```
 
-For unattended delivery or automated optimization, stronger assurance is needed only where the autonomy actually requires it: protected acceptance authority, known-negative verifier calibration, candidate identity, bounded repair, explicit negative scope, structural evaluation isolation where contamination would invalidate evidence, and end-to-end acceptance metrics that the optimizer cannot silently redefine.
+For unattended delivery or automated optimization, stronger assurance is needed only where the autonomy actually requires it: protected acceptance authority, known-negative verifier calibration, candidate identity, bounded repair, explicit negative scope, structural evaluation isolation where contamination would invalidate evidence, externally owned legal-action/reward boundaries, and end-to-end acceptance metrics that the optimizer cannot silently redefine.
 
 That keeps model economics subordinate to correctness instead of turning cost optimization into a new control plane.

@@ -13,6 +13,7 @@ This note intentionally separates:
 Source evidence:
 
 - `01 Research/Sources/AI Engineering Telemetry & Dashboard Repos — Deep Evidence Pass — 2026-09-18.md`
+- `01 Research/Sources/TestGuild — Semantic Assertions, Verifier Calibration & Production-Derived Evaluation — 2026-09-29.md`
 
 ---
 
@@ -162,6 +163,75 @@ A cockpit may expose:
 The moment it binds beyond loopback or accepts browser/network traffic, it requires an explicit threat model.
 
 **REINFORCE:** bounded authority and secure defaults.
+
+---
+
+## 7. Verification result and verification telemetry are different outputs
+
+The Grafana/Cypress pattern provides a useful operational distinction.
+
+A test run produces an acceptance result owned by the test/CI system. The same run may also emit duration, failure-rate, flaky-test and trend metrics into a time-series system for longer-term diagnosis.
+
+Grafana's guidance treats metrics publication as a side effect of the test rather than part of the test result itself. Failure to export telemetry should therefore not silently convert a valid product test into a failed verification unless telemetry delivery is itself an explicit requirement.
+
+A useful abstraction is:
+
+```text
+verification execution
+      ├─ acceptance result → CI / owning verifier
+      └─ historical telemetry → observability system
+```
+
+The observability system may correlate, trend and alert on the data while preserving run identity/provenance back to the source execution.
+
+### Durable implications
+
+> **Observability may consume verification evidence without becoming the authority that produced it.**
+
+> **Telemetry-export failure should not redefine verification outcome unless telemetry delivery is itself part of the acceptance contract.**
+
+**REINFORCE:** source ownership, provenance, snapshot/history separation.
+
+---
+
+## 8. Production-derived behavior can seed pre-release evaluation
+
+Raindrop's early-access Simulations product describes a useful pattern even though the product claims remain vendor evidence.
+
+Its stated approach is to replay production-derived traffic and existing tests against a proposed agent-harness change, then compare/analyze resulting behavior for unexpected deltas.
+
+The durable mechanism is broader than Raindrop:
+
+```text
+production-derived / realistic scenarios
+        ↓
+baseline behavior
+        +
+candidate behavior
+        ↓
+explicit acceptance checks
+        +
+behavioral delta / anomaly inspection
+```
+
+This can extend regression evidence beyond only the failure cases humans anticipated when authoring tests.
+
+However:
+
+- anomaly means “different,” not automatically “wrong”;
+- replaying cached tool responses may be invalid when the candidate harness changes available tools or interaction semantics;
+- the simulator itself can omit or distort important world behavior;
+- production-derived data introduces privacy, retention and sampling boundaries.
+
+### Durable implications
+
+> **Production-derived scenarios can broaden regression evaluation beyond pre-authored cases when a trustworthy production evidence stream exists.**
+
+> **Behavioral-delta detection complements acceptance tests; it does not define correctness by itself.**
+
+> **Simulation fidelity and scenario provenance are part of the evidence envelope.**
+
+**ASSESS:** only for projects that actually have a production behavior stream worth replaying. **PARK:** Raindrop product adoption.
 
 ---
 
@@ -369,13 +439,15 @@ No orchestration, no agent control, no auto-remediation in MVP.
 
 **PARK:** Separate Dashboard / AI Engineering Cockpit project.
 
-**REINFORCE:** Source-owned structured telemetry, adapter isolation, schema-drift detection, minimal provenance, deterministic facts first.
+**REINFORCE:** Source-owned structured telemetry, adapter isolation, schema-drift detection, minimal provenance, deterministic facts first, and separation of acceptance evidence from historical telemetry.
 
-**ASSESS:** PMB machine-readable status contract when an external consumer exists; retrieval/handoff measurement during PMB pilot.
+**ASSESS:** PMB machine-readable status contract when an external consumer exists; retrieval/handoff measurement during PMB pilot; production-derived replay only when a real project has an appropriate behavior stream and decision need.
 
 **REJECT:** Adding manual “dashboard logging” obligations to PMB sessions now.
 
 **REJECT:** Building dashboard functionality inside PMB or HE.
+
+**REJECT:** Treating anomaly/delta detection as proof of correctness.
 
 ---
 
@@ -387,6 +459,7 @@ Revisit the parked Dashboard concept when any of these occur:
 - ACR begins producing stable machine-readable run/calibration outputs worth aggregating;
 - Claude/Codex usage/context monitoring repeatedly requires manual checking;
 - multiple concurrent worktrees/sessions make re-entry and attention management painful;
+- a project gains a production behavior stream whose trends or replayed scenarios repeatedly affect release decisions;
 - the user explicitly decides the cross-project operational view is worth maintaining as its own product.
 
 ## Status

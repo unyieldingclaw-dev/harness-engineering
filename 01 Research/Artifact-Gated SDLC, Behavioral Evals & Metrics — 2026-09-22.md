@@ -9,6 +9,8 @@ Primary evidence:
 - `01 Research/Sources/Claude Academy AI-Native SDLC — First-Party Deep Pass — 2026-09-22.md`
 - `01 Research/Sources/Anthropic Opus 5.5 Prompting — Harness-Relevant Runtime Guidance — 2026-09-24.md`
 - `01 Research/Sources/CoderOne — Jev-Style Fine-Tuning, Decision Models & Evaluation Isolation — 2026-09-26.md`
+- `01 Research/Sources/Prompt Engineering — Bonsai 2 Compression, Agentic Horizon & Trace Failure — 2026-09-28.md`
+- `01 Research/Sources/Stacked Podcast — Naive-N0.5-Flash, AI-Centered R&D & Capability Step-Down — 2026-09-28.md`
 
 Related HE research:
 
@@ -17,6 +19,7 @@ Related HE research:
 - `01 Research/AI Engineering Observability & Dashboard Boundary — 2026-09-18.md`
 - `01 Research/Session Rollover, Handoff & Verification — 2026-09-16.md`
 - `01 Research/Model-Tiered Workflows & Independent Factory Assurance — 2026-09-24.md`
+- `01 Research/Local Inference Capacity, Context Headroom & Runtime Fitness — 2026-09-24.md`
 
 ---
 
@@ -35,7 +38,9 @@ It is a staged lifecycle in which:
 7. consequential actions remain behind explicit gates;
 8. real solved work becomes behavioral regression evidence;
 9. evaluation isolation matches the real leakage boundary when independence matters;
-10. metrics close the loop only when they change an engineering decision.
+10. behavioral evaluation covers the horizon at which failures can compound;
+11. end-to-end acceptance outranks attractive local/microbenchmark wins;
+12. metrics close the loop only when they change an engineering decision.
 
 This maps cleanly onto Superpowers + PMB + ACR without requiring another workflow framework.
 
@@ -165,7 +170,7 @@ Current harness CI commonly answers mechanical questions:
 
 Those checks are necessary but insufficient for behavior-shaping configuration.
 
-Changes to instructions, skills, hooks, routing, or models can leave every structural test green while changing agent behavior materially.
+Changes to instructions, skills, hooks, routing, models, quantization or runtimes can leave every structural test green while changing agent behavior materially.
 
 ### Candidate principle
 
@@ -313,7 +318,7 @@ Do not add unsupported pass/fail thresholds just to create a dashboard.
 
 ## HE
 
-Document metrics semantics, evaluation isolation and artifact-gated transitions as research principles. Do not build an observability platform or generic eval control plane.
+Document metrics semantics, evaluation isolation, horizon-aware behavioral evaluation, end-to-end acceptance and artifact-gated transitions as research principles. Do not build an observability platform or generic eval control plane.
 
 ## PMB
 
@@ -321,7 +326,7 @@ Use pilot evidence and existing CLI/CI sources. Assess behavioral evals after th
 
 ## ACR
 
-Continue benchmark-style measurement around finding quality, false positives/fabrication, timeouts, clustering, and accepted outcomes. Inspect fixture grouping/derivation before calling a corpus independent. External telemetry platform not justified by current evidence.
+Continue benchmark-style measurement around finding quality, false positives/fabrication, timeouts, clustering, and accepted outcomes. Inspect fixture grouping/derivation before calling a corpus independent. If aggressive compression or lower-cost models are evaluated, make sure the fixture set exercises the review horizon and repeated behavior that matters, rather than only one-shot findings. External telemetry platform not justified by current evidence.
 
 ## User-facing applications
 
@@ -466,6 +471,149 @@ Use only tests relevant to the consequential failure mode. Do not turn this into
 
 ---
 
+# 17. Behavioral fidelity needs a task horizon
+
+Bonsai 2 provides a concrete example of why one-shot or short-task evaluation can miss an agent failure mode.
+
+The compressed Qwen3.8-derived model is close to the parent on a broad short-form benchmark average and showed near-parity on several short practical tasks in an independent hands-on comparison.
+
+The same source reported severe failure across six longer application-building loops, with traces dominated by repeated inspection/search actions and failure to progress into productive execution.
+
+PrismML's own Terminal-Bench 2.1 and SWE-bench Verified results also show materially lower retention than the broad benchmark average.
+
+The exact hands-on A/B includes runtime/provider differences, so it is not proof that compression alone caused the observed loop pathology. It is strong evidence that **short-task parity did not predict this deployment-shaped behavior**.
+
+### Candidate principle
+
+> **Evaluate behavior across the horizon at which failures can compound.**
+
+The required horizon depends on deployment:
+
+```text
+single bounded decision       -> short eval may be enough
+multi-step review             -> repeated evidence/judgment may matter
+long autonomous build         -> planning + tool use + recovery + stopping matter
+```
+
+Do not add long-running evals just because they are more impressive. Add them when the intended workload can fail only after state accumulates.
+
+### Diagnostic traces when needed
+
+If an end-state failure needs diagnosis, useful signals may include:
+
+- repeated identical tool calls;
+- repeated retrieval of unchanged state;
+- excessive steps before first material change;
+- failure to transition from exploration to execution;
+- retries without changed hypothesis/evidence;
+- inability to recognize completed substeps;
+- failure to stop or escalate.
+
+These are diagnostic measurements, not universal telemetry requirements.
+
+**Disposition: NEW / STRONGLY MINE.**
+
+---
+
+# 18. Aggregate benchmark averages can hide consequence-relevant cliffs
+
+A broad average is useful for summarizing many tasks, but it can hide a large deficit in a workload that matters more to deployment.
+
+Bonsai 2 illustrates the shape:
+
+```text
+broad benchmark retention        very high
+long-agent benchmark retention   materially lower
+```
+
+Both can be numerically true.
+
+### Candidate principle
+
+> **Averages summarize; acceptance gates belong to the consequence-relevant workload metrics.**
+
+That means a benchmark report should preserve important strata when averaging would hide the failure mode that drives the real decision.
+
+Examples:
+
+- clean vs defective code review;
+- short vs long task horizon;
+- deterministic correctness vs semantic judgment;
+- easy vs adversarial cases;
+- fresh context vs long accumulated session when relevant.
+
+Do not create arbitrary strata. Preserve the ones tied to actual risks or deployment decisions.
+
+**Disposition: NEW / STRONGLY MINE.**
+
+---
+
+# 19. End-to-end acceptance outranks microbenchmark wins
+
+NaiveAI's NaiveRT case study is a strong industrial example of an optimizer producing many candidate performance changes under externally owned correctness and end-to-end criteria.
+
+The company reports 151 optimization trials, with 63 adopted, 71 failed validation/rolled back, and 17 alternative/prototype paths.
+
+More important than the count are the rejection examples:
+
+- some changes improved a local measurement at one context or microbenchmark but regressed another important context or full-model path;
+- some optimizations were numerically correct but did not improve end-to-end performance and were abandoned;
+- a prefetch change could look less attractive under a warm-cache isolated benchmark while improving the integrated model step.
+
+### Candidate principle
+
+> **Optimize the property the system actually consumes; use local metrics to diagnose, not to redefine success.**
+
+A safe optimization loop is:
+
+```text
+candidate
+   ↓
+correctness / invariant gate
+   ↓
+end-to-end target workload measurement
+   ↓
+keep / revise / revert
+```
+
+This applies beyond kernels:
+
+- smaller context is not a win if retries rise;
+- faster decoding is not a win if prefill dominates;
+- cheaper reviewer is not a win if false positives rise beyond tolerance;
+- smaller compressed model is not a win if long-horizon control collapses.
+
+**Disposition: NEW EVIDENCE / STRONGLY REINFORCE.**
+
+---
+
+# 20. Experiment accounting should preserve rejected evidence when it changes future decisions
+
+NaiveAI's adopted / failed / explored accounting is useful because failed experiments remain evidence rather than disappearing into an iteration loop.
+
+HE should not require a ledger for every trivial attempt.
+
+But when experimentation is expensive, repeated, automated or likely to revisit the same hypothesis, durable evidence can include:
+
+```text
+hypothesis / candidate identity
+what changed
+acceptance/evaluator identity
+result
+keep / revert / inconclusive
+why
+```
+
+### Candidate principle
+
+> **Retain rejected experiment evidence when forgetting it would cause expensive re-exploration or weaken provenance.**
+
+This is the experiment analogue of preserving useful incident knowledge without turning every transient thought into memory.
+
+**Disposition: NEW / ASSESS where automated experiment loops become material.**
+
+---
+
 # Candidate HE principles — research status
 
 > **Accepted artifacts should define stage transitions.**
@@ -494,12 +642,20 @@ Use only tests relevant to the consequential failure mode. Do not turn this into
 
 > **Schema/type validity is a structural property; semantic correctness requires separate evidence.**
 
+> **Evaluate behavior across the horizon at which failures can compound.**
+
+> **Averages summarize; acceptance gates belong to the consequence-relevant workload metrics.**
+
+> **Optimize the property the system actually consumes; use local metrics to diagnose, not to redefine success.**
+
+> **Retain rejected experiment evidence when forgetting it would cause expensive re-exploration or weaken provenance.**
+
 ---
 
 # Bottom line
 
-The Claude Academy, Opus 5.5 and Jev-style evaluation material strengthens the case for artifact-gated work, behavioral harness evals, explicit verification semantics, evaluated model/effort configuration, leakage-aware holdouts and evidence-driven maintenance.
+The Claude Academy, Opus 5.5, Jev-style evaluation, Bonsai compression and NaiveAI experiment material strengthen the case for artifact-gated work, horizon-aware behavioral evals, explicit verification semantics, evaluated model/effort/runtime configuration, leakage-aware holdouts and evidence-driven maintenance.
 
 For the current HE/PMB environment, the right strategy remains deliberately small:
 
-> **measure real workflow outcomes from systems that already own the facts; isolate evaluation evidence only where contamination would invalidate it; distinguish structural validity from semantic correctness; use those evals to tune harness/model configuration; and add new infrastructure only when a concrete problem cannot be diagnosed or controlled reliably without it.**
+> **measure real workflow outcomes from systems that already own the facts; isolate evaluation evidence only where contamination would invalidate it; evaluate across the horizon where the intended workload can actually fail; distinguish structural validity from semantic correctness; optimize against the end-to-end property the system consumes; and add new infrastructure only when a concrete problem cannot be diagnosed or controlled reliably without it.**

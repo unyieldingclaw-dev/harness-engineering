@@ -2,12 +2,14 @@
 
 ## Purpose
 
-Synthesize the durable Harness Engineering implications from Cole Medin's model-mixing video and current repositories without adopting his specific software-factory stack, model choices, or control plane.
+Synthesize the durable Harness Engineering implications from model-mixing, decision-model and AI-centered R&D research without adopting a specific software-factory stack, model choice, decision service or control plane.
 
 Primary sources:
 
 - `01 Research/Sources/Cole Medin — Model Mixing, AI Software Factory & GitHub Ecosystem — 2026-09-24.md`
 - `01 Research/Sources/CoderOne — Jev-Style Fine-Tuning, Decision Models & Evaluation Isolation — 2026-09-26.md`
+- `01 Research/Sources/Prompt Engineering — Bonsai 2 Compression, Agentic Horizon & Trace Failure — 2026-09-28.md`
+- `01 Research/Sources/Stacked Podcast — Naive-N0.5-Flash, AI-Centered R&D & Capability Step-Down — 2026-09-28.md`
 
 Related HE research:
 
@@ -18,7 +20,7 @@ Related HE research:
 - `01 Research/Harness Portability, Exit Cost & Inspectability — 2026-09-24.md`
 - `01 Research/Local Inference Capacity, Context Headroom & Runtime Fitness — 2026-09-24.md`
 
-This is research. It does **not** authorize a model router, software factory, autonomous merge pipeline, custom classifier, Jev/Laya adoption, or PMB redesign.
+This is research. It does **not** authorize a model router, software factory, autonomous merge pipeline, custom classifier, Jev/Laya adoption, recursive self-improvement loop or PMB redesign.
 
 ---
 
@@ -47,6 +49,8 @@ inference mechanism + model + effort choice
 That selection can vary by stage, but stage names are only proxies for the actual capability requirement.
 
 The Jev/Jef/Tev research adds an important refinement: the correct substitution may not be a cheaper general model. For some workloads the better fit is a narrower decision model or conventional classifier that does not perform open-ended generation at all.
+
+The Bonsai/NaiveAI follow-on adds another refinement: capability reduction is often **non-linear and failure-mode-specific**. “Move down one model tier” is not a predictable small percentage decrement. A cheaper/compressed configuration can preserve one-shot quality while losing long-horizon control.
 
 Separately, unattended or semi-autonomous delivery becomes credible only when the producer cannot define, weaken, inspect when harmful, or self-certify the acceptance boundary.
 
@@ -336,7 +340,8 @@ Possible future experiments:
 4. ensure every benchmark result records exact model/runtime/configuration identity;
 5. preserve clean cases to detect noise/fabrication regressions;
 6. inspect benchmark fixture families for group/derivation leakage before claiming a clean holdout;
-7. assess whether any repeated narrow typed decision inside ACR would benefit from a decision-model-shaped mechanism before adding another general LLM call.
+7. assess whether any repeated narrow typed decision inside ACR would benefit from a decision-model-shaped mechanism before adding another general LLM call;
+8. if aggressive compression is tested, include enough long/repeated review behavior to detect state/control degradation rather than relying only on single findings.
 
 Do not add a generic model router or decision model merely because cost pressure exists.
 
@@ -438,6 +443,144 @@ For consequential typed decisions, evals should test semantic invariants and adv
 
 ---
 
+# 15. Capability step-down is an empirical search, not a linear ladder
+
+The Stacked Podcast describes a useful cost-control method:
+
+```text
+prove the task with a strong model
+        ↓
+try a cheaper candidate
+        ↓
+measure whether required quality survives
+        ↓
+continue downward while it does
+```
+
+The durable mechanism is good. The implied smoothness is not.
+
+There is no general reason to expect a sequence such as frontier -> mid-tier -> small/open model to lose a predictable 1–3% of useful capability at each step.
+
+Bonsai 2 is a concrete counterexample: broad short-form benchmark retention can remain near parity while long-horizon agentic capability drops much more sharply.
+
+### Candidate principle
+
+> **Capability step-down is a measured search over exact configurations; do not assume degradation is smooth, monotonic or evenly distributed across failure modes.**
+
+A safe search therefore needs workload-specific gates rather than one scalar “accuracy” number.
+
+**Disposition: NEW / STRONGLY MINE.**
+
+---
+
+# 16. Failure tolerance constrains how far substitution can go
+
+The Stacked discussion correctly emphasizes defining acceptable failure before optimizing cost.
+
+A useful order is:
+
+```text
+consequence / reversibility
+        ↓
+important failure modes
+        ↓
+verification / human oversight strength
+        ↓
+acceptable error / uncertainty boundary
+        ↓
+model/mechanism cost search
+```
+
+This prevents a cheaper configuration from being selected on average accuracy while failing catastrophically on a rare property the deployment actually cares about.
+
+### Candidate principle
+
+> **Cost substitution is bounded by the failures the surrounding system can tolerate and reliably detect.**
+
+**Disposition: STRONGLY REINFORCE.**
+
+---
+
+# 17. AI-centered R&D can scale execution without transferring acceptance authority
+
+NaiveAI provides a useful industrial example of AI performing much of an experiment loop while human researchers retain direction, constraints, evaluation criteria and critical decisions.
+
+For the NaiveRT runtime, the company reports 151 documented optimization trials:
+
+```text
+63 adopted
+71 failed validation or rolled back
+17 alternatives / prototypes
+```
+
+AI models performed profiling, implementation, tests, numerical validation and result analysis. Candidate changes still had to satisfy correctness gates and end-to-end performance criteria.
+
+### HE interpretation
+
+The transferable pattern is not “recursive self-improvement.”
+
+It is:
+
+```text
+human / external owner defines objective + constraints + evaluator
+        ↓
+AI executes a broad experiment search
+        ↓
+empirical evidence
+        ↓
+keep / revise / revert
+```
+
+### Candidate principle
+
+> **Automation depth can increase without transferring ownership of the objective or acceptance boundary to the optimizer.**
+
+This is consistent with Autoresearch and HE's existing bounded-autonomy direction.
+
+**Disposition: NEW EVIDENCE / STRONGLY REINFORCE.**
+
+---
+
+# 18. End-to-end objectives outrank local optimization wins
+
+NaiveAI documents cases where isolated kernel/microbenchmark improvements did not improve the full model path, and changes were rejected even when numerically correct.
+
+This gives routing/optimization work a useful reminder:
+
+> **A local stage win only matters if the downstream workflow consumes that property.**
+
+Examples in HE include:
+
+- faster model turn but more retries;
+- cheaper reviewer but more fabricated findings;
+- faster kernel but slower full-model path;
+- fewer prompt tokens but worse task completion;
+- smaller model file but worse long-agent control.
+
+### Candidate principle
+
+> **Optimize the end-to-end verified property; use local metrics to diagnose, not to redefine success.**
+
+**Disposition: NEW / STRONGLY MINE.**
+
+---
+
+# 19. Adoption and price statistics retain their sampling frame
+
+Vercel reports that open-weight models carried 56% of **Vercel AI Gateway** token volume in August 2026.
+
+That is meaningful evidence about that gateway's production population. It is not a global census of all AI inference.
+
+Likewise, a provider's current token price says little without workload mix, cache behavior, provider route and date.
+
+### Candidate principle
+
+> **Do not generalize a platform-specific adoption or cost statistic beyond the population and execution conditions that produced it.**
+
+**Disposition: REINFORCE evidence scope.**
+
+---
+
 # Candidate HE principles — research status
 
 > **Route by demonstrated workload fitness, not by model reputation or stage label.**
@@ -447,6 +590,10 @@ For consequential typed decisions, evals should test semantic invariants and adv
 > **A planning artifact transfers judgment forward; its quality determines how safely later stages can use cheaper capability.**
 
 > **Capability substitution is safe only to the degree that surrounding verification can detect the substituted mechanism's failure modes.**
+
+> **Capability step-down is a measured search over exact configurations; do not assume degradation is smooth, monotonic or evenly distributed across failure modes.**
+
+> **Cost substitution is bounded by the failures the surrounding system can tolerate and reliably detect.**
 
 > **The component under evaluation should not be able to loosen the acceptance mechanism that evaluates it.**
 
@@ -463,6 +610,12 @@ For consequential typed decisions, evals should test semantic invariants and adv
 > **Attribute observed behavior to the layer that actually guarantees it.**
 
 > **Schema/type validity is a structural property; semantic correctness requires separate evidence.**
+
+> **Automation depth can increase without transferring ownership of the objective or acceptance boundary to the optimizer.**
+
+> **Optimize the end-to-end verified property; use local metrics to diagnose, not to redefine success.**
+
+> **Do not generalize a platform-specific adoption or cost statistic beyond the population and execution conditions that produced it.**
 
 > **Autonomous scope needs explicit negative boundaries when plausible adjacent work would otherwise look valid.**
 
@@ -481,17 +634,17 @@ classify the work
         ↓
 choose the least-general viable mechanism
         ↓
-set acceptance semantics
+set acceptance semantics + failure tolerance
         ↓
-measure model/effort/runtime options if a model is needed
+measure exact model/effort/runtime options if a model is needed
         ↓
-use the least expensive option that preserves required behavior
+step down only while required behavior remains inside the boundary
         ↓
 independently verify
         ↓
 revalidate when the model/runtime/decision contract changes
 ```
 
-For unattended delivery, add stronger assurance only where the autonomy actually requires it: protected acceptance authority, known-negative verifier calibration, candidate identity, bounded repair, explicit negative scope, and structural evaluation isolation where contamination would invalidate the evidence.
+For unattended delivery or automated optimization, stronger assurance is needed only where the autonomy actually requires it: protected acceptance authority, known-negative verifier calibration, candidate identity, bounded repair, explicit negative scope, structural evaluation isolation where contamination would invalidate evidence, and end-to-end acceptance metrics that the optimizer cannot silently redefine.
 
 That keeps model economics subordinate to correctness instead of turning cost optimization into a new control plane.

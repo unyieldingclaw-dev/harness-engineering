@@ -11,6 +11,7 @@ Primary evidence:
 - `01 Research/Sources/CoderOne — Jev-Style Fine-Tuning, Decision Models & Evaluation Isolation — 2026-09-26.md`
 - `01 Research/Sources/Prompt Engineering — Bonsai 2 Compression, Agentic Horizon & Trace Failure — 2026-09-28.md`
 - `01 Research/Sources/Stacked Podcast — Naive-N0.5-Flash, AI-Centered R&D & Capability Step-Down — 2026-09-28.md`
+- `01 Research/Sources/Beyond Coding — Carlos Kelkboom, Planning Scaffolds & Iterative Agent Engineering — 2026-10-15.md`
 
 Related HE research:
 
@@ -40,7 +41,8 @@ It is a staged lifecycle in which:
 9. evaluation isolation matches the real leakage boundary when independence matters;
 10. behavioral evaluation covers the horizon at which failures can compound;
 11. end-to-end acceptance outranks attractive local/microbenchmark wins;
-12. metrics close the loop only when they change an engineering decision.
+12. metrics close the loop only when they change an engineering decision;
+13. planning fixes high-cost structural freedoms before implementation when accidental invention would create expensive path dependence.
 
 This maps cleanly onto Superpowers + PMB + ACR without requiring another workflow framework.
 
@@ -77,6 +79,126 @@ The harness does not need to own every artifact. It needs to know which source o
 This is stronger than "follow a workflow" because it makes transitions inspectable and reduces hidden conversational state.
 
 **Disposition: REINFORCE.**
+
+---
+
+# 1A. Planning should freeze high-cost structural freedoms before implementation
+
+The Carlos Kelkboom / SlopCodeBench pass adds a planning-time refinement that is missing from a generic "design → plan → implement" lifecycle.
+
+A coding agent can satisfy the immediate request while silently inventing:
+
+- responsibility boundaries;
+- dependency direction;
+- data/type shapes;
+- public interfaces;
+- persistence/integration seams;
+- deployment assumptions;
+- duplicate implementations of an existing concept.
+
+When those choices are expensive to reverse, the plan should explicitly decide which of them are **not** delegated to implementation.
+
+A useful working abstraction is a **Scaffold Contract**:
+
+~~~text
+Scaffold Contract
+  ├─ ownership / responsibility boundaries
+  ├─ dependency direction
+  ├─ core domain/data shapes
+  ├─ important interfaces
+  ├─ integration seams
+  ├─ runtime/deployment constraints
+  ├─ representative examples
+  ├─ executable invariants where cheap
+  └─ known-plausible extension pressures
+~~~
+
+The Scaffold Contract is a concept, not a required new file. It should live inside the design/spec/implementation-plan artifact that already owns those decisions.
+
+### Scaffold depth is risk-directed
+
+Do not scaffold every task to the same depth.
+
+A useful heuristic is:
+
+| Work intent | Planning treatment |
+|---|---|
+| Spike / throwaway experiment | minimal boundary; make discard cheap |
+| Normal feature | ownership, interfaces/types, dependency direction, representative verification |
+| Durable subsystem | above + data contracts, integration/deployment seams, likely extension points |
+| Cross-cutting / high-consequence | above + invariants, migration/rollback, security/observability boundaries, architecture checks where justified |
+
+The governing question is:
+
+> **How expensive would the wrong structural choice be to discover after the implementation agent has generated a large amount of code?**
+
+### Extension-pressure test
+
+Before high-volume implementation, test the scaffold against one to three **known-plausible** changes supported by current requirements, roadmap or demonstrated pressure.
+
+The purpose is not speculative extensibility. It is to catch an obvious path-dependence trap while structural reversal is still cheap.
+
+~~~text
+current requirement
+      ↓
+accepted scaffold
+      ↓
+known-plausible extension
+      ↓
+does the extension fit the same ownership/interfaces?
+      ├─ yes → proceed
+      └─ no  → revise scaffold before implementation
+~~~
+
+Skip this test when no plausible extension pressure is known.
+
+### Logical scaffold vs physical scaffold
+
+For durable work, the logical scaffold may optionally be materialized in an isolated worktree before substantive implementation:
+
+- folders/projects;
+- interface/type declarations;
+- selected signatures;
+- empty adapters/modules;
+- architecture/dependency checks;
+- representative test skeletons.
+
+Run cheap deterministic checks, then stop.
+
+This creates a **Scaffold Gate**:
+
+> **Does the materialized structure match the accepted scaffold closely enough that the implementation agent is filling an agreed shape rather than silently inventing a new one?**
+
+A spike can skip this entirely. The gate exists to reduce expensive structural drift, not to create ceremony.
+
+### Extension-horizon evidence
+
+SlopCodeBench provides corroborating evidence that iterative agent work can degrade structurally across successive specification changes even when local checkpoints remain the unit of progress. The benchmark should not be treated as final authority: its public runner describes it as an evolving evaluation primitive and independent audit work has challenged parts of the measurement instrument.
+
+The durable HE point is narrower:
+
+> **A current-task pass does not establish extension fitness.**
+
+For long-lived agent-built code, verification may therefore need to include whether accepted structural invariants survived the change:
+
+- forbidden dependency checks;
+- module ownership violations;
+- duplicated domain implementations;
+- architecture tests;
+- complexity concentration;
+- scaffold-to-implementation traceability where valuable.
+
+### Candidate principles
+
+> **Front-load the few structural decisions whose accidental invention would make future change expensive; let implementation agents generate freely inside those boundaries.**
+
+> **Scaffold depth should scale with expected lifetime, change pressure, consequence and reversibility.**
+
+> **Pressure-test structure against known-plausible change, not speculative universality.**
+
+> **When a stable scaffold rule becomes mechanically checkable, prefer deterministic enforcement over repeatedly asking the model to remember it.**
+
+**Disposition: REINFORCE / ASSESS in real planning workflows. Do not create a mandatory new artifact until a consumer requires one.**
 
 ---
 

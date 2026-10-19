@@ -522,6 +522,58 @@ Do not preserve a workaround merely because it was once useful.
 
 ---
 
+# 13A. Harness mechanisms need measured contribution
+
+The 2026-10-19 Apple MLE and HarnessTax evidence adds a stronger control condition for HE.
+
+Apple's autonomous-MLE study reports that, under the tested equal-time / same-backbone conditions,
+elaborate open-source MLE harnesses did not outperform a minimal coding-agent baseline. HarnessTax
+likewise shows that the same model can have similar task success across different coding harnesses
+while cost moves materially.
+
+Neither result proves that minimal harnesses always win. They do establish that **added machinery
+does not get credit merely for existing**.
+
+A useful HE experimental pattern is a **Harness Ablation Protocol**.
+
+```text
+H0 = minimum credible harness for the task
+H1 = H0 + one candidate mechanism
+H2 = H1 + one additional mechanism
+...
+```
+
+Hold the task corpus and model/runtime configuration stable where possible and measure:
+
+- task success / correctness;
+- end-to-end acceptance;
+- token/provider cost;
+- wall time;
+- tool calls;
+- retries / repeated reads;
+- human intervention;
+- constraint violations;
+- recovery behavior;
+- consequence-relevant failures.
+
+A complementary **model ablation** holds the harness/configuration stable while changing the model.
+
+### Experimental attribution rule
+
+Automatic provider/model failover should be disabled in experiments that are attempting to measure
+a specific model or harness contribution. If failover is enabled, failover itself is part of the
+treatment and the result cannot be attributed to one model.
+
+### Candidate principles
+
+> **Compare new harness machinery against the smallest credible baseline that can perform the task.**
+
+> **Measure cost per successful accepted outcome, not raw token reduction, model price, or harness sophistication.**
+
+> **A harness feature should be able to name the property it purchases and show evidence that the workload consumes that property.**
+
+---
+
 # 14. The split boundary must match the leakage boundary
 
 CoderOne's Jev-style fine-tuning experiment provides a concrete behavioral-eval example.

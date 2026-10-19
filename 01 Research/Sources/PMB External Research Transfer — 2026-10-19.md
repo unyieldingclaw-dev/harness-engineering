@@ -58,6 +58,6 @@ The commit-linked copies provide the detailed provenance and observations. A clo
 
 ## Disposition
 
-Keep this source-specific evidence in HE. Retire redundant *open PRs* on PMB only after this HE research is committed to a retained branch/PR; do not delete their historic commits or attribute their content to implementation evidence. Leave PMB bug fixes, operational integrations, review gates, and the product's own authoritative knowledge unaffected.
+Keep this source-specific evidence in HE. PMB research PRs [#22](https://github.com/unyieldingclaw-dev/personal-memory-bank/pull/22), [#23](https://github.com/unyieldingclaw-dev/personal-memory-bank/pull/23), and [#24](https://github.com/unyieldingclaw-dev/personal-memory-bank/pull/24) were **closed without merging** on 2026-10-19 after this source record was committed to the HE branch. Their linked original commits remain the detailed source trail, but those historical links are not a guaranteed permanent archive. Retain the evidence here and do not confuse it with implementation validation. PMB bug fixes, operational integrations, review gates, and authoritative product knowledge remain unaffected.
 
 **No architectural decisions, runtime changes, or new validation thresholds.**

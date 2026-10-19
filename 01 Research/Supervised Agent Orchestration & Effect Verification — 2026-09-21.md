@@ -388,6 +388,72 @@ A cron expression plus prompt is insufficient once side effects, remote hosts, r
 
 ---
 
+# 9A. Long-horizon work should be event-driven, not inference-driven
+
+Arca's 2026 long-horizon agent example distinguishes a goal that spans days from a model that runs
+continuously for days.
+
+The preferred lifecycle for external waits is:
+
+```text
+perform runnable work
+      ↓
+reach external dependency
+      ↓
+persist task state
+      ↓
+stop inference
+      ↓
+event / time / human action
+      ↓
+re-admit the task
+      ↓
+resume in a fresh bounded run
+```
+
+Wake-up signals may include:
+
+- human response or approval;
+- artifact arrival;
+- CI/deployment completion;
+- issue/ticket change;
+- settlement or external-system event;
+- scheduled time.
+
+Human work can therefore be a state transition/event in the workflow rather than prose that remains
+in model context indefinitely.
+
+### HE implication
+
+> **Persist the job, not the inference.**
+
+This does not justify a generalized scheduler. Use event-driven continuation only where a real
+workflow has external waits that otherwise create polling, idle inference, or fragile human memory.
+
+# 9B. Coordinator/worker fan-out should return evidence, not transcripts
+
+A coordinator can dispatch independent work such as migration analysis, code changes, and
+reproduction when decomposition creates real information value.
+
+The default fan-in object should be the worker's **result, evidence, uncertainty, and required next
+action**, not its entire conversational transcript.
+
+Use multiple workers because of:
+
+- independence;
+- specialization;
+- uncertainty reduction;
+- parallel critical-path value;
+- independent corroboration.
+
+Do not use multiple workers merely to increase agent count.
+
+### HE implication
+
+> **Fan out for independent information value; fan in the evidence required for the next decision.**
+
+---
+
 # 10. Fan-out is not the goal; controlled settlement is
 
 The video emphasizes large numbers of concurrent agents. The source is more conservative and more useful.

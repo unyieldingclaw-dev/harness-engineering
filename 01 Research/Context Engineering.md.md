@@ -504,6 +504,57 @@ Fresh sessions should inherit current state rather than depending on reconstruct
 
 This separation is especially important when multiple concurrent sessions work on the same project.
 
+### Separate Knowledge, Task State, Execution Artifacts, and Inference Context
+
+Long-horizon agent work should not collapse every form of persistence into one chat history or one
+ever-growing context window.
+
+Treat at least four resources as distinct:
+
+- **Knowledge** — reusable project/domain truth that may outlive a task.
+- **Task state** — where one specific job stands: completed work, unresolved work, blockers,
+  waiting condition, next action, and continuation authority.
+- **Execution artifacts** — worktrees, prepared environments, snapshots, caches, derived files, or
+  other resumable material that support execution but are not project truth.
+- **Inference context** — only the information a particular model call needs to choose the next
+  action.
+
+Each has a different authority, retention policy, and invalidation lifecycle.
+
+A long-lived objective therefore does not imply a long-lived inference session. When work reaches
+an external dependency, persist the task state, stop the inference loop, and resume on the event or
+time condition that makes the next step runnable.
+
+> **Persist the job, not the inference.**
+
+This sharpens the existing current-state/history distinction and prevents context-window size from
+becoming a substitute for state design.
+
+### Epistemic-Preserving Compaction and Handoff
+
+Compression is a correctness boundary, not only a token-efficiency mechanism.
+
+A compacted summary that changes "probably caused" into "caused" has upgraded uncertainty into fact
+and therefore changed the evidence state even if the topic remains semantically similar.
+
+Where a handoff, summary, memory record, or fan-in artifact carries claims forward, preserve the
+status that matters to the next decision, such as:
+
+- verified;
+- inferred;
+- speculative / hypothesis;
+- unresolved;
+- failed attempt;
+- decision;
+- constraint.
+
+The exact vocabulary may vary by consumer. The invariant is:
+
+> **Compaction must preserve epistemic state, not merely semantic gist.**
+
+Do not preserve every sentence merely to avoid this risk; preserve the evidence class and enough
+provenance to recover the source when the distinction matters.
+
 ### Durable Knowledge Is a Harness Responsibility
 
 Individual model executions are temporary.

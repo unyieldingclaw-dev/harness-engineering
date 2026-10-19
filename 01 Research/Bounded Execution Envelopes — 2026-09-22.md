@@ -157,6 +157,118 @@ Examples:
 
 ---
 
+# Control plane, execution plane, and assurance plane
+
+The 2026-10-19 Turing Post / AI Engineer NYC pass suggests a more precise decomposition than
+treating every non-model mechanism as one undifferentiated "harness."
+
+```text
+MODEL
+  ↓
+TASK / CONTEXT SCAFFOLDING
+  ↓
+CONTROL PLANE
+  ↓
+EXECUTION PLANE
+  ↓
+ASSURANCE PLANE
+```
+
+## Task / context scaffolding
+
+Examples:
+
+- task prompt;
+- plans;
+- skills and references;
+- retrieval;
+- routing;
+- compacted state;
+- worked examples.
+
+This layer is most exposed to model-capability drift and should carry a strong burden of proof when
+it becomes large or mandatory.
+
+## Control plane
+
+Examples:
+
+- triggers and admission;
+- identity;
+- permissions;
+- quotas and budgets;
+- approval state;
+- lifecycle transitions;
+- continuation/wake-up conditions.
+
+## Execution plane
+
+Examples:
+
+- workspace/worktree;
+- sandbox;
+- shell and tools;
+- compute;
+- filesystem;
+- network;
+- connectors.
+
+## Assurance plane
+
+Examples:
+
+- traces;
+- deterministic checks;
+- evaluators;
+- approval receipts;
+- effect verification;
+- regression gates.
+
+The names are conceptual, not a requirement to build four services. Their value is ownership:
+each required property should be implemented at the layer that can actually guarantee it.
+
+### Durable implications
+
+> **Models may outgrow behavioral scaffolding; they do not outgrow external enforcement merely by reasoning better.**
+
+> **Put a constraint in prompt text only when advisory behavior is sufficient. Put consequential boundaries outside the model when the runtime can enforce them.**
+
+# Capability, not secret
+
+The Google DeepMind Managed Agents example reinforces a narrow credential principle: the agent can
+receive a placeholder or scoped capability while a proxy/runtime owns the reusable secret and
+releases it only for the configured destination.
+
+The exact mechanism is platform-specific, but the boundary is durable:
+
+> **Give the model the capability required for the task without exposing the reusable secret when the runtime can enforce that separation.**
+
+Least privilege therefore includes both **what the agent may do** and **what sensitive material the
+model ever needs to see**.
+
+# Approval request vs approval enforcement
+
+A skill or prompt may tell an agent to ask for approval. That is useful behavioral guidance.
+
+For consequential operations, however, the action boundary should independently prevent execution
+until the required approval state exists.
+
+```text
+agent proposes
+      ↓
+dry run / reviewable effect
+      ↓
+named human or policy approves
+      ↓
+runtime gate verifies approval
+      ↓
+effect is applied
+```
+
+> **The model may know that approval is required; the action boundary should enforce it when the consequence warrants enforcement.**
+
+---
+
 # PMB boundary
 
 PMB should not automatically become the enforcer for every bounded-run dimension.

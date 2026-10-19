@@ -345,6 +345,54 @@ The same discipline should apply to bespoke local tools: if repeated use no long
 
 ---
 
+# 8A. Behavioral scaffolding needs admission and retirement tests
+
+The 2026-10-19 Turing Post / Apple / HarnessTax pass strengthens the existing deletion principle.
+
+A model-specific workaround should not become permanent merely because it once fixed a real failure.
+When practical, record both the evidence that justified adding the mechanism and the evidence that
+would justify removing it later.
+
+A useful lifecycle is:
+
+```text
+observed failure X
+      ↓
+smallest owning correction Y
+      ↓
+reproduction / eval case Z
+      ↓
+Y improves Z
+      ↓
+model / runtime changes materially
+      ↓
+rerun Z without Y
+      ↓
+still passes? ── yes → remove or reduce Y
+           └── no  → keep with current evidence
+```
+
+This applies most strongly to **behavioral compensation**:
+
+- long instruction blocks;
+- forced planning rituals;
+- delegation reminders;
+- model-specific examples;
+- redundant reviewer roles;
+- recovery prompts for limitations the current model may no longer have.
+
+It does not imply automatically removing controls whose purpose is external enforcement rather than
+model compensation, such as permission boundaries, sandboxing, deterministic approval gates,
+credential isolation, or evidence requirements.
+
+### Candidate principle
+
+> **Temporary model compensation should have an admission test and, when practical, a retirement test.**
+
+> **Keep durable controls because of the property they enforce, not because the model is weak.**
+
+---
+
 # 9. Retention is part of the harness design
 
 A history-mining loop creates pressure to keep raw transcripts indefinitely.
@@ -374,6 +422,43 @@ Not every organization or project will use all three.
 > **Preserve the evidence needed for learning, not an unlimited copy of all agent history.**
 
 This extends Source Preservation without turning HE into an archive.
+
+---
+
+# 9A. Run retention contract
+
+The Arize Signal evidence sharpens the existing retention rule from trace storage into execution
+lifecycle design.
+
+A run should state what survives because a successor genuinely needs it and what disappears because
+it was only execution exhaust.
+
+### Keep deliberately
+
+- accepted output;
+- verified findings;
+- durable task-state checkpoint;
+- selected traces/evidence required for replay, audit, or recovery;
+- approved memory;
+- promoted reusable rules/skills.
+
+### Destroy deliberately
+
+- ephemeral sandbox;
+- short-lived credentials;
+- scratch checkout/worktree after its successor need ends;
+- disposable intermediate context;
+- redundant raw tool output after required evidence is extracted;
+- abandoned temporary artifacts.
+
+The exact retention set is workload-specific.
+
+### Candidate principle
+
+> **Persistence must be earned by a successor need, not inherited because the agent happened to see or create something.**
+
+This does not require a new storage layer. It is a lifecycle contract that existing runtime,
+repository, PMB, or trace mechanisms may already satisfy.
 
 ---
 

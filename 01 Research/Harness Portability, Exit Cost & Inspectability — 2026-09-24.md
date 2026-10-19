@@ -48,6 +48,41 @@ A component is more replaceable when its owned state and contracts remain unders
 
 ---
 
+# 1A. Model portability and harness portability are separate
+
+The 2026-10-19 Ollama/Claude Code and HarnessTax pass reinforces that "the coding agent" is not one
+indivisible product.
+
+At minimum, distinguish:
+
+```text
+model
++ model/provider adapter
++ harness
++ execution/runtime configuration
+```
+
+A model may be usable through more than one harness, and the same harness may be able to drive more
+than one model. That separation creates both an exit path and an experimental control.
+
+Two useful portability tests are:
+
+1. **Hold the model constant; swap the harness.**
+   - measures harness contribution, cost, tool behavior, and dependency coupling.
+2. **Hold the harness constant; swap the model.**
+   - measures how much observed behavior belongs to the backbone versus surrounding machinery.
+
+This does not require HE to adopt a universal router. In fact, automatic model/provider failover can
+make attribution harder when reproducibility is the objective.
+
+### Candidate principle
+
+> **Own durable workflow/state/evidence above the model-harness pairing where practical; treat both model and harness as replaceable execution dependencies unless a measured requirement says otherwise.**
+
+> **Portability is proven by a controlled swap, not by an abstraction layer existing on paper.**
+
+---
+
 # 2. Exit cost should be explicit during dependency selection
 
 Before making a harness/runtime/tool a durable dependency, ask:

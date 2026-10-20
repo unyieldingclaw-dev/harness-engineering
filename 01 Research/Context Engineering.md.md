@@ -764,6 +764,8 @@ Research reviewed from:
 
 This research is being evaluated for architectural patterns and ideas. Matt Pocock's implementation is not being adopted or copied.
 
+**2026-10-19 interview corroboration:** `01 Research/Sources/Matt Pocock — Agent Environment, Intent & Verification Interview — 2026-10-19.md` preserves the speaker's examples. His video-editor story **reinforces** existing “Durable WHAT vs Implementation HOW” and “Eyes as Evidence Acquisition” findings; executable feedback is already covered by HE-001. A deteriorating spec is a plausible *inference*, not a demonstrated root cause, and his lower-effort preference is not a controlled cost/quality comparison. No new architecture or assessment requirement follows.
+
 ### Core Finding
 
 A potentially useful distinction exists between **workflow orchestration** and **engineering capabilities**.

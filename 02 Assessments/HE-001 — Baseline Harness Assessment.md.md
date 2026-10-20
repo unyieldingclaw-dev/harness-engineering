@@ -20,6 +20,8 @@ Branch: main
 Repository: ai-code-review-agent  
 Branch: main
 
+**Scope clarification (2026-10-19):** HE-001 covers the checked-in public `unyieldingclaw-dev/ai-code-review-agent` repository on `main`, where `src/core/config.ts` selects `provider: 'ollama'` and `src/core/llm/ollamaProvider.ts` implements that default. This is a source-code observation, not a claim about active machines or other deployments. Distinct environments require their own authorized evidence.
+
 ---
 
 ## Questions

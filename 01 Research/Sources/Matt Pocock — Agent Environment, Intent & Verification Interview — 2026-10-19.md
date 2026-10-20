@@ -7,7 +7,7 @@
 - Reviewed 2026-10-19 from a user-supplied 876-line timestamped transcript.
 - Evidence class: attributed practitioner reports, not independent measurements or observations in HE.
 - Preservation status: this source-derived note is preserved; the original transcript is user-held, not vendored or redistributed.
-- Related but not independent: open HE PR #6 examines Pocock's skill source code. Two accounts from the same practitioner are not independent corroboration.
+- Related but not independent: [HE PR #6](https://github.com/unyieldingclaw-dev/harness-engineering/pull/6) examines Pocock's skill source code. Two accounts from the same practitioner are not independent corroboration.
 
 ## Specific interview evidence
 

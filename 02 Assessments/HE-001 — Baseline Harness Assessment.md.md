@@ -555,6 +555,21 @@ goal → action → evidence → evaluation → next action.
    Determine whether the evidence is relevant to the acceptance criteria
    and whether it materially reduces the risk of undetected failure.
 
+Before attributing poor output to model capability, reasoning effort, or the need for another agent, assess whether the workflow is missing an acceptance-relevant **guide**, **capability**, or **sensor**.
+
+Where practical, distinguish:
+
+- missing or ambiguous intent / project guidance;
+- inaccessible relevant state;
+- missing authorized tool/runtime capability;
+- missing post-action observability;
+- missing deterministic feedback;
+- residual semantic judgment that actually requires stronger inference.
+
+A specialist agent or higher model tier should not be the default compensation for a missing tool, missing sensor, or enforceable policy boundary.
+
+This is a diagnostic heuristic rather than a required stage gate.
+
 For each identified loop, determine:
 
 - what establishes the goal;

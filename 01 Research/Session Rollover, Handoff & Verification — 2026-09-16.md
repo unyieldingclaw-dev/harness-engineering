@@ -164,6 +164,51 @@ Do not silently copy project files merely to make a handoff self-contained.
 
 ---
 
+# 4A. Handoff, pickup, and recall are different recovery operations
+
+The 2026-10-21 pstack follow-up provides a useful distinction between three continuation mechanisms.
+
+## Handoff
+
+Producer-authored transfer at a known boundary.
+
+Use when the current actor is available to preserve only the ephemeral state that authoritative project artifacts do not already hold.
+
+## Pickup
+
+Consumer-side continuation of one known prior execution trail.
+
+Use when the successor can identify the branch/session/worktree and needs to establish what landed, what remains, and the exact resume point.
+
+## Recall
+
+Consumer-side reconstruction from multiple historical and shared sources.
+
+Use when there is no trustworthy handoff, the work spans several threads, or relevant state must be rediscovered across transcripts, source control, issues, team chat, docs, incidents, or other source-owned systems.
+
+```text
+planned transition + predecessor available
+        → narrow handoff
+
+known prior trail
+        → pickup
+
+uncertain / multi-source historical state
+        → recall
+```
+
+Recall is potentially much more expensive and can surface stale or conflicting history, so current live/project state must still govern.
+
+### Candidate principles
+
+> **Do not pay reconstruction cost when authoritative durable state plus a narrow handoff already answers the successor's job.**
+
+> **Recall is recovery/search over historical evidence, not a replacement for current project truth.**
+
+For PMB, this supports keeping `handoff.md` narrow rather than expanding it into a general transcript summary. A future recall capability, if needed, should be a separate retrieval operation.
+
+---
+
 # 5. Verification ritual vs evidence-directed verification
 
 The source correctly identifies a real anti-pattern:

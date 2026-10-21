@@ -269,6 +269,41 @@ effect is applied
 
 ---
 
+# Authority changes should invalidate stale in-flight effects
+
+The 2026-10-21 Noodle inspection provides a concrete control-plane mechanism for asynchronous work: a monotonic **mode epoch**.
+
+An effect is associated with the authority state under which it was created. If the operator changes the system from a more autonomous mode to a more restrictive one before the effect is applied, the old effect can be rejected as stale.
+
+```text
+effect prepared under authority epoch 7
+        ↓
+operator changes authority → epoch 8
+        ↓
+old effect reaches boundary
+        ↓
+epoch mismatch
+        ↓
+cancel / require re-authorization
+```
+
+This closes a subtle gap in long-running systems. Checking permission only when work starts is insufficient if authority can change while work is still in flight.
+
+The exact mechanism need not be an integer epoch. Equivalent designs can bind the effect to:
+
+- an approval receipt/version;
+- policy revision;
+- capability lease;
+- transaction/session authority token.
+
+### Durable implication
+
+> **When authority changes, pending consequential effects created under the old authority should not silently retain permission. Bind the effect to the authority state that authorized it and revalidate at the action boundary.**
+
+This is an **ASSESS** pattern for future asynchronous orchestration, not a current PMB implementation requirement.
+
+---
+
 # PMB boundary
 
 PMB should not automatically become the enforcer for every bounded-run dimension.

@@ -342,6 +342,36 @@ This is directly relevant to ACR noise reduction.
 
 ---
 
+# 6A. Deterministic execution should absorb mechanical agent work
+
+The Lauren Tan / pstack evidence extends the deterministic-review principle into execution.
+
+When a repeatable transformation, query, migration step or verification method can be encoded as a small script, codemod, generator or checker, repeated model execution adds variance without adding useful judgment.
+
+This creates a useful pre-fan-out test:
+
+```text
+repeated work
+   ↓
+can the mechanical part be compiled into a rerunnable lever?
+   ├── yes → build the smallest script / codemod / checker
+   └── no  → retain model judgment where the variability is real
+```
+
+A deterministic lever can also become the common contract used by parallel agents, reducing drift between workers.
+
+This does not mean every one-off task deserves a framework. The lever must remain smaller and cheaper than the work it replaces or proves.
+
+### Candidate principles
+
+> **Before parallelizing probabilistic workers, ask whether the repeated work can be compiled into a deterministic lever.**
+
+> **Use model capacity for judgment; use deterministic machinery for mechanics when the boundary is stable enough to encode.**
+
+**Disposition: STRONGLY REINFORCE deterministic ownership; ASSESS on representative workloads.**
+
+---
+
 # 7. Metrics are decision inputs, not a product requirement
 
 The Claude Academy maintenance loop uses system metrics to detect degradation and initiate diagnosis or new work. The durable mechanism is not the observability vendor.

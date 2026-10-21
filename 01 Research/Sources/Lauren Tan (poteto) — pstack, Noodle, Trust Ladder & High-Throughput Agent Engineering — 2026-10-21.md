@@ -797,3 +797,419 @@ It is:
 > **High agent throughput is downstream of a highly engineered environment: deterministic mechanics, strong verification, direct source access, isolation, explicit authority, and continuous structural correction. Parallelism is the consequence of trustable machinery, not the starting strategy.**
 
 For HE, the strongest new additions are the deterministic-lever test, buffered systemic diagnosis, reversibility/verifiability as the ceiling on sampled supervision, durable order identity above session identity, explicit event-loss semantics, and stale-authority invalidation for asynchronous effects.
+
+
+---
+
+# 23. 2026-10-21 follow-up: pstack is changing fast enough that source snapshots matter
+
+A second user-supplied walkthrough, Rob Shocks' **Pstack Is Agent Overkill. Use It Anyway!**, was checked against the live public pstack source rather than treated as current documentation.
+
+Secondary source:
+
+- https://www.youtube.com/watch?v=lUhXa8GiXns
+
+At the inspected `cursor/plugins` HEAD `190d28736eff128ec94f502a22c7fe0c4b56cd37`:
+
+- pstack reports version `0.15.29`;
+- the official README lists **23 playbooks**;
+- the official README lists **24 principles**;
+- current source includes `/tdd`, `/recall`, `/interrogate`, app-verification generators/maintenance, and beta formal-verification generators/maintenance;
+- the same repository now contains a generated **Claude Code adapter** under `harness/pstack/claude-code/`.
+
+Some screenshots and secondary walkthrough counts therefore describe earlier snapshots.
+
+### HE implication
+
+> **For fast-moving skill libraries, cite the repository commit/ref and inspect the current implementation before promoting a video description into architecture.**
+
+---
+
+# 24. TDD in current pstack is narrower than "always test first"
+
+Current `/tdd` is explicitly conditional.
+
+It is intended when:
+
+- the user explicitly asks for TDD / a regression test; or
+- a bug has an obvious, cheap local executable test path.
+
+It explicitly says to skip forcing a new test when the path is:
+
+- unclear;
+- expensive;
+- integration-heavy;
+- brittle;
+- dependent on production-only state;
+- or requires broad unrelated fixture/harness setup.
+
+The key evidence contract is:
+
+```text
+intended behavior understood
+      ↓
+smallest executable regression check
+      ↓
+failing-before evidence for the intended reason
+      ↓
+smallest production fix
+      ↓
+passing-after evidence
+```
+
+If a durable failing test is impractical, the skill allows the nearest useful executable regression check:
+
+- script;
+- manual reproduction command;
+- browser automation;
+- snapshot comparison;
+- log assertion;
+- focused integration check.
+
+It explicitly prefers **no new test over a bad test**.
+
+### HE refinement
+
+> **TDD is valuable when it cheaply turns the defect into executable evidence; it should not become a ritual that manufactures brittle tests merely to satisfy process.**
+
+The test's red state is evidence only when it fails for the intended reason.
+
+---
+
+# 25. Test quality needs both sensitivity and refactor tolerance
+
+pstack's `principle-test-behavior-not-implementation` gives a compact two-sided oracle test.
+
+Imagine two changes:
+
+1. **Break the externally observable behavior.**
+   - the test should fail.
+2. **Restructure internals while preserving the externally observable behavior.**
+   - the test should continue to pass.
+
+This distinguishes a useful behavioral contract from an implementation-pinned test.
+
+The principle also requires expected results to come from the requirement or an independent source of truth, not from the same algorithm under test.
+
+### Transferable principle
+
+> **A useful regression test should be sensitive to the behavior it protects and insensitive to implementation changes that preserve that behavior.**
+
+This sharpens HE's existing distinction between test existence and test/oracle quality.
+
+---
+
+# 26. A new or changed verifier should demonstrate that it can fail
+
+Current pstack goes beyond ordinary red/green TDD in both app verification and formal verification.
+
+The formal-verification generator requires the check to catch a deliberately broken variant before trusting a pass.
+
+The formal-maintenance skill repeats that calibration after the model/property is updated: if the final check passes, deliberately break the guarded property and prove the updated verifier still detects it.
+
+This is highly compatible with HE's existing verifier-calibration and mutation-testing research.
+
+### Durable refinement
+
+> **For consequence-relevant verifiers, a green result is stronger when the verifier has demonstrated sensitivity to a representative known-bad case under the current harness.**
+
+This does **not** imply mutation testing or formal proof for every unit test.
+
+Use this level of calibration where a false green would materially mislead acceptance.
+
+---
+
+# 27. Formal verification is a targeted extension, not a new default testing policy
+
+pstack now ships beta:
+
+- `/create-formal-verification-skill`
+- `/maintain-formal-verification-skill`
+
+The generator targets promises where:
+
+- failure is consequential; and
+- ordinary tests are unlikely to reach the important state space.
+
+Examples named by the skill include:
+
+- concurrency/orderings;
+- retries;
+- state machines;
+- parsers;
+- unsafe code.
+
+The tool is chosen by the question, not by a universal preference:
+
+- event-order reasoning commonly defaults to TLA+;
+- code-level invariants may use a verifier operating on the implementation;
+- when no suitable verifier exists for the language, the current skill says to exercise the **real code with generated inputs**, not verify a hand-written copy and confuse that with implementation proof.
+
+The skill requires:
+
+- code-to-model traceability;
+- explicit bounds/assumptions;
+- a reproducible command/tool version;
+- a deliberate broken variant proving the verifier can fail;
+- covered code/functions;
+- a sync commit recording the code version the verification describes.
+
+The maintenance skill treats a stale passing model as a dangerous failure mode and distinguishes:
+
+```text
+verification drift
+      from
+product bug
+```
+
+### Public eval evidence and limit
+
+PR #716 reports a preregistered 54-run maintenance-skill evaluation. After correcting scoring artifacts, it reports **no material correctness gain** across the tested cases; the stronger measured effect was process/evidence hygiene:
+
+- updated checks were much more consistently shown to still be able to fail;
+- drift vs bug was explicitly separated;
+- sync-commit metadata was maintained more reliably.
+
+PR #721 provides a more concrete failure-mode result for tool choice: on one JavaScript case, the older instruction caused 6/9 runs to prove a claim only on a hand-written copy of the function; revised wording led all 9 tested runs to check the shipped code.
+
+### HE disposition
+
+**ASSESS selectively.**
+
+Formal verification is promising where the state space and consequence justify it. The current public evidence does not justify making it a universal HE/PMB requirement.
+
+---
+
+# 28. Recall, session pickup, and handoff are different operations
+
+Current pstack explicitly separates:
+
+## Recall
+
+Consumer-side **reconstruction**.
+
+It mines:
+
+- recent in-scope agent transcripts;
+- shared records such as source control, issue trackers, team chat, long-form docs, error tracking;
+- live Git/PR/ticket state;
+
+then returns a compact current-state brief.
+
+## Session pickup
+
+Consumer-side **continuation from one known prior execution trail**.
+
+It reconstructs:
+
+- branch/worktree;
+- landed vs pending work;
+- decisions;
+- next execution point;
+
+and verifies inherited claims against the real artifact.
+
+## PMB-style handoff
+
+Producer-side **state transfer at a known boundary**.
+
+PMB's current design intentionally keeps durable project truth in Memory Bank and uses `handoff.md` only for narrow ephemeral in-flight state that the successor cannot recover naturally.
+
+### HE refinement
+
+```text
+known transition, predecessor available
+        → HANDOFF
+
+known prior trail to continue
+        → PICKUP
+
+no trustworthy handoff / many historical threads
+        → RECALL / RECONSTRUCTION
+```
+
+> **Do not make expensive historical reconstruction the normal path when authoritative durable state and a narrow handoff already exist.**
+
+Recall is a useful fallback/recovery/search capability; it is not evidence that transcript history should become the primary memory system.
+
+---
+
+# 29. Interrogate overlaps code review but is not an acceptance gate
+
+Current `/interrogate`:
+
+- packages the change and stated intent;
+- dispatches multiple read-only reviewers;
+- uses different configured model families rather than invented reviewer personas;
+- gives each the same rubric/context;
+- synthesizes agreement and disagreement;
+- places findings into Act on / Consider / Noted / Dismissed;
+- does **not** auto-apply fixes.
+
+This is a useful adversarial review mechanism.
+
+However it is not equivalent to PMB's current `/code-review` contract, which also includes:
+
+- deterministic baseline-health checks before model review;
+- separate review domains;
+- an independently pinned Opposition reviewer that attacks premises;
+- explicit finding/Blocking semantics;
+- a marker tied to the exact reviewed diff;
+- acceptance/gating behavior.
+
+### HE implication
+
+> **Multi-model adversarial review is one assurance mechanism. It should not silently replace deterministic gates, domain ownership, or explicit acceptance authority.**
+
+For PMB, `interrogate` is best treated as comparison evidence for a possible cross-model challenge layer, not as a replacement for the existing review gate.
+
+---
+
+# 30. Official pstack now demonstrates a useful portability pattern
+
+The secondary walkthrough showed an unofficial `pstack-claude` port. Current upstream evidence is stronger: `cursor/plugins` itself now publishes a generated Claude Code tree under:
+
+```text
+harness/pstack/claude-code/
+```
+
+The upstream README says the generated harness tree is regenerated from canonical pstack and CI fails if the generated copy is stale.
+
+Conceptually:
+
+```text
+canonical workflow / skill source
+          ↓
+host adapter generation
+          ↓
+Claude Code representation
+          ↓
+drift check in CI
+```
+
+This is a useful portability mechanism because host differences are made explicit without requiring the conceptual workflow to be maintained independently in every harness.
+
+### Durable refinement
+
+> **When one workflow must ship across harnesses with different primitives, prefer one canonical semantic source plus explicit generated/maintained adapters and drift checks over independently edited copies.**
+
+This pattern should be evaluated against real host differences; code generation alone does not prove behavioral equivalence.
+
+---
+
+# 31. Current X profile provided additional primary-practitioner context
+
+Public unauthenticated fetching of X returned HTTP 403 in the initial research pass.
+
+Nolan subsequently opened `https://x.com/poteto` in an authenticated browser and the page was readable through the connected browser context.
+
+Visible 2026-10-18 material corroborates that Lauren publicly announced:
+
+- pstack v0.15.27;
+- beta `/create-formal-verification-skill`;
+- a meta-skill that generates project-local formal verification.
+
+The current profile also links pstack as part of Lauren's current work context.
+
+A visible 2026-10-16 post begins with the same trust-building themes found in the interview/public repository: stronger architecture, types/invariants, and clear boundaries.
+
+### Evidence boundary
+
+Only text actually visible in the loaded profile is treated as observed. Truncated "Show more" text is not reconstructed or quoted as if fetched in full.
+
+---
+
+# 32. MoltenBase is ecosystem prior art for skill governance, not Lauren's system
+
+Rob Shocks' video demonstrates an early-access product called **MoltenBase**:
+
+- https://www.moltenbase.com/
+
+It is a Switch Dimension product, not part of Lauren Tan's pstack repository.
+
+The current early-access site describes:
+
+- invocation counts and last-used timestamps;
+- never-called skills;
+- cross-harness inventory;
+- single source of truth;
+- per-agent targets;
+- duplicate/stale detection;
+- approved skill sets;
+- team rollout;
+- local-first/plain-file storage.
+
+The site's metrics/dashboard are explicitly presented as an illustrative early-access view; they are not evidence of Nolan's or pstack's actual usage.
+
+### HE relationship
+
+MoltenBase is concrete product prior art for a lifecycle HE already favors:
+
+```text
+CREATE
+  ↓
+USE
+  ↓
+MEASURE
+  ↓
+CONSOLIDATE
+  ↓
+RETIRE
+```
+
+It reinforces the value of knowing whether skills are actually invoked before treating a large skill library as useful.
+
+### Boundary
+
+Do not build a skill dashboard merely because a product exists.
+
+Usage count alone cannot establish skill value. A rarely invoked safety/recovery skill may be valuable; a frequently invoked skill may still add cost without improving outcomes.
+
+> **Skill telemetry is useful when it informs admission, drift, consolidation or retirement decisions; invocation count is not a quality score.**
+
+---
+
+# 33. PMB-specific testing-policy implication — research candidate, not implemented
+
+Current PMB already has unusually strong testing/review machinery, but its policy is stricter than current pstack TDD in one important way: PMB's workflow currently states a universal implementation-phase rule that production code should not precede a failing test.
+
+The pstack evidence suggests a more precise version worth evaluating:
+
+```text
+BUG / BEHAVIOR CHANGE
+      ↓
+cheap, stable, acceptance-relevant executable regression path?
+      ├── yes → require failing-before evidence for the intended reason
+      │         then minimal fix and passing-after evidence
+      │
+      └── no  → use the nearest acceptance-relevant executable check,
+                state why a durable failing test is impractical,
+                and do not manufacture a brittle test merely for ritual compliance
+```
+
+PMB should retain its existing strengths:
+
+- public/seam behavior over implementation detail;
+- independent expected values;
+- cross-shell parity;
+- exact regression cases;
+- deterministic baseline checks;
+- opposition review;
+- real throwaway-clone execution for destructive gate tests.
+
+The stronger candidate hardening is **oracle quality**, not simply more test files:
+
+1. Can the check observe the behavior actually at risk?
+2. Did failing-before fail for the intended reason?
+3. Would the test fail on a representative broken behavior?
+4. Does it survive an internal refactor that preserves the contract?
+5. Is the expected result independent of the code under test?
+6. For high-consequence gates, has the verifier demonstrated that it can fail under the current harness?
+
+PMB's current `/test-audit` remains useful as a cheap structural inventory, but file-to-test mapping should not be confused with proof that the tests have a meaningful oracle.
+
+### Current disposition
+
+**ASSESS before modifying PMB policy.**
+
+No pstack installation, TDD-policy rewrite, or formal-verification requirement is authorized by this source alone.

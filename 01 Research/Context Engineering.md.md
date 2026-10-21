@@ -618,6 +618,47 @@ A capability boundary is valuable when it permits independent ownership, evaluat
 
 Runtime composition should preserve traceability of the active capabilities and their effects on execution.
 
+### Guides and Sensors as Complementary Control Vocabulary
+
+Birgitta Böckeler's 2026 harness-engineering framework provides useful vocabulary for controls already present across HE:
+
+- **Guides** are feed-forward controls that act before execution to increase the probability of a good first result.
+- **Sensors** are feedback controls that observe after execution and provide evidence for self-correction.
+- Either can be **computational** (deterministic/tool-based) or **inferential** (model-mediated/semantic).
+
+This classification is orthogonal to HE's existing control-plane and assurance distinctions. A sensor can detect a condition without owning authority to permit or block the resulting action.
+
+Examples:
+
+```text
+inferential guide      → repository instructions / skill / reference
+computational guide    → constrained generator / codemod / typed interface
+computational sensor   → test / lint / type check / structural check / runtime metric
+inferential sensor     → semantic review / AI code review / LLM judgment
+```
+
+The useful design question is not whether every workflow has all four categories. It is whether the required property has the cheapest reliable control at the correct point in the loop.
+
+> **Guides steer before action; sensors provide feedback after action. Classify both by how their result is established.**
+
+### Agent Legibility Before Model Escalation
+
+OpenAI's 2026 Codex harness report and the 2026-10-19 Pocock interview independently reinforce the same diagnostic: poor agent outcomes can come from an underspecified or illegible environment rather than insufficient model intelligence.
+
+Before escalating model strength, reasoning effort, or orchestration complexity, determine whether the agent can:
+
+1. understand the required outcome and acceptance boundary;
+2. inspect the relevant current state;
+3. access the authorized capability needed to act;
+4. observe the real post-action effect;
+5. receive an acceptance-relevant feedback signal.
+
+If those properties are missing, a stronger model may spend more tokens reasoning about an environment it still cannot inspect or verify.
+
+This is a diagnostic ordering, not a mandatory workflow.
+
+> **Before escalating model intelligence, improve what the agent can see, do, and verify when those are the actual missing properties.**
+
 ### Human Direction and Measurable Feedback
 
 AI systems can execute increasingly large portions of engineering work, but human judgment remains important at points where goals, architecture, quality, or long-term maintainability are determined.

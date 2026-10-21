@@ -10,6 +10,7 @@ Primary evidence:
 - `01 Research/Sources/Anthropic Opus 5.5 Prompting — Harness-Relevant Runtime Guidance — 2026-09-24.md`
 - `01 Research/Sources/CoderOne — Jev-Style Fine-Tuning, Decision Models & Evaluation Isolation — 2026-09-26.md`
 - `01 Research/Sources/Prompt Engineering — Bonsai 2 Compression, Agentic Horizon & Trace Failure — 2026-09-28.md`
+- `01 Research/Sources/Rob Shocks — Pstack, MoltenBase & Verification-First Agent Engineering — 2026-10-21.md`
 - `01 Research/Sources/Stacked Podcast — Naive-N0.5-Flash, AI-Centered R&D & Capability Step-Down — 2026-09-28.md`
 - `01 Research/Sources/Beyond Coding — Carlos Kelkboom, Planning Scaffolds & Iterative Agent Engineering — 2026-10-15.md`
 
@@ -432,6 +433,35 @@ This is not a universal mutation-testing requirement. The cost should be proport
 This extends existing verifier-calibration work and is especially relevant to authorization gates, concurrency/state-machine checks, and formal verification whose model can drift away from the implementation.
 
 ---
+
+
+# 6D. Verification assets need lifecycle ownership because verifiers can drift
+
+The Rob Shocks / MoltenBase demonstration highlights a second-order failure mode: the verification machinery itself can diverge from the product as the product changes.
+
+A verifier can become misleading in either direction:
+
+- **false red** — legitimate product behavior changes but the verifier still encodes the old contract;
+- **false green** — the verifier still runs but no longer observes the property it is supposed to protect.
+
+For material verification assets, record enough ownership to answer:
+
+- what property is protected;
+- which system/artifact owns that property;
+- what source/version the verifier currently matches;
+- what changes should trigger verifier review;
+- how verifier sensitivity is demonstrated on a known-bad case.
+
+This does not require a new verification platform. The owner can be an existing test, script, integration harness, CI job or documented executable check.
+
+### Candidate principle
+
+> **Verification code is production assurance code: it needs an explicit protected property, an owner, and maintenance when the observed system changes.**
+
+**Disposition: REINFORCE for consequence-relevant gates; keep lightweight for ordinary tests.**
+
+---
+
 
 # 7. Metrics are decision inputs, not a product requirement
 

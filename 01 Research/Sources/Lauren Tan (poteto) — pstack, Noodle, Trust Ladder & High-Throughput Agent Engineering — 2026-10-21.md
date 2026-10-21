@@ -1213,3 +1213,101 @@ PMB's current `/test-audit` remains useful as a cheap structural inventory, but 
 **ASSESS before modifying PMB policy.**
 
 No pstack installation, TDD-policy rewrite, or formal-verification requirement is authorized by this source alone.
+
+
+# 34. MoltenBase screenshots expose a more useful skill-governance schema than invocation count alone
+
+The user supplied additional screenshots from the Rob Shocks walkthrough showing the early-access MoltenBase interface in use.
+
+Observed UI concepts include:
+
+- a skill inventory with scope labels such as built-in, user and team;
+- per-skill usage/session counts and recent activity;
+- provenance/install metadata;
+- detail tabs for **Security**, **Evals** and **History**;
+- separate inventories for **Skills**, **Memories & Rules**, **MCP Servers**, and **Agents**;
+- organization-level surfaces for **Shared Library**, **Policies**, and **Members**;
+- aggregate insight areas for **Activity**, **Cost**, **Delivery**, **Security**, and **Evals**.
+
+These screenshots are product demonstrations, not proof that every displayed control is production-complete or that the displayed counts represent pstack or Nolan's environment.
+
+The current public MoltenBase site independently describes the product as early access and claims local-first skill inventory, usage tracking, cross-agent sync, duplicate/stale detection and approved skill sets.
+
+### HE implication
+
+The useful abstraction is a **capability inventory with lifecycle evidence**, not a "skill dashboard" by itself.
+
+A mature inventory may need to answer:
+
+```text
+What is this capability?
+Where did it come from?
+Who/what may invoke it?
+Which harnesses receive it?
+When was it last used?
+What did it cost?
+Did it improve outcomes?
+Has it been evaluated?
+Has its source changed?
+Is it still approved?
+Can it be rolled back?
+```
+
+That applies to:
+
+- skills;
+- reusable prompts;
+- agents / Misfits;
+- MCP/tool connectors;
+- always-loaded rules.
+
+### Important caution
+
+> **Usage is evidence of activation, not evidence of value.**
+
+A rarely used destructive-operation safety skill may be essential. A frequently invoked skill may add latency and tokens while producing no measurable improvement.
+
+Retirement therefore needs more than "never/rarely called." Useful signals include:
+
+- invocation frequency;
+- task outcome;
+- correction/retry rate;
+- cost;
+- source/provenance;
+- evaluation status;
+- replacement/overlap;
+- consequence if absent.
+
+---
+
+# 35. The Misfit Unit will eventually need capability observability before it needs an agent dashboard
+
+The MoltenBase concept is relevant to Inglorious Bastards / The Misfit Unit, but it suggests a sequence rather than a product requirement.
+
+First prove that a Misfit deserves to exist.
+
+Only after several durable specialists exist does it become useful to track:
+
+```text
+Misfit
+  ↓
+missions invoked
+  ↓
+model / harness / tool configuration
+  ↓
+cost and latency
+  ↓
+accepted outcomes / corrections
+  ↓
+last evaluation
+  ↓
+retirement candidate?
+```
+
+This is stronger than synthetic "agent utilization."
+
+### Candidate principle
+
+> **Observe capability use and outcomes before building organizational metaphors around agents. Instrument the roster only after the roster has earned its existence.**
+
+MoltenBase should therefore be treated as **ASSESS / WATCH** prior art for capability lifecycle management, not as a dependency or a reason to build an HE dashboard now.

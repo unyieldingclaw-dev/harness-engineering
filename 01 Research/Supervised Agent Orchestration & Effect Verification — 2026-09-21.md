@@ -454,6 +454,76 @@ Do not use multiple workers merely to increase agent count.
 
 ---
 
+# 9C. Durable work identity should outrank session identity
+
+The 2026-10-21 Noodle deep dive provides a concrete scaling refinement: its control loop was redesigned around durable **orders and stages** rather than around agent sessions.
+
+That distinction matters because a session is an execution attempt. The durable object the system cares about is the work and its lifecycle state.
+
+```text
+durable task / order
+      ↓
+stage
+      ↓
+attempt / agent session
+      ↓
+completion evidence
+```
+
+At small scale, polling a few sessions may be adequate. At larger scale, Noodle moved toward completion events so orchestration cost follows relevant state transitions rather than repeatedly scanning every worker.
+
+### HE implications
+
+> **Long-horizon orchestration should identify durable work by task/order identity; sessions are attempts or execution handles, not the primary work identity.**
+
+> **At scale, prefer trustworthy terminal-state events over repeated global worker scans when the runtime exposes them.**
+
+This is an implementation option, not a reason to build event infrastructure for small local workflows.
+
+## Event delivery semantics belong in the contract
+
+Noodle also makes an explicit distinction between best-effort lifecycle context and events that would require guaranteed delivery.
+
+That suggests a durable HE question for every asynchronous source:
+
+```text
+Is this event:
+- a hint / context update?
+- evidence that can be reconstructed?
+- a command / approval / effect that must not be lost?
+```
+
+Those categories should not silently share the same transport assumptions.
+
+> **Every event source should state whether it is advisory context, reconstructable evidence, or required delivery. Lossy context and consequential commands need different semantics.**
+
+---
+
+# 9D. Review can move from blocking to sampling only inside a strong consequence envelope
+
+Lauren Tan describes sampling accepted output and using recurring defects to improve the environment instead of manually blocking every pull request.
+
+That can be a legitimate process-assurance strategy, but only when upstream verification and consequence controls are strong enough.
+
+The relevant dimensions include:
+
+- reversibility;
+- verifiability;
+- blast radius;
+- deterministic gates;
+- rollback/recovery quality;
+- consequence of a false negative.
+
+### HE implication
+
+> **Sampling is a process-assurance strategy, not a substitute for consequence-relevant gates. The less reversible or less verifiable the effect, the less safely review can move from blocking to sampling.**
+
+For highly reversible and well-verified work, human review may increasingly audit the process and sampled output rather than every artifact.
+
+For one-way-door effects, irreversible actions, or hard-to-verify domains, blocking approval can remain necessary even when the model/harness has an excellent history.
+
+---
+
 # 10. Fan-out is not the goal; controlled settlement is
 
 The video emphasizes large numbers of concurrent agents. The source is more conservative and more useful.

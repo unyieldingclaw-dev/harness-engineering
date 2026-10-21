@@ -83,6 +83,45 @@ make attribution harder when reproducibility is the objective.
 
 ---
 
+# 1B. Canonical semantics plus generated host adapters can reduce workflow drift
+
+Current upstream pstack provides a useful portability pattern.
+
+The canonical skill/playbook source lives in the Cursor plugin tree, while the same repository generates a Claude Code representation under `harness/pstack/claude-code/`. Upstream documentation states that the generated tree is regenerated from the canonical source and CI checks that it has not drifted.
+
+Conceptually:
+
+```text
+canonical workflow semantics
+          ↓
+host-specific adapter generation
+          ↓
+Claude Code / other harness representation
+          ↓
+drift check
+```
+
+This is stronger than maintaining unrelated copies by hand because semantic ownership remains explicit.
+
+It does not prove behavioral equivalence across hosts. A host may differ in:
+
+- tool semantics;
+- subagent capability;
+- hooks;
+- permissions;
+- model identifiers;
+- invocation lifecycle.
+
+Those differences belong in the adapter and should remain visible/testable.
+
+### Candidate principle
+
+> **When one workflow must span harnesses with different primitives, prefer one canonical semantic owner plus explicit adapters and drift checks over independently edited copies.**
+
+**Disposition: REINFORCE portability mechanism; ASSESS behavioral equivalence per host.**
+
+---
+
 # 2. Exit cost should be explicit during dependency selection
 
 Before making a harness/runtime/tool a durable dependency, ask:

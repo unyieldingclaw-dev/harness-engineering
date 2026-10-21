@@ -372,6 +372,67 @@ This does not mean every one-off task deserves a framework. The lever must remai
 
 ---
 
+# 6B. TDD should produce evidence, not ceremonial red/green
+
+The 2026-10-21 pstack follow-up sharpens how HE should interpret test-first work.
+
+A failing-before check is useful when it is:
+
+- acceptance-relevant;
+- cheap enough to run during the change;
+- stable enough to remain a useful regression artifact;
+- capable of failing for the actual defect.
+
+A red test caused by unrelated setup failure is not evidence of the bug. A test that mainly pins mocks or implementation detail can create maintenance cost without protecting behavior.
+
+A useful default for a bug or behavioral change is:
+
+```text
+practical executable regression path exists
+      ↓
+prove failing-before for the intended reason
+      ↓
+make the smallest fix
+      ↓
+prove passing-after
+```
+
+When the durable test path would require disproportionate harness setup, production-only state, brittle timing, or unrelated fixture churn, use the nearest executable acceptance-relevant check and state the limitation rather than manufacturing a bad test merely to satisfy ritual.
+
+### Candidate principles
+
+> **Test-first is valuable when it makes the failure executable before the fix; do not confuse ceremonial red/green with evidence.**
+
+> **Prefer an honest executable verification alternative over a brittle test whose only value is satisfying process.**
+
+---
+
+# 6C. Consequence-relevant verifiers should demonstrate sensitivity to a known-bad case
+
+A green verifier can be vacuous, stale, or pointed at the wrong artifact.
+
+For high-consequence gates or newly changed verification machinery, stronger evidence comes from showing that the verifier can still fail on a representative broken condition.
+
+Examples include:
+
+- remove or invert the check the property depends on;
+- replay a known historical failure;
+- inject a bounded mutant;
+- reorder a modeled state transition;
+- run a deliberately invalid fixture.
+
+Then restore the real artifact and confirm the expected green state.
+
+This is not a universal mutation-testing requirement. The cost should be proportional to the consequence of a false green.
+
+### Candidate principle
+
+> **A verifier that has demonstrated sensitivity to a representative known-bad case provides stronger evidence than one observed only in the passing state.**
+
+This extends existing verifier-calibration work and is especially relevant to authorization gates, concurrency/state-machine checks, and formal verification whose model can drift away from the implementation.
+
+---
+
 # 7. Metrics are decision inputs, not a product requirement
 
 The Claude Academy maintenance loop uses system metrics to detect degradation and initiate diagnosis or new work. The durable mechanism is not the observability vendor.

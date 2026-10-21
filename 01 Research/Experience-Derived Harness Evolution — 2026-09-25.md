@@ -283,6 +283,52 @@ The same rule applies to opportunity discovery. A newly feasible recurring workf
 
 ---
 
+# 6A. Repeated observations may need buffering before correction
+
+The 2026-10-21 Lauren Tan / pstack pass adds an important diagnostic step before durable correction.
+
+High-throughput systems can observe many local symptoms that share one systemic cause. Fixing each symptom immediately can create a stream of locally plausible patches while hiding the pattern.
+
+A safer path when the failure class is not yet clear is:
+
+```text
+observe
+  ↓
+buffer evidence
+  ↓
+cluster / establish recurrence
+  ↓
+identify the owning cause
+  ↓
+smallest durable correction
+```
+
+The buffer is not a new HE storage requirement. It can be an existing issue set, query, structured log, file or other source-owned artifact.
+
+Once recurrence is established, prefer the strongest owning primitive that can reliably remove or expose the failure:
+
+```text
+architecture / ownership
+        ↓
+types / constrained state
+        ↓
+lint / CI / deterministic check
+        ↓
+behavioral test
+        ↓
+skill / instruction for irreducible judgment
+```
+
+This ordering is a heuristic, not a universal escalation ladder. The owning component and consequence still decide.
+
+### Candidate principles
+
+> **When observations may share a systemic cause, aggregate before mutating; do not let execution velocity collapse diagnosis into one-finding/one-fix.**
+
+> **Promote repeated corrections toward the strongest owning primitive that can make the failure impossible or directly observable; prose is the fallback for irreducible judgment.**
+
+---
+
 # 7. A recommendation is not a validated improvement
 
 The same agent that failed may also generate a plausible but wrong explanation for the failure.

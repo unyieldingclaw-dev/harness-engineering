@@ -122,6 +122,58 @@ Those differences belong in the adapter and should remain visible/testable.
 
 ---
 
+
+# 1C. Cross-agent skill portability needs a managed canonical source, not manual copies
+
+The 2026-10-21 Rob Shocks / MoltenBase demonstration makes the operational form of this portability problem concrete.
+
+MoltenBase was presented as a skill manager for reusing skills across several coding agents. The transferable HE mechanism is not the specific product. It is the need to prevent reusable capability definitions from becoming unrelated copies spread across host-specific folders.
+
+A bounded capability manager should preserve:
+
+- canonical source and version provenance;
+- owner and review state;
+- supported-agent / host metadata;
+- project-local vs user/global scope;
+- controlled deploy/sync;
+- diff-before-update;
+- refusal to silently overwrite unmanaged content;
+- drift detection and rollback;
+- explicit host adapters when semantics differ.
+
+Conceptually:
+
+```text
+canonical skill / capability
+          ↓
+source + version + owner
+          ↓
+host-specific adapter / deployment
+          ↓
+Claude Code / Cursor / Codex / ...
+          ↓
+drift + behavior verification
+```
+
+The important boundary is that a capability registry should remain a deployment/provenance layer.
+
+It should not become:
+
+- project memory;
+- task orchestration authority;
+- a secret store;
+- an autonomous self-modification loop;
+- evidence that a capability behaves equivalently across hosts merely because the same text was copied.
+
+### Candidate principle
+
+> **Manage reusable agent capabilities like versioned engineering artifacts: one canonical owner, explicit host deployment, provenance, drift detection and behavioral verification where host semantics differ.**
+
+**Disposition: ASSESS / PILOT where multiple coding agents share the same capability set.**
+
+---
+
+
 # 2. Exit cost should be explicit during dependency selection
 
 Before making a harness/runtime/tool a durable dependency, ask:

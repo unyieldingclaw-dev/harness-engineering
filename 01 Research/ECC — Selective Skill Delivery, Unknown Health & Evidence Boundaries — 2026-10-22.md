@@ -54,15 +54,29 @@ Acceptance: where a capability is consequential, a mismatched classification, mi
 
 **Assessment invariant:**
 
-> A skill, hook, review gate, or evaluator with **no valid outcome records** is not healthy. It is **unmeasured** until the telemetry producer and outcome semantics have been tested.
+> A skill, hook, review gate, or evaluator with **no valid outcome records in its declared observation window** is not healthy. Its effectiveness is **UNMEASURED**. This alone cannot distinguish **no invocation** from **a failed/missing recorder**; that diagnosis needs an independent expected-event or recorder-liveness check.
 
 Required negative fixture for any future implementation:
 
-- Disable/omit the event writer while keeping the dashboard/report renderer running. **Expected:** UNMEASURED / UNKNOWN, **not** success/green.
+- Disable/omit the event writer while keeping the dashboard/report renderer running. **Expected:** UNMEASURED / UNKNOWN, **not** success/green. Separately, run a known invocation and confirm recorder-liveness catches the lost event; an otherwise idle skill with zero legitimate invocations must not be labeled broken.
 - Inject one failed and one corrected run. Confirm that “command executed” and “accepted verified outcome” are not conflated.
 - Preserve source/skill version identity to prevent a successful old version disguising an untested new one.
 
 Don't build an HE dashboard merely to display this. Add the invariant to the real evaluation and deployment gate when such a consumer is chosen.
+
+### 2A. Adversarial ownership and threat model for skill distribution
+
+The simplest path to a false confidence signal is to conflate **content ownership**, **installation authority**, **host-event support**, and **effect verification**. Require separate evidence for:
+
+- **Untrusted skill/prompts:** external skill instructions are repository content, not trusted policy. A downloaded skill must not acquire broader file/network permissions or override mandatory organizational policy.
+- **Mixed ownership:** a destination path may contain an operator's edits or another installer's files. Refuse silent replacement, ambiguous cleanup, or guessed ownership; preserve recovery/rollback information.
+- **Time of check versus execution:** an operation plan can become stale if a file or adapter changes before apply. Revalidate exact source/target hashes, destination roots and authority before mutation.
+- **Host-specific behavior:** a known-good Node fixture may not be invoked by the installed IDE/agent. Verify actual entrypoint, event shape and policy composition at the target version.
+- **Cross-project promotion:** frequency, shared trigger names and average confidence do not establish semantic equivalence or authority to change global instructions; keep the human approval/owner path explicit.
+- **Telemetry absence versus success:** no events can mean an unused skill, dropped hooks or a broken recorder; never report as healthy without observed coverage.
+- **Evaluation receipts:** integrity of bytes is not authenticity of actor, correctness of outcome, or independent approval. Do not accept a receipt self-signed by a writable worker as a substitute for a trusted verifier.
+
+If the pilot cannot satisfy these boundaries with a small deterministic owner, **stop** rather than widening ECC's borrowed infrastructure.
 
 ### 3. Proposed EHE-05 pilot refinement — *only if enterprise owner accepts*
 

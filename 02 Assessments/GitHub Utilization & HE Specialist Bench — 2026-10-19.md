@@ -6,7 +6,9 @@ Assess observable GitHub use in the three public engineering repositories named 
 
 Tracking experiment: [Issue #14 — HE Specialist Bench vs current workflow](https://github.com/unyieldingclaw-dev/harness-engineering/issues/14)
 
-Source evidence pass: [Ryan Doser & Aaron Makelky — GitHub Work Infrastructure and Agent Office Prior Art — 2026-10-19](../01%20Research/Sources/Ryan%20Doser%20%26%20Aaron%20Makelky%20%E2%80%94%20GitHub%20Work%20Infrastructure%20and%20Agent%20Office%20Prior%20Art%20%E2%80%94%202026-10-19.md)\n\nThis assessment is intentionally conservative:
+Source evidence pass: [Ryan Doser & Aaron Makelky — GitHub Work Infrastructure and Agent Office Prior Art — 2026-10-19](../01%20Research/Sources/Ryan%20Doser%20%26%20Aaron%20Makelky%20%E2%80%94%20GitHub%20Work%20Infrastructure%20and%20Agent%20Office%20Prior%20Art%20%E2%80%94%202026-10-19.md)
+
+This assessment is intentionally conservative:
 
 - no feature is recommended merely because GitHub supports it;
 - no agent is admitted merely because a role can be named;

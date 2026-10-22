@@ -39,7 +39,7 @@ Ponytail's root `AGENTS.md` defines a seven-rung decision ladder:
 
 The source explicitly says the ladder runs **after understanding the problem**, including reading touched code and tracing the real flow. It also defines bug-fix guidance around fixing root cause in the shared function rather than patching every named symptom path.
 
-The source explicitly protects trust-boundary validation, data-loss handling, security, accessibility, hardware calibration, and explicitly requested behavior from the simplification rule. fileciteturn522file0L2-L2
+The source explicitly protects trust-boundary validation, data-loss handling, security, accessibility, hardware calibration, and explicitly requested behavior from the simplification rule. [Ponytail's project instructions](https://github.com/DietrichGebert/ponytail/blob/main/AGENTS.md) (historical research, no runtime reproduction)
 
 The current README also corrects an earlier benchmark framing: the old 80–94% single-shot reduction was recognized as partly reflecting a weak conversational baseline. The newer real-agent comparison reports a 54% mean LOC reduction, 22% token reduction, 20% cost reduction, and 27% time reduction across 12 feature tasks, while retaining 100% safety in its separate safety evaluation. The README explicitly states that the objective is not the fewest tokens; lower token/cost/time usage is a side effect when the ladder prevents over-building.
 
@@ -109,7 +109,7 @@ Therefore “original data exists” is insufficient proof of context usefulness
 
 ### LeanCTX — loss-tolerance routing is a more useful abstraction than generic compression
 
-The current README provides a particularly strong refinement: content is classified by loss tolerance. Code, stack traces, tool linkage, JSON, and edit payloads can be protected verbatim while documentation/log/prose segments can be compressed. It includes an explicit fallback to the original when validation fails or times out. fileciteturn523file0L2-L2
+The current README provides a particularly strong refinement: content is classified by loss tolerance. Code, stack traces, tool linkage, JSON, and edit payloads can be protected verbatim while documentation/log/prose segments can be compressed. It includes an explicit fallback to the original when validation fails or times out. [LeanCTX README](https://github.com/jia-gao/leanctx/blob/main/README.md) (author-described behavior)
 
 The benchmark reporting also illustrates why compression claims require careful decomposition: the headline 503-item result is layered on top of another structural compressor; the README distinguishes the contribution of each layer and records accuracy deltas and CPU/GPU differences.
 
@@ -121,7 +121,7 @@ The important Harness principle is therefore not “use LeanCTX.” It is:
 
 ### Graphify — strict mode reveals a useful enforcement pattern
 
-The current README adds an important detail: default installation nudges the assistant to query the graph before reading source, while strict mode blocks the first raw source read of a session and redirects it to the graph, then relaxes after the first intervention. It also states that code is parsed locally with tree-sitter and that relationships are tagged `EXTRACTED` versus `INFERRED`. fileciteturn525file0L2-L2
+The current README adds an important detail: default installation nudges the assistant to query the graph before reading source, while strict mode blocks the first raw source read of a session and redirects it to the graph, then relaxes after the first intervention. It also states that code is parsed locally with tree-sitter and that relationships are tagged `EXTRACTED` versus `INFERRED`. [Graphify README](https://github.com/Graphify-Labs/graphify/blob/v8/README.md) (claimed install behavior; not executed in this review)
 
 That is a bounded enforcement pattern rather than a permanent prohibition:
 
@@ -153,7 +153,7 @@ Graphify also clearly labels `EXTRACTED` versus `INFERRED` relationships, reinfo
 
 ### codebase-memory-mcp — the operational coordination model is as interesting as the graph
 
-The current README contains unusually detailed runtime coordination behavior: one shared per-account daemon, exact-build/ABI/cache-root admission, crash-safe barriers, finite activation shutdown, separate ordinary CLI mode, and durable owner-only diagnostics. fileciteturn526file0L2-L2
+The current README contains unusually detailed runtime coordination behavior: one shared per-account daemon, exact-build/ABI/cache-root admission, crash-safe barriers, finite activation shutdown, separate ordinary CLI mode, and durable owner-only diagnostics. [codebase-memory-mcp README](https://github.com/DeusData/codebase-memory-mcp/blob/main/README.md) (author-described coordination)
 
 This is not merely “a code graph.” It is evidence for a broader Harness concern: **shared background services require explicit ownership, admission, lifecycle, and activation boundaries when multiple agent sessions coexist.**
 
@@ -163,7 +163,7 @@ The project also separates structural parsing from the agent's reasoning and mai
 
 ### Token Optimizer MCP — zero-turn refusal is a distinct optimization primitive
 
-The current README describes a mechanism where an expensive read can be denied while the refusal itself carries a cached/diffed replacement, avoiding the ordinary “tool call → denial → re-plan → replacement tool” sequence. It also separates verified transport savings from modeled graph savings and accounts for later expansions. fileciteturn524file0L2-L2
+The current README describes a mechanism where an expensive read can be denied while the refusal itself carries a cached/diffed replacement, avoiding the ordinary “tool call → denial → re-plan → replacement tool” sequence. It also separates verified transport savings from modeled graph savings and accounts for later expansions. [Token Optimizer MCP README](https://github.com/ooples/token-optimizer-mcp/blob/master/README.md) (claimed optimization; savings not independently reproduced)
 
 This is more interesting than simply “blocking expensive calls.” It is a **zero-turn substitution** pattern:
 

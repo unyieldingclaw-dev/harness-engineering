@@ -31,6 +31,10 @@ Future implementations may include:
 
 ---
 
+## Publication boundary
+
+This repository is **public research**. Publish transferable, source-backed principles and approved public references—not nonpublic employer/client plans, deployment decisions, internal architecture, system names, operational details, or confidential documents. Preserve such specifics only in their owning, organization-approved access-controlled workspace. When private experience informs HE, describe the generalizable lesson without revealing or reconstructing the private implementation.
+
 ## Current Goal
 
 Build the foundations before building the tools.

@@ -62,6 +62,28 @@ The branch count is not itself a defect, but the combination of:
 
 creates discoverability cost and stale-branch ambiguity.
 
+### Open HE research PR reconciliation (review snapshot: 2026-10-22)
+
+The repository has **11 open HE PRs** at this review snapshot. Eight predate the October research rounds (#5, #6, #7, #8, #9, #10, #12, #13); three are recent drafts (#15, #19, #20). As of this review, these are **PR-branch commits, not uncommitted local files and not merged material**. The old eight branches were brought current with `main` by a non-destructive two-parent integration commit that preserves their original source commits and proposes **only their existing added Markdown files**. This eliminates mechanical divergence; it **does not** validate source claims or create merge approval.
+
+| PR | Distinct source / candidate contribution | Reconcile with existing HE owner | Disposition before merge |
+| --- | --- | --- | --- |
+| [#5](https://github.com/unyieldingclaw-dev/harness-engineering/pull/5) | David Ondrej skill deep pass: decision review, liveness, goal loops | David Ondrej prior art; bounded execution and decision gates | **HOLD:** document what is incremental, verify current implementation, no skill import |
+| [#6](https://github.com/unyieldingclaw-dev/harness-engineering/pull/6) | Corpus-admission discipline and earlier Matt Pocock review | HE philosophy/source-preservation; later Oct 19 Matt Pocock source | **HOLD:** preserve distinct evidence but eliminate duplicate governing rules |
+| [#7](https://github.com/unyieldingclaw-dev/harness-engineering/pull/7) | Archify typed candidate/architecture delta notes | Artifact-gated SDLC and evidence/receipt research | **HOLD:** original source evidence may be useful; do not promote claims without pinned tests |
+| [#8](https://github.com/unyieldingclaw-dev/harness-engineering/pull/8) | OpenMAIC and Hindsight source bundle (five documents) | Durable state, recovery, experience-derived improvement | **HOLD:** check distinct ownership and mark PMB admission experiment as hypothetical |
+| [#9](https://github.com/unyieldingclaw-dev/harness-engineering/pull/9) | Rta-Smriti context/evidence compiler prior art | Derived index economics; context authority | **HOLD:** alpha-era historical snapshot; no new memory backend |
+| [#10](https://github.com/unyieldingclaw-dev/harness-engineering/pull/10) | Radiant execution/approval/ship-state patterns | Supervised orchestration, publication and runtime fitness | **HOLD:** platform-specific assumptions; check current implementation before any operational transfer |
+| [#12](https://github.com/unyieldingclaw-dev/harness-engineering/pull/12) | Context-efficiency comparative notes; correction pass; OmniRoute | Context engineering, tool steering, execution routing | **HOLD / CONSOLIDATE:** 1,572 added lines; prune duplication and preserve second-pass corrections before admission |
+| [#13](https://github.com/unyieldingclaw-dev/harness-engineering/pull/13) | Ten-repository evidence mining | Skill routing, plugin supply, context mode, ACR evals | **HOLD / CONSOLIDATE:** intersect #7/#12/#20; historical vendor claims are not current capability proof |
+| [#15](https://github.com/unyieldingclaw-dev/harness-engineering/pull/15) | GitHub assessment and specialist-bench proposal | HE-001, Issue #14 | **DRAFT:** experimental; independent held-out evaluation required before role adoption |
+| [#19](https://github.com/unyieldingclaw-dev/harness-engineering/pull/19) | Mastra workflow API drift and typed graph comparison | HE-001 / HE-002 | **DRAFT:** historical source-only, no runtime adoption |
+| [#20](https://github.com/unyieldingclaw-dev/harness-engineering/pull/20) | ECC selective install, unmeasured health, adapter truth | HE-001 / EHE-05 | **DRAFT:** review precise HE-001 additions; no ECC install or enterprise change |
+
+**Acceptance order:** (1) independent source/citation and security/privacy pass, (2) confirm each finding's owning existing HE artifact and whether it is actually incremental, (3) mark historical and unexecuted claims as such, (4) verify exact changed-file scope and relative links, (5) approve only documents that reduce ambiguity or preserve uniquely useful reproducible evidence. **Do not merge all 11 merely to make the GitHub inbox empty.** Where a source note duplicates an already accepted canonical source, retain its PR as a traceable research artifact pending an explicit archive/close choice; do not silently delete or count it as independent corroboration.
+
+**Operational note:** the October 22 branch sync is a point-in-time state, not a promise of future mergeability. Recheck `main`, PR diff, branch rules and actual CI at merge time. No original third-party repository tests or downstream Work-MB/PMB/ACR behavior are established by this PR reconciliation.
+
 ### Candidate correction
 
 Enable automatic deletion of merged head branches for HE, PMB, and ACR **after confirming no workflow depends on preserved branch refs**.

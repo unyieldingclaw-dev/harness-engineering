@@ -60,7 +60,7 @@ No existing entry is superseded.
 
 OmniRoute's adaptive-routing documentation explicitly separates the request hot path from the control plane. The hot path remains fast, asynchronous, memory-efficient and predictable. Routing outcomes are emitted as typed events and consumed by bounded in-memory sinks; persistence and external telemetry are kept off the synchronous path.
 
-The `RoutingEvent` contains routing metadata such as request ID, provider, model, strategy, latency, TTFT, token counts, cost, retries, fallback use, outcome, status, finish reason and timestamp. The sink contract is designed to avoid synchronous I/O. The documented implementation dispatches events after request completion and keeps OTel export asynchronous. fileciteturn530file0L2-L2
+The `RoutingEvent` contains routing metadata such as request ID, provider, model, strategy, latency, TTFT, token counts, cost, retries, fallback use, outcome, status, finish reason and timestamp. The sink contract is designed to avoid synchronous I/O. The documented implementation dispatches events after request completion and keeps OTel export asynchronous. [OmniRoute upstream repository at the reviewed revision](https://github.com/diegosouzapw/OmniRoute/tree/949235736042b13cf64215632e6d44db7985af76) (code/docs as historically inspected; not independently executed)
 
 ### Harness lesson
 
@@ -86,7 +86,7 @@ Feedback consumers should not silently acquire authority over the execution hot 
 
 OmniRoute explicitly separates operational quality from semantic quality. Operational quality comes from routing/runtime signals: HTTP failures, 429s, connection failures, malformed responses, interruptions, finish-at-length, zero-output successes and latency/TTFT behavior. A successful HTTP 200 is not treated as semantic quality.
 
-Semantic quality is separately supplied by an evaluator and remains null until an evaluator provides it. The implementation keeps semantic quality out of the operational score. fileciteturn530file0L2-L2
+Semantic quality is separately supplied by an evaluator and remains null until an evaluator provides it. The implementation keeps semantic quality out of the operational score. [OmniRoute upstream repository at the reviewed revision](https://github.com/diegosouzapw/OmniRoute/tree/949235736042b13cf64215632e6d44db7985af76) (code/docs as historically inspected; not independently executed)
 
 ### Harness lesson
 
@@ -134,7 +134,7 @@ This complements PMB's existing bounded-authority model.
 
 OmniRoute's quality tracker uses EWMA-style state and sample-aware confidence. A provider/model with no observations remains neutral rather than being either rewarded or punished. As observations accumulate, the measured operational signal has increasing influence; isolated failures do not destroy a previously healthy provider, and recovery is gradual.
 
-The documented scoring behavior blends the observed operational score toward neutral according to sample count, with 50 samples as the stated convergence point. fileciteturn530file0L2-L2
+The documented scoring behavior blends the observed operational score toward neutral according to sample count, with 50 samples as the stated convergence point. [OmniRoute upstream repository at the reviewed revision](https://github.com/diegosouzapw/OmniRoute/tree/949235736042b13cf64215632e6d44db7985af76) (code/docs as historically inspected; not independently executed)
 
 ### Harness lesson
 
@@ -174,7 +174,7 @@ A useful execution provenance record should eventually support:
 
 # 6. Bounded telemetry and failure isolation
 
-The OTel sink is optional and asynchronous. It is not registered unless configured. It enqueues bounded events and flushes in the background. Under overload, old telemetry can be dropped rather than backpressuring the data plane. The documentation explicitly states that telemetry unavailability does not stop routing. fileciteturn530file0L2-L2
+The OTel sink is optional and asynchronous. It is not registered unless configured. It enqueues bounded events and flushes in the background. Under overload, old telemetry can be dropped rather than backpressuring the data plane. The documentation explicitly states that telemetry unavailability does not stop routing. [OmniRoute upstream repository at the reviewed revision](https://github.com/diegosouzapw/OmniRoute/tree/949235736042b13cf64215632e6d44db7985af76) (code/docs as historically inspected; not independently executed)
 
 This is an excellent operational pattern:
 
@@ -193,7 +193,7 @@ The same principle should apply to nonessential Harness diagnostics and evaluati
 
 # 7. Routing strategy should remain explicit
 
-Repository code exposes multiple strategies and explicit fallback behavior. The adaptive routing documentation includes strategy identity and scoring factors. Code search shows a rules-based scorer using factors such as quota, health, cost and task fit, with separate configuration and fallback paths. fileciteturn529file12L249-L256
+Repository code exposes multiple strategies and explicit fallback behavior. The adaptive routing documentation includes strategy identity and scoring factors. Code search shows a rules-based scorer using factors such as quota, health, cost and task fit, with separate configuration and fallback paths. [OmniRoute repository and reviewed revision](https://github.com/diegosouzapw/OmniRoute/tree/949235736042b13cf64215632e6d44db7985af76) (source-derived, not an observed deployment result)
 
 This supports keeping routing policy explicit rather than hiding it inside an opaque “smart router.”
 

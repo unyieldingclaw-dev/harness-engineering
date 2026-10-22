@@ -116,7 +116,7 @@ Use:
 
 ## 7. Governance complexity is itself an evaluation signal
 
-The attached PMB project review warns that governance/process complexity is beginning to accumulate faster than operational value, with the risk that governance becomes the product rather than supporting it. fileciteturn389file0
+**Risk hypothesis (not a verified measurement):** as agent projects grow, governance instructions and process may accumulate faster than demonstrable operational value. Review this as a possible failure mode, not as a measured condition of PMB or HE.
 
 This should not trigger an immediate architectural response. It should become a standing evaluation criterion:
 
@@ -126,7 +126,7 @@ Every new durable process should justify its own complexity.
 
 ## 8. Operational artifacts belong to the same discipline
 
-The project review also identified accidental operational artifacts under `.claude/worktrees/...` as a repository hygiene concern. fileciteturn389file0
+**Inspection candidate (not an asserted finding):** check whether temporary worktree directories, session transcripts, or generated artifacts are accidentally tracked in a source repository. Record the exact paths and ownership only after a repository inspection.
 
 Treat this as evidence for the existing isolation/working-tree research, not as a reason to invent a new repository subsystem without inspection.
 

@@ -115,10 +115,13 @@ Branch: main
     not evidence of installed runtime behavior. Treat missing, outdated, or
     conflicting evidence as UNVERIFIED rather than silently "supported."
 
-    When reporting skill/hook or review-gate health, first verify that its
-    outcome recorder is functioning. Zero valid observations means UNMEASURED,
-    not "healthy." Where health matters to a decision, a negative fixture
-    must demonstrate that a missing recorder does not produce a false green.
+    When reporting skill/hook or review-gate health, distinguish missing
+    outcome observations from failed instrumentation. Zero valid observations
+    in the chosen window means UNMEASURED, not "healthy"; it does not, by
+    itself, establish whether the feature was unused or its recorder broke.
+    Where health matters to a decision, exercise one known invocation and
+    show that a dropped event produces UNKNOWN/UNMEASURED and a recorder-
+    liveness failure, never a false green.
 
     Treat observed precedence behavior as a correctness concern, not
     merely a usability issue.

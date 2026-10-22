@@ -107,6 +107,19 @@ Branch: main
     executed. A correct file with incorrect discovery is still a harness
     failure.
 
+    For any asserted cross-harness capability, distinguish the evidence that it
+    is (a) declared in a catalog, (b) shipped in the pinned source, (c)
+    exercised by a fixture test, and (d) observed to work in the installed
+    harness/client. Record the host version, source version, verification date,
+    owner, unsupported surfaces, and how to retest. A source-level test is
+    not evidence of installed runtime behavior. Treat missing, outdated, or
+    conflicting evidence as UNVERIFIED rather than silently "supported."
+
+    When reporting skill/hook or review-gate health, first verify that its
+    outcome recorder is functioning. Zero valid observations means UNMEASURED,
+    not "healthy." Where health matters to a decision, a negative fixture
+    must demonstrate that a missing recorder does not produce a false green.
+
     Treat observed precedence behavior as a correctness concern, not
     merely a usability issue.
 

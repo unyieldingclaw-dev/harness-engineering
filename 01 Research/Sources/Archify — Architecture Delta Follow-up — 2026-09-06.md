@@ -14,7 +14,7 @@ That is valuable, but it does not by itself answer the harder ACR question:
 
 > Given an approved architecture and a changed repository, can we deterministically establish which architectural relationships the code change actually introduced or removed?
 
-That second problem requires a code-to-architecture mapping/evidence layer. Archify explicitly warns that authored graph reachability must not be called runtime impact, blast radius, or breakage without independent code-analysis evidence. urlArchify DESIGN.mdhttps://github.com/tt-a1i/archify/blob/c6519401f7b91b9d43011657880893b0a8955548/DESIGN.md
+That second problem requires a code-to-architecture mapping/evidence layer. Archify explicitly warns that authored graph reachability must not be called runtime impact, blast radius, or breakage without independent code-analysis evidence. [Archify DESIGN.md](https://github.com/tt-a1i/archify/blob/c6519401f7b91b9d43011657880893b0a8955548/DESIGN.md)
 
 **Disposition: HIGH-VALUE RESEARCH, with a narrower candidate boundary than the original proposal.**
 
@@ -36,7 +36,7 @@ The comparator explicitly separates classifications:
 - presentation changes;
 - provenance changes.
 
-The result also carries comparator/canonical versions, completeness, proof level, identity rules, and limitations. urlArchify architecture-delta.mjshttps://github.com/tt-a1i/archify/blob/c6519401f7b91b9d43011657880893b0a8955548/archify/delta/architecture-delta.mjs
+The result also carries comparator/canonical versions, completeness, proof level, identity rules, and limitations. [Archify architecture-delta.mjs](https://github.com/tt-a1i/archify/blob/c6519401f7b91b9d43011657880893b0a8955548/archify/delta/architecture-delta.mjs)
 
 This is a strong **model-delta primitive**.
 
@@ -88,9 +88,9 @@ Therefore ACR should not initially attempt to infer a complete architecture grap
 
 ## 3. Independent evidence strongly supports the harder problem's difficulty
 
-The literature on static architecture conformance checking distinguishes planned architecture from implemented architecture and identifies mapping between them as a central problem. A 2017 empirical study of ten dependency-analysis tools found substantial variation in dependency detection accuracy; on its benchmark the tools reported, on average, 77% of dependencies, while reporting within the FreeMind case averaged 72%. The study identified difficult dependency types and detection challenges. citeturn1search5
+The literature on static architecture conformance checking distinguishes planned architecture from implemented architecture and identifies mapping between them as a central problem. A 2017 empirical study of ten dependency-analysis tools found substantial variation in dependency detection accuracy; on its benchmark the tools detected, on average, 77% of *dependency types*, while the FreeMind case averaged 72% of the examined dependency constructs. The study identified difficult dependency types and detection challenges. [Pruijt et al., *Software: Practice and Experience* (2017), DOI: 10.1002/spe.2421](https://doi.org/10.1002/spe.2421)
 
-A later CMU state-of-the-art summary similarly describes static analysis, architecture-specific tests/fitness functions, and dependency-structure analysis as useful but requiring tuning; it also notes that conformance tests can become brittle as architecture and implementation evolve. citeturn1search47
+A later CMU state-of-the-art summary similarly describes static analysis, architecture-specific tests/fitness functions, and dependency-structure analysis as useful but requiring tuning; it also notes that conformance tests can become brittle as architecture and implementation evolve. [Carnegie Mellon SEI, *Why Architecture Conformance Matters for Software Systems* (2022), p. 9](https://insights.sei.cmu.edu/documents/4504/2022_017_001_973555.pdf)
 
 **Implication:** whole-repository architecture extraction should not be treated as a deterministic oracle merely because a tool produces a graph.
 
@@ -100,19 +100,19 @@ A later CMU state-of-the-art summary similarly describes static analysis, archit
 
 ### Structurizr
 
-Structurizr deliberately treats the architecture model as code and renders multiple views from one model. Its documentation explicitly identifies AI-assisted drift detection as a possible use case: an agent can compare code or infrastructure against the Structurizr model and raise an alert when they diverge. citeturn0search1turn0search2
+Structurizr provides an architecture-as-code DSL and renders multiple views from a defined model. This makes it a potential *target intent* for independent drift checking; automatic drift detection by an LLM is not established merely by having a DSL. [Structurizr DSL documentation](https://docs.structurizr.com/dsl)
 
 The important design choice is that Structurizr is a **target architecture model**, not an automatically inferred source of truth.
 
 ### dependency-cruiser
 
-dependency-cruiser demonstrates a mature deterministic enforcement layer for source dependency relationships. It supports forbidden, allowed, required, reachability, circularity, and other dependency rules, with severity and explanatory comments. citeturn0search0turn0search3
+dependency-cruiser demonstrates a mature deterministic enforcement layer for source dependency relationships. It supports forbidden, allowed, required, reachability, circularity, and other dependency rules, with severity and explanatory comments. [dependency-cruiser rules reference](https://github.com/sverweij/dependency-cruiser/blob/main/doc/rules-reference.md)
 
 This suggests a stronger ACR design than "ask an LLM whether the architecture changed": use deterministic dependency evidence wherever the language/toolchain supports it, then use semantic reasoning only where deterministic analysis cannot establish the claim.
 
 ### Erode
 
-Erode is particularly close to the proposed ACR use case. Its repository describes comparing pull-request or local Git diffs against LikeC4 or Structurizr models to surface undeclared dependencies and structural changes. Its pipeline resolves architecture components, scans dependency changes, analyzes them against the model, and can propose model updates. fileciteturn435file0
+Erode is particularly close to the proposed ACR use case. Its repository describes comparing pull-request or local Git diffs against LikeC4 or Structurizr models to surface undeclared dependencies and structural changes. Its pipeline resolves architecture components, scans dependency changes, analyzes them against the model, and can propose model updates. [Erode repository](https://github.com/erode-app/erode) and [Structurizr adapter documentation](https://erode.dev/docs/models/structurizr/)
 
 This is useful corroboration, but it also confirms that an explicit **code-change → architecture-component mapping** layer is necessary.
 
@@ -215,7 +215,7 @@ The receipt should expose evidence quality separately from architectural judgmen
 
 ## 8. Provenance becomes essential
 
-Archify's model comparator already records raw and semantic hashes, byte counts, repository revisions, comparator version, canonicalization version, completeness, and proof level when evidence is available. urlArchify architecture-delta.mjshttps://github.com/tt-a1i/archify/blob/c6519401f7b91b9d43011657880893b0a8955548/archify/delta/architecture-delta.mjs
+Archify's model comparator already records raw and semantic hashes, byte counts, repository revisions, comparator version, canonicalization version, completeness, and proof level when evidence is available. [Archify architecture-delta.mjs](https://github.com/tt-a1i/archify/blob/c6519401f7b91b9d43011657880893b0a8955548/archify/delta/architecture-delta.mjs)
 
 That is a useful provenance model for ACR.
 

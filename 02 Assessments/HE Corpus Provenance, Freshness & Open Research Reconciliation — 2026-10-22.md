@@ -46,6 +46,25 @@ The eight older PRs are **committed, pushed, and readable**; they are not uncomm
 
 **Scope limit:** These are selected high-risk **source spot checks**, not a claim that all 104 main files, all citations, all papers, or all upstream dependencies have been current-version verified. Current documentation can change after the recorded audit date.
 
+## Completed mechanical corpus scan — 104/104 tracked blobs on main
+
+Read **every tracked blob** from main using GitHub's file interface and searched for *nonportable, session-scoped citation markers* (e.g. `filecite...`, `cite...`, `turnNsearchM`) plus obvious malformed escaped Markdown. This is a **text-pattern integrity scan**, not a successful link crawl, independently authenticated citation resolution or full semantic/current-source audit.
+
+**Concrete defect: four mainline research documents still contain transient citations:**
+
+| Mainline file | Citation-marker occurrences in scan | Examples and consequence |
+| --- | ---: | --- |
+| `01 Research/Austin Marchese — Loop Engineering & Skill Mining — 2026-09-01.md` | **8** | Temporary web citation markers accompany Exa and Firecrawl capabilities/prices; product behavior/pricing is time-sensitive and **must be reverified**, not silently copied |
+| `01 Research/Sources/Agent Harness & Workflow Repos — 2026-08-30.md` | **24** | Session-scoped `filecite` and search references for multiple external projects (e.g. DeepSeek Harness, Archify, OmniRoute); inaccessible source identity undermines later verification |
+| `01 Research/Sources/Anthropic AI-Native SDLC & Molten OS — 2026-09-01.md` | **8** | `filecite` references for Molten OS claims are not portable verification links |
+| `01 Research/Sources/PMB Dream — Retrospective Memory Consolidation — 2026-09-01.md` | **14** | Session-scoped search markers support Anthropic Dreams and memory API claims; since these concern preview/active services, they need exact current documentation, release, and tested-usage boundaries |
+
+**Total: 54 marker occurrences across 4 files.** Raw occurrence counts are not independently verified individual claims; some lines contain multiple markers. The inspected 104-file tree included Obsidian configuration and Markdown, not all 104 are source-note documents.
+
+**Required correction:** retain text as historical claims marked **SOURCE NOT REVALIDATED** until each marker is replaced by a stable official document/repository URL, pinned version/section when possible, or an explicit `UNVERIFIED` tag. **Never** replace a citation with a plausible but unchecked source. Fix price/API statements only after checking current provider documentation. The four files should be changed through a separately reviewable PR or a source-owner-approved correction in this audit branch; no automated regex deletion of evidence is safe.
+
+Other mechanical findings: the scan did **not** observe literal escaped backtick syntax or literal `\\n\\n` formatting errors in the sampled pattern across mainline blobs. This does **not** mean all Markdown renders correctly. Internal and external link reachability, anchor correctness, GitHub source path existence, fence balancing and citation-target correctness were **not** exhaustively executed.
+
 ## Evidence debt and failure modes
 
 | Finding | Severity to process | Observed support | Response / owner |

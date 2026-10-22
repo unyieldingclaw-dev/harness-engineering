@@ -13,7 +13,7 @@ An audit is not a search-and-replace to make historical sources match today's pr
 
 - Repository: [HE](https://github.com/unyieldingclaw-dev/harness-engineering); **main** at `ef1d5b82350aac22c7a3a10dd3e3e5a02d8b7e12` (2026-10-21 13:21 UTC).
 - Read-only GitHub recursive tree: **111 entries, 104 tracked blobs**, nontruncated. The repository is overwhelmingly Markdown research, with no general runtime test suite currently demonstrated by this investigation.
-- **11 open PRs**, all **draft** at the last live snapshot: #5, #6, #7, #8, #9, #10, #12, #13, #15, #19, #20. Most add historical source notes; #20 also proposes a 16-line HE-001 assessment extension.
+- **13 open PRs**, all **draft** at the 2026-10-22 follow-up snapshot: #5, #6, #7, #8, #9, #10, #12, #13, #15, #19, #20, #21 (this audit) and #22 (Kerim Satirli production-infrastructure source). Most add historical source notes; #20 also proposes a 16-line HE-001 assessment extension.
 - Each of the eight older PR branches was brought forward onto main through history-preserving commits in the prior review. This is **mechanical branch hygiene**, not source-claim validation or endorsement. All remain unmerged.
 - [HE-001](../02%20Assessments/HE-001%20%E2%80%94%20Baseline%20Harness%20Assessment.md.md) is **IN PROGRESS**; [HE-002](../03%20Decisions/Decisions%20Index.md.md) is **PENDING HE-001**. No decisions have been changed.
 - The [publication boundary](../Start%20Here.md) prohibits publishing nonpublic employer/client implementation details or plans. This audit uses public HE and public upstream materials only.
@@ -50,16 +50,16 @@ The eight older PRs are **committed, pushed, and readable**; they are not uncomm
 
 Read **every tracked blob** from main using GitHub's file interface and searched for *nonportable, session-scoped citation markers* (e.g. `filecite...`, `cite...`, `turnNsearchM`) plus obvious malformed escaped Markdown. This is a **text-pattern integrity scan**, not a successful link crawl, independently authenticated citation resolution or full semantic/current-source audit.
 
-**Concrete defect: four mainline research documents still contain transient citations:**
+**Concrete defect: four mainline research documents still contain transient citations.** Distinguish **citation constructs** from identifiers embedded within them:
 
-| Mainline file | Citation-marker occurrences in scan | Examples and consequence |
+| Mainline file | Approximate original regex token hits (citation + inner IDs, not distinct citations) | Examples and consequence |
 | --- | ---: | --- |
 | `01 Research/Austin Marchese — Loop Engineering & Skill Mining — 2026-09-01.md` | **8** | Temporary web citation markers accompany Exa and Firecrawl capabilities/prices; product behavior/pricing is time-sensitive and **must be reverified**, not silently copied |
 | `01 Research/Sources/Agent Harness & Workflow Repos — 2026-08-30.md` | **24** | Session-scoped `filecite` and search references for multiple external projects (e.g. DeepSeek Harness, Archify, OmniRoute); inaccessible source identity undermines later verification |
 | `01 Research/Sources/Anthropic AI-Native SDLC & Molten OS — 2026-09-01.md` | **8** | `filecite` references for Molten OS claims are not portable verification links |
 | `01 Research/Sources/PMB Dream — Retrospective Memory Consolidation — 2026-09-01.md` | **14** | Session-scoped search markers support Anthropic Dreams and memory API claims; since these concern preview/active services, they need exact current documentation, release, and tested-usage boundaries |
 
-**Total: 54 marker occurrences across 4 files.** Raw occurrence counts are not independently verified individual claims; some lines contain multiple markers. The inspected 104-file tree included Obsidian configuration and Markdown, not all 104 are source-note documents.
+**Corrected count from follow-up audit: 24 nonportable citation constructs containing 30 session-scoped source-ID references across four files.** The earlier **54** was an invalid sum: it counted both constructs and identifiers inside them. The table's 8/24/8/14 figures are **legacy mixed-token counts**, not citation-construct counts; do not use them to estimate independently supported claims. A claim can have multiple references, and one citation construct can hold multiple source IDs. The inspected 104-file tree included Obsidian configuration and Markdown, not all 104 are source-note documents.
 
 **Required correction:** retain text as historical claims marked **SOURCE NOT REVALIDATED** until each marker is replaced by a stable official document/repository URL, pinned version/section when possible, or an explicit `UNVERIFIED` tag. **Never** replace a citation with a plausible but unchecked source. Fix price/API statements only after checking current provider documentation. The four files should be changed through a separately reviewable PR or a source-owner-approved correction in this audit branch; no automated regex deletion of evidence is safe.
 
@@ -113,6 +113,15 @@ Revalidate on **source release/adapter change**, real host failure, conflicting 
 6. **Research independence:** same presenter/repo derivative repeated across three notes counts as **one lineage** unless independent measurement exists.
 7. **No operational bleed:** public research contains neither workplace-private examples nor raw confidential agent logs.
 8. **Cost discipline:** audit automation must detect real recurring errors before being installed as always-on hook/CI; otherwise stay manual and bounded.
+
+
+## Subsequent findings and correction status (2026-10-22)
+
+- **Public information boundary — HIGH.** A public enterprise-transfer document contained an environment-specific inventory inconsistent with HE's `Start Here` publication boundary. The current audit branch replaces that inventory with product-neutral guidance and sends actual environment inspection to its authorized private owner. **The prior public Git history may still retain historical text.** This finding is intentionally not reproduced here. Review history-retention/remediation under the repository owner's security and privacy process; do not force-push or delete history impulsively.
+- **Anthropic Dreams API — verified nuance.** A prior note said the source memory was never modified. The [current first-party Dreams create reference](https://platform.claude.com/docs/en/api/beta/dreams/create) documents default `create_new` plus an opt-in `update_existing` mode (subject to permissions). The audit branch corrects the universal statement without changing the recommended policy of separately approving memory writes.
+- **Time-sensitive product pricing — annotated, not certified permanently.** The audit branch adds dated source qualifiers to previously unanchored Exa/Firecrawl figures. Prices are never persistent HE invariants; revalidate at procurement or implementation time.
+- **Research-only Kerim Satirli source — draft [#22](https://github.com/unyieldingclaw-dev/harness-engineering/pull/22).** Expected/no-op Terraform plan and risk-gated exception handling refine HE's existing deterministic authority work; no production IaC was run.
+- **Publication and semantic gates remain open:** no independent, whole-corpus replication of benchmarks, current upstream test execution, enterprise-host runtime verification, or complete review of every external URL's claim support. The repository-wide sweep covers structure/patterns, not every statement's truth.
 
 ## Open limitations and next decision
 

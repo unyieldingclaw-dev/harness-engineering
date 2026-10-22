@@ -108,17 +108,148 @@ The Second Brain implementation itself is not currently a Harness Engineering re
 
 ### Simon Willison — Agentic Engineering Patterns
 
-- Coding agents should be understood as harnesses combining models, system prompts, tools, execution, and iterative feedback.
-- Context isolation through subagents can preserve primary working context for bounded exploration or specialized tasks.
-- Preserve proven, reusable knowledge rather than repeatedly rediscovering solutions.
-- Completed work can feed a compound engineering loop where useful lessons improve future agent execution.
-- Small, high-leverage instructions may activate existing model capabilities more effectively than extensive procedural guidance.
-- Agent-generated code still requires verification, reviewable scope, and evidence that the implementation works.
-- Reduced implementation cost increases the importance of engineering judgment rather than eliminating it.
+Evidence trail:
 
-Harness implication:
+- `01 Research/Sources/Simon Willison - Harness Engineering Findings - August 2026.md`
+- `01 Research/Sources/Simon Willison — Harness Engineering Findings — 2026-09-01 through 2026-09-14.md`
+- `01 Research/Sources/Simon Willison — Harness Engineering Findings — 2026-09-15 through 2026-09-21.md`
+- Earlier Agentic Engineering Patterns research retained in this synthesis.
 
-These patterns reinforce existing HE-001 investigation areas around context isolation, durable knowledge, progressive disclosure, verification, independent review, and continuous improvement. Subagents and additional orchestration remain mechanisms to evaluate against observed problems rather than default architectural components.
+#### Durable findings
+
+**The harness is the behavioral unit.** Coding-agent behavior emerges from the model, provider/runtime, persistent and task context, tools, skills, authority, execution environment, and feedback loop. Model identity alone is insufficient when any of those conditions materially differ.
+
+**Execution provenance should be minimal but discriminating.** Capture only what is needed to explain or reproduce a material behavioral difference. Provider/backend identity, reasoning configuration, available capabilities, security boundaries, repository state, and evaluation method may matter. This is not a mandate for general-purpose telemetry or hidden reasoning capture.
+
+**Effective authority is compositional.** The authority available to an agent may exceed the explicit tool list when filesystem, networking, DNS/host configuration, proxies, package systems, credentials, and command execution can be combined. Security assessment must evaluate the composed environment rather than each permission in isolation.
+
+**Deterministic enforcement belongs below model judgment where practical.** A model or model-adjacent classifier may contribute risk signals, but it should not be the sole boundary for safety-critical authority when filesystem, network, credential, process, or sandbox constraints can enforce the boundary mechanically.
+
+**Verification must produce relevant evidence.** An agent performing an inspection step or claiming completion does not establish correctness. Tests, invariants, acceptance checks, runtime observations, targeted inspection, and reproducible commands should be selected according to the property being verified.
+
+**Independent executable evidence is stronger than another model opinion.** A workflow in which one actor demonstrates a defect with a failing test and another repairs it provides a clearer boundary than model-to-model approval alone. Multiple models do not automatically create independent verification.
+
+**Verification should be risk-directed.** Review effort should concentrate on semantic-risk boundaries and required properties, not raw change volume or line-by-line inspection by default.
+
+**Cheap implementation raises the value of scope discipline.** When agents reduce implementation cost, cost stops acting as a natural constraint against unnecessary features. Planning must still protect conceptual integrity and determine whether a change belongs in the system.
+
+**Tool interfaces should be legible to the model.** Self-describing tool output may reduce errors, especially for weaker models, but can consume more context. Interface shape should be evaluated against reliability and total execution cost rather than token compactness alone.
+
+**Skills are bounded capabilities, not automatically agents.** Narrow reusable skills and context isolation can be useful mechanisms. Subagents, fleets, and orchestration remain mechanisms to justify against demonstrated need, verification value, and execution cost.
+
+**Persistent guidance needs continuing justification.** Guidance may compensate for current model limitations, encode intentional behavior, enforce deterministic requirements, or prevent demonstrated failures. Newer model capability is not sufficient evidence for removal.
+
+**Model-generated continuation state is derived context.** Compaction,
+handoff, and memory summaries can omit, distort, or introduce instructions.
+They should not silently outrank authoritative project state, acceptance
+criteria, policy, or source artifacts. A summary may be useful without being
+authoritative.
+
+**Instruction behavior has a client-owned discovery layer.** Repository
+artifacts, discovery rules, precedence, and executed implementation are
+different ownership boundaries. A client or runtime version can change which
+instructions are loaded without changing the repository file.
+
+**Voluntary restraint is not containment.** A model stopping after recognizing
+that it reached a real system is a useful behavior signal, not a deterministic
+security boundary. Effective authority must be assessed from the capabilities
+the environment permits and composes.
+
+**Secret usability and secret exposure are separate properties.** A bounded
+process may need to use a credential without exposing the value to model
+context, generated artifacts, logs, or unrelated tools. This is an assessment
+question, not a requirement to adopt a particular credential UI.
+
+**Generated artifact volume can exceed human understanding.** Faster production
+of specifications, code, tests, and reports does not itself create conceptual
+integrity, shared understanding, or safe delivery. Human-owned acceptance and
+meaningful evidence remain necessary for consequential work.
+
+#### Harness implications
+
+These findings reinforce HE-001 investigation of context isolation, durable knowledge, execution provenance, provider/runtime conditions, effective authority, deterministic enforcement, evidence acquisition, independent evaluation, model-legible tools, and conceptual integrity.
+
+They do not establish requirements for a VM, observability platform, provider router, subagent fleet, universal provider pinning, or preservation of hidden chain-of-thought.
+
+#### Research disposition
+
+- **REINFORCE:** Treat model + context + tools + authority + runtime + verification as the evaluated execution system.
+- **REINFORCE:** Separate generation, evidence acquisition, and evaluation where the distinction improves confidence.
+- **REINFORCE:** Preserve valuable, proven knowledge outside transient conversation.
+- **ASSESS:** Minimum provenance needed to distinguish provider/backend and runtime effects in controlled evaluation.
+- **ASSESS:** Effective authority created by combinations of otherwise ordinary capabilities.
+- **ASSESS:** Whether ACR findings can produce independently reproducible evidence of failure and closure.
+- **ASSESS:** Whether tool schemas trade a small context increase for a material reduction in model error.
+- **ASSESS:** Whether generated summaries or handoffs can silently replace authoritative state; how client/version discovery and precedence affect executed instructions; whether credential paths minimize model-context exposure; and whether generated artifacts remain understandable and reviewable.
+- **PARK:** Hardware-isolated sandboxing, model routing infrastructure, and additional orchestration until an observed requirement justifies them.
+- **REJECT:** Treating model assertion, nominal model name, more agents, or more review tokens as sufficient evidence of correctness or reproducibility.
+
+### Anthropic — Agent Skills and Skills-First Engineering
+
+Evidence trail:
+
+- `01 Research/Sources/Anthropic — Agent Skills and Skills-First Engineering — 2026-09-25.md`
+- Anthropic, [Equipping agents for the real world with Agent Skills](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills)
+- Anthropic, [Skill authoring best practices](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices)
+- [Agent Skills open format](https://agentskills.io/home)
+- User-provided secondary video: [Anthropic Engineer Explains: What to Build Instead of AI Agents](https://www.youtube.com/watch?v=HIRDzMtuWFk)
+
+This is an incremental synthesis of the existing Skills and progressive-
+disclosure research, not a new architecture proposal.
+
+**Capability before actor.** A general-purpose runtime plus a bounded,
+task-specific capability can be simpler than a separate agent for every job.
+An independent actor remains justified only when independent context,
+authority, state, objective, parallelism, or evaluation is the demonstrated
+requirement.
+
+**Progressive disclosure is a context-supply property.** Skill metadata,
+activation, full instructions, references, scripts, and enforcement are
+separate stages. Discovery descriptions should identify both what a capability
+does and when it applies. Direct, paraphrased, neighboring, and unrelated
+prompts are useful routing tests.
+
+**Reusable utilities need promotion criteria.** Saving a proven script can
+reduce regeneration and variation, but a one-off success is not enough to make
+code durable. Promotion should require repeated, stable, verified usefulness,
+an owner, versioning, and regression coverage. The script is executable code
+and a possible supply-chain boundary, not merely a prompt fragment.
+
+**Corrections belong in the owning layer.** A failed run may implicate a Skill,
+metadata, project configuration, discovery/installation, deterministic code,
+runtime, or a one-time execution error. Diagnose and reproduce before editing;
+make the smallest durable correction; rerun in a fresh session; and check that
+the change does not create routing regressions. This is controlled knowledge
+maintenance, not autonomous self-improvement.
+
+**Format portability does not prove behavior portability.** An open Skill
+folder can move between compatible harnesses while model, provider, tools,
+runtime, and instruction-precedence differences still change execution. A
+cross-harness result needs the conditions required to interpret the comparison.
+
+**Verification is evidence-directed.** Establish acceptance criteria from the
+request, authoritative specification, or independently established quality bar
+before iteration. Use artifact-relevant evidence, fix demonstrated failures,
+rerun, and report what remains unverified. Additional model personas can add
+signals for subjective work but do not become external proof merely by being
+separate agents.
+
+#### Research disposition
+
+- **REINFORCE:** Bounded capabilities, progressive disclosure, model-legible
+  routing metadata, durable knowledge outside transient conversation, and
+  evidence before completion.
+- **ASSESS:** Capability-versus-actor boundaries; promotion criteria for
+  reusable utilities; owning-layer diagnosis; routing regression tests; and
+  runtime conditions for cross-model or cross-harness portability.
+- **PARK:** Universal Skill registries, automatic self-modifying Skills,
+  persona consensus as proof, and the claim that agents are generally obsolete.
+- **REJECT:** Treating the video's headline, a successful one-off, or an
+  agent's self-inspection as sufficient architecture or verification evidence.
+
+No PMB, ACR, or HE architecture change follows automatically from this
+material. It refines the existing modular-capability and verification
+questions for HE-001.
 
 ### Austin Marchese — Loop / Graph Engineering
 
@@ -373,6 +504,57 @@ Fresh sessions should inherit current state rather than depending on reconstruct
 
 This separation is especially important when multiple concurrent sessions work on the same project.
 
+### Separate Knowledge, Task State, Execution Artifacts, and Inference Context
+
+Long-horizon agent work should not collapse every form of persistence into one chat history or one
+ever-growing context window.
+
+Treat at least four resources as distinct:
+
+- **Knowledge** — reusable project/domain truth that may outlive a task.
+- **Task state** — where one specific job stands: completed work, unresolved work, blockers,
+  waiting condition, next action, and continuation authority.
+- **Execution artifacts** — worktrees, prepared environments, snapshots, caches, derived files, or
+  other resumable material that support execution but are not project truth.
+- **Inference context** — only the information a particular model call needs to choose the next
+  action.
+
+Each has a different authority, retention policy, and invalidation lifecycle.
+
+A long-lived objective therefore does not imply a long-lived inference session. When work reaches
+an external dependency, persist the task state, stop the inference loop, and resume on the event or
+time condition that makes the next step runnable.
+
+> **Persist the job, not the inference.**
+
+This sharpens the existing current-state/history distinction and prevents context-window size from
+becoming a substitute for state design.
+
+### Epistemic-Preserving Compaction and Handoff
+
+Compression is a correctness boundary, not only a token-efficiency mechanism.
+
+A compacted summary that changes "probably caused" into "caused" has upgraded uncertainty into fact
+and therefore changed the evidence state even if the topic remains semantically similar.
+
+Where a handoff, summary, memory record, or fan-in artifact carries claims forward, preserve the
+status that matters to the next decision, such as:
+
+- verified;
+- inferred;
+- speculative / hypothesis;
+- unresolved;
+- failed attempt;
+- decision;
+- constraint.
+
+The exact vocabulary may vary by consumer. The invariant is:
+
+> **Compaction must preserve epistemic state, not merely semantic gist.**
+
+Do not preserve every sentence merely to avoid this risk; preserve the evidence class and enough
+provenance to recover the source when the distinction matters.
+
 ### Durable Knowledge Is a Harness Responsibility
 
 Individual model executions are temporary.
@@ -436,6 +618,47 @@ A capability boundary is valuable when it permits independent ownership, evaluat
 
 Runtime composition should preserve traceability of the active capabilities and their effects on execution.
 
+### Guides and Sensors as Complementary Control Vocabulary
+
+Birgitta Böckeler's 2026 harness-engineering framework provides useful vocabulary for controls already present across HE:
+
+- **Guides** are feed-forward controls that act before execution to increase the probability of a good first result.
+- **Sensors** are feedback controls that observe after execution and provide evidence for self-correction.
+- Either can be **computational** (deterministic/tool-based) or **inferential** (model-mediated/semantic).
+
+This classification is orthogonal to HE's existing control-plane and assurance distinctions. A sensor can detect a condition without owning authority to permit or block the resulting action.
+
+Examples:
+
+```text
+inferential guide      → repository instructions / skill / reference
+computational guide    → constrained generator / codemod / typed interface
+computational sensor   → test / lint / type check / structural check / runtime metric
+inferential sensor     → semantic review / AI code review / LLM judgment
+```
+
+The useful design question is not whether every workflow has all four categories. It is whether the required property has the cheapest reliable control at the correct point in the loop.
+
+> **Guides steer before action; sensors provide feedback after action. Classify both by how their result is established.**
+
+### Agent Legibility Before Model Escalation
+
+OpenAI's 2026 Codex harness report and the 2026-10-19 Pocock interview independently reinforce the same diagnostic: poor agent outcomes can come from an underspecified or illegible environment rather than insufficient model intelligence.
+
+Before escalating model strength, reasoning effort, or orchestration complexity, determine whether the agent can:
+
+1. understand the required outcome and acceptance boundary;
+2. inspect the relevant current state;
+3. access the authorized capability needed to act;
+4. observe the real post-action effect;
+5. receive an acceptance-relevant feedback signal.
+
+If those properties are missing, a stronger model may spend more tokens reasoning about an environment it still cannot inspect or verify.
+
+This is a diagnostic ordering, not a mandatory workflow.
+
+> **Before escalating model intelligence, improve what the agent can see, do, and verify when those are the actual missing properties.**
+
 ### Human Direction and Measurable Feedback
 
 AI systems can execute increasingly large portions of engineering work, but human judgment remains important at points where goals, architecture, quality, or long-term maintainability are determined.
@@ -493,6 +716,16 @@ Questions to evaluate during HE-001:
 - Which information should become references instead of instructions?
 - Which instructions are duplicated?
 - What should always load vs be discovered?
+- Which client/runtime owns capability discovery, instruction precedence, and
+  the implementation that actually executes?
+- Which generated summaries or handoffs are derived context rather than
+  authoritative project state, and how is reconciliation established?
+- What evidence is sufficient to promote a repeated utility or correction into
+  durable capability content?
+- Which routing tests distinguish true activation from false positives and
+  neighboring capability overlap?
+- Which acceptance criteria and verification evidence are established before
+  a producer begins iterating?
 
 ## Candidate Architectural Decisions
 
@@ -535,6 +768,9 @@ Evidence Required
 - What information should survive a session boundary?
 - How should PMB distinguish project-level durable state from session-specific working state?
 - How should multiple concurrent sessions contribute to shared project state without unnecessary context duplication or conflicting authority?
+- How should PMB/ACR keep generated compaction and handoff summaries from silently outranking authoritative artifacts?
+- Which credential paths allow required work without exposing secret values to model context, logs, or unrelated tools?
+- When does a reusable utility have enough repeated, verified value to justify durable ownership and maintenance?
 
 ## Assessment Observations
 
@@ -568,6 +804,8 @@ Research reviewed from:
 - Related concepts presented in Matt Pocock's skills, including `grill-me`, `to-spec`, `to-tickets`, `implement`, `code-review`, writing-for-agents, and engineering vocabulary.
 
 This research is being evaluated for architectural patterns and ideas. Matt Pocock's implementation is not being adopted or copied.
+
+**2026-10-19 interview corroboration:** `01 Research/Sources/Matt Pocock — Agent Environment, Intent & Verification Interview — 2026-10-19.md` preserves the speaker's examples. His video-editor story **reinforces** existing “Durable WHAT vs Implementation HOW” and “Eyes as Evidence Acquisition” findings; executable feedback is already covered by HE-001. A deteriorating spec is a plausible *inference*, not a demonstrated root cause, and his lower-effort preference is not a controlled cost/quality comparison. No new architecture or assessment requirement follows.
 
 ### Core Finding
 

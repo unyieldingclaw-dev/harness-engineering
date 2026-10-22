@@ -2,32 +2,42 @@
 
 ## Source and evidence boundary
 
-- **User-supplied artifact:** \`ScreenRecording_10-22-2026 06-20-15_1.mp4\`, a **60.07-second** portrait screen recording of a Matt Pocock / \`@mattpocockuk\` short about **“Mastra, the AWESOME new TypeScript AI Agent framework.”**
-- **Artifact fingerprint (SHA-256):** \`b0f5a4c4e9c2e6b6c82f4117e7f8a1337e6d7355b2256dbf36748336e51dbbd0\`.
+- **User-supplied artifact:** `ScreenRecording_10-22-2026 06-20-15_1.mp4`, a **60.07-second** portrait screen recording of a Matt Pocock / `@mattpocockuk` short about **“Mastra, the AWESOME new TypeScript AI Agent framework.”**
+- **Artifact fingerprint (SHA-256):** `b0f5a4c4e9c2e6b6c82f4117e7f8a1337e6d7355b2256dbf36748336e51dbbd0`.
 - **Reviewed:** 2026-10-22, by sampling video frames and reading visible captions and example code. **Audio was not independently transcribed**; no complete transcript or runnable code accompanies this source.
-- **Related public post:** [Matt Pocock's Mastra post on LinkedIn](https://www.linkedin.com/posts/mapocock_mastra-the-awesome-new-typescript-ai-agent-activity-7340729332274741249-sjDT), publicly circulating in **2025**; original YouTube source URL for this particular recording **not verified**.
-- **First-party technical verification:** [Mastra current workflow-control-flow documentation](https://mastra.ai/docs/workflows/control-flow), [Mastra vNext workflow migration announcement](https://mastra.ai/blog/vNext-workflows), [Studio documentation](https://mastra.ai/docs/studio/overview), [human-in-the-loop documentation](https://mastra.ai/docs/agents/human-in-the-loop), and [Mastra GitHub repository](https://github.com/mastra-ai/mastra) (\`main\` observed at \`6338514d87a00247ad0c71dabdf7303d0151ca71\` on review date). Current documentation is a moving target.
+- **Related public post (independently opened; exact original-video equivalence not verified):** [Matt Pocock's Mastra post on LinkedIn](https://www.linkedin.com/posts/mapocock_mastra-the-awesome-new-typescript-ai-agent-activity-7340729332274741249-sjDT), publicly visible as an approximately year-old post at review time; its timestamp does **not** establish the exact creation date of this screen recording. Original YouTube source URL **not verified**.
+- **First-party technical verification:** [Mastra current workflow-control-flow documentation](https://mastra.ai/docs/workflows/control-flow), [Mastra vNext workflow migration announcement](https://mastra.ai/blog/vNext-workflows), [Studio documentation](https://mastra.ai/docs/studio/overview), [human-in-the-loop documentation](https://mastra.ai/docs/agents/human-in-the-loop), and [Mastra GitHub repository](https://github.com/mastra-ai/mastra) (`main` observed at `6338514d87a00247ad0c71dabdf7303d0151ca71` on review date). Current documentation is a moving target.
 - **Preservation choice:** This concise source/evidence note and fingerprint are retained, **not** a copy of the video or an endorsement of the short. Frame timestamps are approximate.
-- **Prior HE source by the same speaker:** \`01 Research/Sources/Matt Pocock — Agent Environment, Intent & Verification Interview — 2026-10-19.md\`. The two Pocock items are not independent practitioner corroboration.
+- **Prior HE source by the same speaker:** `01 Research/Sources/Matt Pocock — Agent Environment, Intent & Verification Interview — 2026-10-19.md`. The two Pocock items are not independent practitioner corroboration.
 
 ## What the recording actually shows
 
 | Approx. recording time | Visible evidence | Evidence class |
 | --- | --- | --- |
 | 0–10 s | Presenter describes a TypeScript agent language/framework, showing Mastra's framework page | **VIDEO-OBSERVED** capability claim, not a benchmark |
-| 11–22 s | TypeScript \`new Agent({ name, instructions, model, memory, workflow })\` example; narrator references AI SDK and memory | **VIDEO-OBSERVED** sample API, version not specified in recording |
-| 23–36 s | Workflow uses \`.step(...)\`, \`.then(...)\`, \`.after(...)\`, \`.commit()\`; diagram displays conditional “success” and “retry” paths converging on “finalize” | **VIDEO-OBSERVED** legacy composition/visualization |
+| 11–22 s | TypeScript `new Agent({ name, instructions, model, memory, workflow })` example; narrator references AI SDK and memory | **VIDEO-OBSERVED** sample API, version not specified in recording |
+| 23–36 s | Workflow uses `.step(...)`, `.then(...)`, `.after(...)`, `.commit()`; diagram displays conditional “success” and “retry” paths converging on “finalize” | **VIDEO-OBSERVED** legacy composition/visualization |
 | 39–60 s | Presenter says a local development environment can support UI building and testing through an ordinary REST API | **VIDEO-OBSERVED** claim, corroborated at a product-capability level by current Studio docs |
 
 **The short does not establish:** correctness, runtime isolation, permissions, resumability across crashes, audit completeness, cost reduction, prompt-injection resistance, independent effect verification, or a controlled comparison against HE/PMB/ACR.
 
 ## Critical correction — pictured API is obsolete
 
-**FIRST-PARTY VERIFIED:** Mastra's [vNext announcement](https://mastra.ai/blog/vNext-workflows) says that its redesigned workflows **retired \`.step()\` in favor of \`.then()\`**, **removed \`.after()\`**, and introduced \`.branch()\` and \`.parallel()\` with typed step schemas. This change was announced in **2025**, so code captured in the 2026-10-22 *screen recording* should not be treated as a current implementation template.
+**FIRST-PARTY VERIFIED:** Mastra's [vNext announcement](https://mastra.ai/blog/vNext-workflows) says that its redesigned workflows **retired `.step()` in favor of `.then()`**, **removed `.after()`**, and introduced `.branch()` and `.parallel()` with typed step schemas. The redesign was announced **April 29, 2025**; the recording upload date is **not** the release date of the demonstrated API. Replaying an old short on October 22, 2026 does not make its implementation current.
 
-Current docs expose \`createWorkflow\` + \`createStep\`, typed input/output schemas and \`.then()\`, \`.branch()\`, \`.parallel()\`, loops and \`.commit()\`. For current branching, **more than one condition may be true and execute**, unless mutually exclusive conditions or an explicit first-matching behavior is used. Do not assume the legacy diagram means exclusive branching.
+Current docs expose `createWorkflow` + `createStep`, typed input/output schemas and `.then()`, `.branch()`, `.parallel()`, loops and `.commit()`. For current branching, **more than one condition may be true and execute**, unless mutually exclusive conditions or an explicit first-matching behavior is used. Do not assume the legacy diagram means exclusive branching.
 
 **HE takeaway:** a compelling short demonstrates a *concept* but may encode a superseded API. Verify the source version, failure semantics and actual current contract before elevating it to a pattern or reference implementation.
+
+## Adversarial correction criteria
+
+- Treat the workflow graph as **claimed/intended topology** until instrumented step traces establish which branches and side effects actually ran.
+- A truthful conditional workflow may run **multiple** truthy branches; add a counterexample with both conditions true before claiming exclusive if/else semantics.
+- A typed output can still be semantically wrong. Verify actual postconditions and authority on an independent evidence path.
+- Approval prompts require exact operation binding and protected policy enforcement; a UI confirmation alone must not be treated as authorization.
+- A successful suspended-run demonstration without persistent storage does not prove crash-safe continuation or single authoritative attempt.
+- Compare a no-framework baseline (small deterministic script/host-native workflow), and measure total runtime ownership, failure recovery and exit cost before adopting a long-lived engine.
+- The source is *one* practitioner clip plus first-party product documentation; do not use it as independent evidence of quality improvement.
 
 ## First-party capabilities worth inspecting if HE ever needs an execution reference
 
@@ -36,14 +46,14 @@ Current docs expose \`createWorkflow\` + \`createStep\`, typed input/output sche
 3. **Local test/debug surface.** Mastra Studio exposes live execution, step output, tracing, errors and local API operations. **LIMIT:** observability is not an independent evaluation oracle, and a UI is not necessarily the right HE product boundary.
 4. **Suspend/approval.** Mastra has human-in-the-loop tool approvals and storage-backed suspended runs. Its own documentation states that **restart-safe resumption requires persistent storage**; default in-memory state can be lost. **LIMIT:** suspend/resume infrastructure does not settle HE's separate authoritative Task/Attempt identity, exact approval scope, or effect verification requirements.
 5. **Provider/tool framework.** Mastra offers agent definitions, tools, routing and memory as TypeScript services. **LIMIT:** adopting the runtime creates a new dependency surface without any HE-001 evidence of a needed replacement for existing coding hosts.
-6. **License boundary.** Mastra's GitHub repository reports **Apache-2.0 for most source** with an **enterprise-license carve-out for \`ee/\` directories**. Assess actual feature/licensing/deployment boundaries if ever piloted; do not assume uniform Apache licensing.
+6. **License boundary.** Mastra's GitHub repository reports **Apache-2.0 for most source** with an **enterprise-license carve-out for `ee/` directories**. Assess actual feature/licensing/deployment boundaries if ever piloted; do not assume uniform Apache licensing.
 
 ## Mapping to existing HE ownership
 
 | Existing HE work | What Mastra adds as external comparator | Disposition |
 | --- | --- | --- |
-| **HE-001 — Baseline Harness Assessment** (\`02 Assessments/HE-001 — Baseline Harness Assessment.md.md\`) | A concrete example of how typed dependency topology, conditional execution and graph inspection *could* work. HE-001 already asks which workflow stages are truly dependent and which can run concurrently. | **REINFORCE** an existing assessment dimension, no new required deliverable |
-| **HE-002 — Modular Capability Architecture** (\`03 Decisions/Decisions Index.md.md\`, **PENDING HE-001**) | Useful reference for an optional composition layer only if measured work shows a need for an executable orchestrator. | **ASSESS after HE-001**; do not accelerate HE-002 or turn its candidate into an approved decision |
+| **HE-001 — Baseline Harness Assessment** (`02 Assessments/HE-001 — Baseline Harness Assessment.md.md`) | A concrete example of how typed dependency topology, conditional execution and graph inspection *could* work. HE-001 already asks which workflow stages are truly dependent and which can run concurrently. | **REINFORCE** an existing assessment dimension, no new required deliverable |
+| **HE-002 — Modular Capability Architecture** (`03 Decisions/Decisions Index.md.md`, **PENDING HE-001**) | Useful reference for an optional composition layer only if measured work shows a need for an executable orchestrator. | **ASSESS after HE-001**; do not accelerate HE-002 or turn its candidate into an approved decision |
 | **Supervised Agent Orchestration & Effect Verification** (2026-09-21) | Inspectable steps can support evidence and transitions, but do not replace authoritative Task/Attempt identity, explicit settlement, UNKNOWN state, or verification of external effects. | **REINFORCE**, not new doctrine |
 | **Artifact-Gated SDLC, Behavioral Evals & Metrics** (2026-09-22) | Typed I/O gives a structural boundary, useful only when paired with *acceptance semantics* and observed postconditions. | **REINFORCE** |
 | **AI Engineering Observability & Dashboard Boundary** (2026-09-18) | Local Studio is an example of a **derived operational view** built from runtime evidence, not an authority for project truth. | **REINFORCE / PARK UI** |
@@ -70,6 +80,6 @@ If HE-001 finds a task that warrants evaluation, run a **small, disposable, non-
 - **REINFORCE:** supervised orchestration authority boundaries, artifact-based acceptance, verification outside the model, runtime exit-cost assessment.
 - **ASSESS:** an optional typed-orchestration comparator **only if HE-001 exposes a real need**.
 - **PARK:** Studio/dashboard integration, new runtime or server, persistent workflow platform, model gateway and generic agent framework adoption.
-- **REJECT:** copying \`.step()\`/\`.after()\` from the clip; treating a visual graph, an approval option, or a successful API call as proof of valid effects.
+- **REJECT:** copying `.step()`/`.after()` from the clip; treating a visual graph, an approval option, or a successful API call as proof of valid effects.
 
 **No production code, tests or Mastra runtime were executed for this review. No HE-001/HE-002 decision or work-transfer obligation changes here.**

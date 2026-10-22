@@ -273,7 +273,7 @@ The retrieval layer should not own knowledge-base policy, and the ingestion laye
 
 ## Exa assessment
 
-Current Exa documentation describes an AI-oriented search API with search, contents extraction, agent/deep-search workflows, and coding-agent use cases. Exa currently offers a free starter allowance and usage-based developer pricing; the current pricing page lists Search at $7/1,000 requests, Contents at $1/1,000 pages, and Agent at $0.012–$1/run depending on effort. citeturn1search0turn1search6
+At the September 2026 research snapshot, Exa was assessed as an AI-oriented search, contents, and agent-research API. **Pricing rechecked 2026-10-22:** the [official live pricing page](https://exa.ai/pricing) distinguishes **Instant Search from $4/1,000**, **Fast/Auto Search $7/1,000**, **Contents $1/1,000 pages**, and agent effort-based usage (plus applicable additional charges). The earlier undifferentiated "Search $7" assertion was insufficiently scoped; these amounts remain time-sensitive and must be confirmed again before making a purchase or cost model.
 
 ### Fit
 
@@ -298,7 +298,7 @@ Exa becomes more interesting if we build a recurring research/ingestion loop whe
 
 Firecrawl currently provides scrape, crawl, map, search, browser interaction, and structured extraction capabilities. Its official Claude plugin is available in the Claude plugin marketplace and exposes `/firecrawl:scrape`, `/firecrawl:crawl`, `/firecrawl:search`, `/firecrawl:map`, and `/firecrawl:agent`. citeturn1search12turn1search14
 
-Current self-serve pricing is credit-based: the free plan provides 1,000 credits/month; Scrape/Crawl/Map consume 1 credit per page, and Search consumes 2 credits per 10 results. citeturn1search1
+**Pricing rechecked 2026-10-22:** the [official Firecrawl pricing page](https://www.firecrawl.dev/pricing) says its free plan provides **1,000 credits/month**, basic Scrape/Crawl/Map costs **1 credit per page**, and Search costs **2 credits per 10 results**; additional formats and tools may cost more. The source is a changing commercial price sheet, not a durable HE cost invariant.
 
 ### Fit
 

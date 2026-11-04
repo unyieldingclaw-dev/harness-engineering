@@ -36,7 +36,7 @@ The authors' eight-task ablation reports:
 | RALPH | 1.75 | $407.58 | 3 |
 | Zenith | 1.38 | $175.68 | 5 |
 
-Compared with RALPH in **this** test, Zenith reported ~$232 lower mean spend per task, or about **2.32× less cost for RALPH than Zenith?** No: correctly stated, RALPH costs ~2.32× as much as Zenith; Zenith is ~57% cheaper. Do not repeat the interview's **50× lower cost** as if this ablation validates it. Task choice, variance, model/runtime, evaluator independence, retries and differing orchestration complexity still constrain generalization.
+Compared with RALPH in **this** test, Zenith reported about $232 lower mean spend per task. RALPH cost ~2.32× as much as Zenith, or equivalently Zenith was ~57% cheaper. Do not repeat the interview's **50× lower cost** as if this ablation validates it. Task choice, variance, model/runtime, evaluator independence, retries and differing orchestration complexity still constrain generalization.
 
 The repository also cites a Frontier SWE leaderboard. Treat that as a separate comparison with potentially different model/harness pairs; it does not isolate the harness effect unless model and other execution conditions are controlled.
 

@@ -140,6 +140,16 @@ Distinguish code-shape detection from actual effects (e.g., configuration for ba
 
 **Disposition:** UI tools can be evaluated per UI project (Side Quest Atlas or personal site). No evidence supports three required overlapping design skills, nor another full HE workflow policy. Keep one canonical style source per product.
 
+
+## Independent empirical check on skill proliferation (external to video)
+
+Two contemporaneous **preprints** reinforce the need for controlled local evaluation, but neither is proof that a specific HE skill helps or harms:
+
+- [SWE-Skills-Bench, revised 2026-10-27 (arXiv:2603.15401v2)](https://arxiv.org/abs/2603.15401): reports **3,920 paired evaluations** of **98 skills** with four agent-model configurations. **92/98** showed no statistically significant effect, and average pass ratio moved from **76.6% to 76.9%**. This is the revised v2 result; do **not** repeat the earlier v1 39/49 and +1.2% figures as the current findings.
+- [How Agent Skills Evolve, submitted 2026-11-03 (arXiv:2611.04456v1)](https://arxiv.org/abs/2611.04456): analyzed **84,200 skills and 750,898 commits**, finding persistent challenges around reliability, project coupling, redundancy and regression testing.
+
+These are author-reported research results and may change under review. Their appropriate HE implication is narrow: **a skill must demonstrate marginal benefit on relevant tasks and carry a maintenance/retest obligation.** Popularity and plausible procedure text are not evidence of improvement. This reinforces existing behavioral skill evaluation and does not justify new governance machinery.
+
 ## Proposed bounded evaluation queue (not implementation commitments)
 
 | Priority | Candidate | Trigger / observed problem needed | Minimum comparison | Owner of result |

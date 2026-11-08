@@ -174,3 +174,14 @@ These are author-reported research results and may change under review. Their ap
 ## Recommended documentation action
 
 Retain this synthesis and its pinned source ledger under existing HE research paths. It is research evidence, not an approved architectural RFC or production roadmap. Revisit only when a pilot is triggered and evidence can be recorded with actual inputs, version, result and limitation.
+
+
+## 2026-11-08 evidence update: memory observer privacy and point-in-time replay
+
+Source addendum: `01 Research/Sources/Beau Johnson — Five Trending Agent Repositories & Claude-Mem Consent Incident — 2026-11-08.md`, grounded in maintainer release notes, merged fix and TradingAgents changelog.
+
+**Observer privacy is a pre-pilot boundary, not a post-install tuning preference.** Claude-mem's browser installer from v15.2.0 through pre-v15.8.3 transmitted 30 days of local agent prompts and identifying session/project metadata without a consent gate. The v15.8.3 fix added explicit opt-in but did not remediate previously uploaded data; v15.12.0 also retains agent-seen images by default (not automatically cloud-uploaded by that feature). This directly changes the proposed *optional recall experiment*: **require inspection and disposable-data verification of installer-time and runtime history access, network transmission, telemetry, data retention/deletion, uninstall and rollback before even comparing recall performance**. Do not add a universal scanner or assume every install path was affected.
+
+**Historical agent debate does not validate time-bounded evidence.** TradingAgents v0.7.0/v0.7.1 changelogs document incorrect decision-close scoring, non-padded dates letting future filings enter historical analysis, and old/new outcome-convention mixing. Future HE/ACR evaluation using dated artifacts should verify **what could have been known at decision time, temporal filtering and scoring provenance**. Deterministic historical fixtures take priority over adding debating agents. No evidence of an analogous HE/ACR bug was obtained in this research.
+
+**No new feature/project:** both findings refine existing source/evidence and bounded-risk research, not a PMB memory replacement, agent orchestration proposal, or automatically enforced gate.

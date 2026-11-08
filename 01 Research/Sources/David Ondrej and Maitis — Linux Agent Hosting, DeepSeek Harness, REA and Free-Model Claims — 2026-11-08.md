@@ -75,7 +75,7 @@ The `@preset/free-models` example rotates across named NVIDIA offerings. Each ca
 ## HE overlap and specific marginal contribution
 
 These sources **reinforce**, but do not supersede, existing:
-- `01 Research/Sources/Manolo Remiddi & DeepSeek Harness — Lock-In, Inspectability & Exit Cost — 2026-09-24.md` — DeepSeek Harness already reviewed; new source adds its **explicit unsaudited safety notice** in contrast with a “free clone” video.
+- `01 Research/Sources/Manolo Remiddi & DeepSeek Harness — Lock-In, Inspectability & Exit Cost — 2026-09-24.md` — DeepSeek Harness already reviewed; new source adds its **explicit unaudited safety notice** in contrast with a “free clone” video.
 - `01 Research/Harness Portability, Exit Cost & Inspectability — 2026-09-24.md` — host/client/runtime portability and permission differences.
 - `01 Research/Bounded Execution Envelopes — 2026-09-22.md` — limits outside model and distinct execution/authorization.
 - `01 Research/Budgeted Side Effects, Approval Gates & Receipts — 2026-09-25.md` — review/approval/readback for consequential changes.

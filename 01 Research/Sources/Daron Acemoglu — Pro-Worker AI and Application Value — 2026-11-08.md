@@ -54,3 +54,16 @@
 ## Existing HE overlap
 
 `01 Research/Sources/Austin Marchese — Anthropic Growth Workflows, Sub-Threshold Work & Bespoke Tools — 2026-09-29.md`; `01 Research/Experience-Derived Harness Evolution — 2026-09-25.md`; `01 Research/Artifact-Gated SDLC, Behavioral Evals & Metrics — 2026-09-22.md`; `01 Research/Model-Tiered Workflows & Independent Factory Assurance — 2026-09-24.md`.
+
+## Important source-version correction: October 2026 survey expansion
+
+The `Firm Data on AI` figures above are explicitly for the **March 2026 edition**. The [NBER paper w34836, revised October 2026](https://www.nber.org/papers/w34836) has **later and materially different figures**:
+
+- **Nearly 9,000 executives in seven countries**, rather than the March survey's nearly 6,000 in four.
+- **78% of firms** report using AI (vs 69% for the earlier sample).
+- Executives report **80% personal usage**, averaging 2.1 hours/week.
+- Retrospective average: **about 0.2 percentage points of extra annual labor-productivity growth**, with little net employment effect over three years; forward-looking expectation **~0.6 percentage points annually** over the next three years.
+- The company-level figures are **self-reports and forecasts**, not randomized treatment effects, and geographic sample composition changed. Do not calculate a causal adoption or productivity growth from the difference between editions.
+- **More than 40% anticipate changes to employment** despite an aggregate net estimate near zero. A zero aggregate can conceal material company-level and occupational churn.
+
+The October revision is the **current version** for any “latest” factual summary. Both versions are evidence that high adoption and measured organization-wide gains are different questions. This research note retains the March result only for date-specific comparison, rather than silently replacing it.

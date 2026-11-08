@@ -136,3 +136,12 @@ Primary files: [README](https://github.com/hallikkristjan-code/production-skelet
 - Do not create new HE decisions while HE-002 remains pending HE-001; research sources and synthesis are appropriate, implementation decisions require measured evidence.
 - Do not interpret stars, before/after promotional screenshots, or self-reported savings as causal performance measurements.
 - No code copied from external repositories; any future code reuse needs targeted license review and attribution.
+
+
+## 2026-11-08 verified security addendum (subsequent source; does not change the Nov 7 pinned-code observations)
+
+A second user-supplied video, [Beau Johnson — Five Trending Agent Repositories](https://www.youtube.com/watch?v=y2TmTP7qsvU), disclosed a claude-mem installer privacy incident that materially increases the requirements for any recall pilot. Full verified review: `01 Research/Sources/Beau Johnson — Five Trending Agent Repositories & Claude-Mem Consent Incident — 2026-11-08.md`.
+
+**Confirmed by official [v15.8.3 notes](https://github.com/thedotmack/claude-mem/releases/tag/v15.8.3) and [merged fix #5220](https://github.com/thedotmack/claude-mem/pull/5220):** browser setup initiated by `npx claude-mem install` since v15.2.0 uploaded 30 days of agent prompt text and metadata to cmem.ai without on-screen consent. The Nov 2 v15.8.3 update added explicit local-only/upload consent; **it did not delete previously uploaded prompts**, and provider-side retention/deletion remained outside the fix. **Do not generalize** this to all plugin-only installations. The [Nov 7 v15.12.0 release](https://github.com/thedotmack/claude-mem/releases/tag/v15.12.0) also defaults to **retaining captured images locally**, a separate lifecycle/privacy consideration, not proof of default cloud upload.
+
+**Updated disposition:** claude-mem remains a *conceptual retrieval-pattern* reference, but any future PMB recall pilot must first pass **specific installer/history-scope, transmitted-data, telemetry, retained-image, permission and deletion tests on disposable data**. Do not install it against real personal/company history merely to benchmark recall. No PMB/HE runtime change authorized.

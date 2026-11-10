@@ -83,3 +83,41 @@ User provided screen captures, descriptions and chapters from three videos:
 **PARK / REJECT NOW:** importing `/zen` without review, building a command-center UI inside PMB, user-wide autonomous skill rewrites, 2-week universal scans, mandatory "three M" policy gates, transcript mass harvesting, work/personal event-stream merging, and fixed token-health scores.
 
 **Operational action taken in this research pass:** documentation only, in a draft HE research branch. No PMB, Work MB, ACR or runtime changes; no scripts executed, permissions altered, external agents installed, or logs exported.
+
+## Nov 10 — Additional screenshots: MCP economics, skill attribution and build-prompt slice
+
+**Additional user evidence:** eight screenshots show the \`Skills & MCP\` view and lines ~105–143 of a \`build-your-own-dashboard-prompt.md\` inside an editor. Only the screenshot-visible **portion** of the prompt was supplied, not the full 168-line source. This is not a security or functional review of the full builder prompt. These details were captured after the initial preliminary research note.
+
+### MCP Cost & Performance panel
+
+Screenshot lists: **23 servers**, **7.6k name tax**, **21.5k schema load**, **253.6k result tokens**, **845 calls in seven days**, **3.3% errors**, **4,889ms average latency**. Per-server view lists *configured tools*, *used tools*, an estimated schema/name footprint, calls, latency and error rate. A \`Measure schemas\` control apparently performs a \`tools/list\` probe when available, with \`EST\` labels on estimates. This is useful for investigating actual tool selection and latency, but:
+
+- **Name tax/schema load is an estimate**, not necessarily tokens inserted into a given model context. Lazy/tool-search features and host-specific discovery can change what loads. Derive actual prompt cost only from exposed usage/trace evidence or a controlled before/after comparison.
+- A large registry with few used tools is a candidate for **scope review**, not a reason to delete rarely called tools. Time window, data collection coverage and fallback/emergency usage matter. Do not mistake 'not observed' for 'dead'.
+- \`tools/list\` probes are connectivity and schema discovery requests; the cost and security semantics depend on the server and transport. For actual use, measure with a small allowlisted provider rather than blanket-probing all connected servers; do not export schemas/credentials with the diagnostics.
+- Some individual tools show 'slow' tags, but the screenshot does not disclose the cutoff, sample count, statistical distribution or whether the slowdown is model-side, MCP transport, target provider or tool logic. Never declare a server 'slow' from a label alone.
+
+### Skill cost panel
+
+The ranked examples include \`morning-brief\` at **13.8 million effective tokens per run (one run)**, \`build-frontend\` at **12.9M (one run)** and \`superpowers:requesting-code-review\` at **8.2M per run (two runs)**; per-skill totals and **$ retail** appear in the later view. These are screenshots of the speaker's telemetry and do **not** demonstrate skill-only marginal consumption or actual subscription costs. A skill can be present in long, multi-step sessions and any 'session-with-skill' allocation may attribute the whole session to it. The source already describes multi-skill attribution as heuristic in an earlier Spend panel. Distinguish: (a) exact skill tool invocations, (b) activity window/attribution basis, (c) input vs output vs cache create/read, (d) deduplication across simultaneous skills, (e) list-price-equivalent estimate vs actual billed amount and (f) observed task-quality outcome. A high number is an **audit candidate only**.
+
+### Config / skills registry
+
+The demo claims **100 skills across five environments** and exposes \`CLAUDE.md\`, rules, hooks, allowed tools, MCP enabled/configured, \`.claudeignore\` and an API-key exposure check. This is good discoverability, but registry counts can include duplicates or shadowed definitions. Labels like 'supervised', 'API key exposure clean' or '21 patterns' are **checker-specific outputs**, not proof that an invocation was gated or that all secret channels were inspected. Record checker version, environment scope, checked locations and exclusions when evaluating such panels.
+
+### Visible build-prompt slice (not the full prompt)
+
+The screenshot shows text from a Markdown prompt called \`build-your-own-dashboard-prompt.md\`:
+
+- use/seed a local **SQLite** database;
+- offer to run the **OpenTelemetry wizard**;
+- start \`python scripts/server.py\` at **http://localhost:8765**;
+- add a thin \`cc\` launcher: \`cc start\`, \`cc stop\`, \`cc doctor\` (deterministic health check including Python version, OTEL status, JSONL path, server reachability);
+- anti-bloat 'DO NOT build' list: voice/chat avatars, WebSockets, multi-agent orchestration, external database, Cloudflare tunnels or remote access/user accounts, background agents or daemons beyond the main server, retail-dollar costing when only tokens are known, Telegram bridge, **task dispatcher/scheduler**;
+- dashboard stated as **read-only window into data already on disk**; stop conditions reference installer, local service, sync script, event arrival within 30 seconds when OTEL enabled and \`cc doctor\`.
+
+A second screenshot of user-provided message text includes 'bind to \`127.0.0.1\` only, never \`0.0.0.0\`', no auth for a **local single-user design**, loading/empty states, and request to inspect \`db.py\` schema before building other components. These are *proposed requirements visible in the screenshot*, not a verified implemented network bind or authorization boundary. A no-auth local app still needs protection from other local processes, malicious web origins and later remote exposure. The screenshot's UI shows the IDE's **'Bypass permissions'** mode/indicator in one frame; this alone does not prove bypass was activated during the build, but its effective settings and influence on installation should be audited.
+
+**Critical version/scope distinction:** Other screenshots feature a **task dispatcher, scheduler, human approval queue and interactive task execution**, which this particular prompt slice expressly excludes. That may reflect a later iteration of the creator's product, not a contradiction in the same revision. The minimal prompt cannot be claimed to recreate those expanded dashboard capabilities. Do not silently import their extra authority or runtime into the baseline.
+
+**Decision refined by this intake:** The *minimal* local/read-only design and explicit stop conditions are more relevant to HE than the expanded command-centre workflow, but **nothing has established demand for implementing even that minimal UI**. Reuse the existing HE observability boundary, retain these as design constraints if a future project is authorized, and wait for the full prompt and distinct Security/Context evidence before reconsidering risk.

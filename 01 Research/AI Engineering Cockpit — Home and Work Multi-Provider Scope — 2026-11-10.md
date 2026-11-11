@@ -4,6 +4,11 @@
 **Placement:** Independent adjacent application, **not** PMB, ACR, or Harness Engineering runtime.
 **Prior HE ownership decision:** [AI Engineering Observability & Dashboard Boundary — 2026-09-18](./AI%20Engineering%20Observability%20%26%20Dashboard%20Boundary%20%E2%80%94%202026-09-18.md) expressly parked the cockpit until a cross-project operational view was requested and useful adapters were available. The user-request trigger is now present; feasibility and work permissions are not yet validated.
 
+## Research preservation and resumption
+
+- [GBrain / StarMynd evidence assessment](./Sources/GBrain%20%26%20StarMynd%20%E2%80%94%20Memory%20Systems%20Evidence%20and%20Transfer%20Assessment%20%E2%80%94%202026-11-11.md) — facts, source limitations, transfer decisions and explicitly rejected architecture.
+- [Post-PMB Resumption Checklist](./AI%20Engineering%20Cockpit%20%E2%80%94%20Post-PMB%20Resumption%20Checklist%20%E2%80%94%202026-11-11.md) — operational questions, provider capability gates, Home/Work separation, stop conditions and non-goals. **PMB completion is not permission to implement.**
+
 ## Decision and explicit boundaries
 
 - **One versioned product/codebase**, provisioned as separate **Home** and **Work** instances. Shared code does not mean shared telemetry, identity, credentials, database, logs, browser storage, or endpoint.

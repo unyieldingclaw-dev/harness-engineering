@@ -113,6 +113,7 @@ Evidence trail:
 - `01 Research/Sources/Simon Willison - Harness Engineering Findings - August 2026.md`
 - `01 Research/Sources/Simon Willison — Harness Engineering Findings — 2026-09-01 through 2026-09-14.md`
 - `01 Research/Sources/Simon Willison — Harness Engineering Findings — 2026-09-15 through 2026-09-21.md`
+- `01 Research/Sources/Simon Willison — Harness Engineering Findings — 2026-11-10 through 2026-11-15.md`
 - Earlier Agentic Engineering Patterns research retained in this synthesis.
 
 #### Durable findings
@@ -164,6 +165,18 @@ question, not a requirement to adopt a particular credential UI.
 of specifications, code, tests, and reports does not itself create conceptual
 integrity, shared understanding, or safe delivery. Human-owned acceptance and
 meaningful evidence remain necessary for consequential work.
+
+#### November 10–15, 2026 refinement
+
+The November review adds several boundary conditions to the existing findings:
+
+- **Compatibility is not isolation.** OpenAI-compatible adapters can still resolve or transmit the wrong credential. Provider, endpoint, adapter path, and credential-source resolution must be evaluated separately and fail closed when required configuration is absent.
+- **Authorization is compositional.** Requesting actor, resource owner, and requested resource must remain distinct. A filter or metadata parameter must not redefine the identity used for authorization; policy composition needs explicit negative and unauthenticated tests.
+- **Local execution is not automatically faithful.** An emulator or local adapter can reduce live authority and credential exposure, but only task-specific fidelity tests establish whether it represents the behavior under evaluation.
+- **Economic comparisons require verified outcomes.** Model price, benchmark score, commit volume, and nominal model identity are insufficient proxies for workflow quality or cost. Include retries, latency, verification, correction, and failure consequences.
+- **Responsibility framing is a hypothesis, not authority.** Ownership instructions may affect behavior, but should be tested on bounded tasks and must not silently grant permission to broaden scope or alter durable project policy.
+
+These findings refine provenance, effective-authority, modular-capability, and independent-evaluation questions without creating a provider router, credential broker, emulator requirement, or default ownership policy.
 
 #### Harness implications
 

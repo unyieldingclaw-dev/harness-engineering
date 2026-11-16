@@ -216,6 +216,10 @@ Assessment should distinguish:
 
 Do not optimize for token count alone. Determine whether reducing a measured
 cost changes total execution cost, latency, reliability, or output quality.
+
+
+Where local adapters or service emulators are used, compare the specific behavior under evaluation with the hosted or live reference where relevant. Record fidelity limits and do not treat reduced live authority as proof that the local environment is behaviorally equivalent.
+
 ### Modular Capability Assessment
 
 HE-001 must distinguish between:
@@ -494,7 +498,10 @@ strength of the finding, not automatically as evidence that the underlying
 result is invalid.
 
 When an endpoint can route the same advertised model through multiple
-backends, do not assume those executions are equivalent. Determine whether
+backends, do not assume those executions are equivalent.
+
+For provider-compatible adapters, also record the selected endpoint, adapter execution path, and credential source. Test the absence, mismatch, and fallback cases explicitly. A successful request is not evidence that the credential boundary was correct; classify wrong-credential delivery as a runtime/configuration failure rather than model non-adherence.
+ Determine whether
 backend identity, serving behavior, reasoning-setting interpretation, or
 available capabilities could materially affect the result before requiring
 provider pinning or additional provenance.
@@ -520,7 +527,10 @@ shell history, or unrelated tools. Record where authentication, service
 selection, and audit logging are owned.
 
 Do not treat a deterministic control as effective merely because it is
-mechanically enforced. Determine whether adjacent capabilities can bypass,
+mechanically enforced.
+
+Treat authorization identity as compositional. Test that requesting actor, resource owner, and requested resource remain distinct, including unauthenticated, conflicting, empty, and parameter-manipulation cases. A filter or metadata field must not redefine the identity used for authorization.
+ Determine whether adjacent capabilities can bypass,
 reinterpret, or expand the intended boundary.
 
 Distinguish prompt injection, malicious tool output, confused-deputy
@@ -624,6 +634,10 @@ single-agent verification loop.
 Do not assume independent critics, sub-agents, or recursive iteration
 improve quality. Require evidence that the additional execution materially
 improves the result relative to its cost and complexity.
+
+
+
+When comparing models or runtimes, evaluate complete verified task cost rather than nominal token price, benchmark score, commit volume, or advertised model name. Include retries, latency, verification, correction, and failure consequences in the comparison.
 
 ### Independent Evaluation and Quality Bars
 

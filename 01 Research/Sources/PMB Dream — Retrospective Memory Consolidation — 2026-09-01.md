@@ -298,20 +298,22 @@ These are **research candidates**, not an adopted CLI/Skill interface.
 
 # 7. Anthropic Dreams: the strongest implementation lesson
 
+> **Current-documentation correction — 2026-10-22:** The original research characterized Dreams as *always* producing a separate output store. Anthropic's [current Dreams API reference](https://platform.claude.com/docs/en/api/beta/dreams/create) instead documents a **default `create_new` mode** that preserves the input store **and an opt-in `update_existing` mode** that writes back into the input memory store when the credential has write permission. The API remains in research preview and its contract can change. The diagram below depicts **only the safer default**, not an enforced invariant. The HE/PMB recommendation to protect canonical memory remains a proposed policy and must be enforced by the owner, not inferred from a provider default.
+
 Anthropic's current Dreams documentation describes Dreams as a research-preview capability that lets Claude reflect on past sessions to curate agent memory and surface new insights. citeturn0search0
 
 The documented workflow is:
 
 ```text
 existing memory store ─────┐
-                           ├──→ Dream job ──→ NEW memory store
+                           ├──→ Dream job ──→ NEW memory store (default)
 1–100 session transcripts ─┘                    │
                                                 ├─ review
                                                 ├─ adopt
                                                 └─ discard
 ```
 
-The input memory store is never modified by the Dream. The resulting store is separate and can be reviewed and either attached for future sessions or discarded. citeturn0search0
+By default, the Dream writes to a new store and leaves the input unchanged. With `output_behavior: {type: "update_existing", ...}`, it can write into the input instead, subject to API permissions. This current source contract is verified from the [official create reference](https://platform.claude.com/docs/en/api/beta/dreams/create) as of 2026-10-22.
 
 The Dream is asynchronous and accepts 1–100 sessions. Anthropic also reports usage on the Dream resource and states that cost scales roughly linearly with the number and length of input sessions. citeturn0search0
 

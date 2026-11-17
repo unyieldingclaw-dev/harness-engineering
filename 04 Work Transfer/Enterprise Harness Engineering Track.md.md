@@ -6,20 +6,13 @@ Provide a portable Harness Engineering methodology that can be applied inside th
 
 This track translates public HE research into **bounded enterprise assessments and pilots**. It does not prescribe adoption of PMB, pstack, MoltenBase, Noodle, or any other external system wholesale.
 
-## Known Environment
+## Enterprise usage assumptions (not environment inventory)
 
-- PMB is available internally.
-- ACR is not currently deployed internally.
-- Independent code review is an established requirement.
-- Claude Code and Cursor are primary development agents.
-- Codex is available as an alternative/fallback.
-- LiteLLM is available.
-- Enterprise ChatGPT has access to organization-specific knowledge.
-- Source repositories are private.
+Any enterprise assessment must begin **inside the approved private workspace** by independently inventorying actual agents, model gateways, repository hosting, information access, review requirements, and operational policies. **Do not publish** which tools are deployed, favored, absent, or available within a specific organization, or any internal measurements, in this public research repository.
 
-## Observed Problem
+## General research problem
 
-Self-review by the implementation agent has demonstrated lower defect discovery than review performed from an independent context.
+Existing public HE research identifies recurring risks when AI-assisted engineering scales. These are candidate risks to test, **not assertions about a specific employer's incidents, measured review performance, or current deployment**.
 
 The broader HE research also indicates recurring risks when AI-assisted engineering scales:
 

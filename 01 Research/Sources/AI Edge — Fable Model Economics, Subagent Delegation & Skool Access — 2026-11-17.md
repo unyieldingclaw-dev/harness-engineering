@@ -39,7 +39,7 @@ No claim of having read restricted/JS-rendered lesson content. The user's authen
 
 ## HE owner mapping; avoid duplicate doctrine
 
-**Already owned by:** [Model-Tiered Workflows & Independent Factory Assurance — Sep 24](../../Model-Tiered%20Workflows%20%26%20Independent%20Factory%20Assurance%20%E2%80%94%202026-09-24.md) (workload class, risk, verification, measured fitness); [Context Engineering](../../Context%20Engineering.md.md) (scope of loaded instructions, skill discovery, model/runtime interactions); [Session Rollover, Handoff & Verification](../../Session%20Rollover%2C%20Handoff%20%26%20Verification%20%E2%80%94%202026-09-16.md) (token spend ≠ active context); [Risk-Directed Review & Release Proof](../../Risk-Directed%20Review%20%26%20Release%20Proof%20%E2%80%94%202026-09-24.md).
+**Already owned by:** [Model-Tiered Workflows & Independent Factory Assurance — Sep 24](../Model-Tiered%20Workflows%20%26%20Independent%20Factory%20Assurance%20%E2%80%94%202026-09-24.md) (workload class, risk, verification, measured fitness); [Context Engineering](../Context%20Engineering.md.md) (scope of loaded instructions, skill discovery, model/runtime interactions); [Session Rollover, Handoff & Verification](../Session%20Rollover%2C%20Handoff%20%26%20Verification%20%E2%80%94%202026-09-16.md) (token spend ≠ active context); [Risk-Directed Review & Release Proof](../Risk-Directed%20Review%20%26%20Release%20Proof%20%E2%80%94%202026-09-24.md).
 
 This source reinforces rather than replaces those decisions: **route by actual workload and verification**, not stage labels; do not treat a model reviewer as an independent acceptance mechanism; keep setup/skill modifications explicit and reversible; do not convert a creator heuristic into an organization-wide mandate.
 

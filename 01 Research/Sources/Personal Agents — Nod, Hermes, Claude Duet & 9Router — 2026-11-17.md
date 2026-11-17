@@ -42,7 +42,7 @@ Claude Duet documents a vendor-managed classifier and approval architecture; the
 
 **Transfer:** map (a) requested effect, (b) actor and real OS/app authority, (c) non-writable enforcing component, (d) approval scope, (e) execution receipt, and (f) uncertain outcome/retry rule. Prefer a deterministic refusal path for destructive actions. Do **not** conclude that one runtime is safer based only on the presence/absence of approval popups.
 
-**Already owned by HE:** [Budgeted Side Effects, Approval Gates & Receipts (Sep 25)](../..//01%20Research/Budgeted%20Side%20Effects%2C%20Approval%20Gates%20%26%20Receipts%20%E2%80%94%202026-09-25.md) and [Bounded Execution Envelopes (Sep 22)](../..//01%20Research/Bounded%20Execution%20Envelopes%20%E2%80%94%202026-09-22.md). No new global policy required.
+**Already owned by HE:** [Budgeted Side Effects, Approval Gates & Receipts (Sep 25)](../Budgeted%20Side%20Effects%2C%20Approval%20Gates%20%26%20Receipts%20%E2%80%94%202026-09-25.md) and [Bounded Execution Envelopes (Sep 22)](../Bounded%20Execution%20Envelopes%20%E2%80%94%202026-09-22.md). No new global policy required.
 
 ### F2 — Self-improving skills are mutable software inputs, not verified learning (REINFORCE / TEST)
 
@@ -52,7 +52,7 @@ The showcased sequence “job finished → review → patched its own skill” i
 
 **Transfer:** preserve the exact source failure, evidence and owner; stage the smallest candidate correction; test original failure and regression cases in a fresh run; promote only with human or deterministic authorization. Single-run corrections and recurring patterns deserve different thresholds. Include “no durable correction” as a valid answer.
 
-**Already owned by HE:** [Experience-Derived Harness Evolution (Sep 25)](../..//01%20Research/Experience-Derived%20Harness%20Evolution%20%E2%80%94%202026-09-25.md). PMB retains its own provenance and memory authority; no Hermes-derived memory subsystem is authorized.
+**Already owned by HE:** [Experience-Derived Harness Evolution (Sep 25)](../Experience-Derived%20Harness%20Evolution%20%E2%80%94%202026-09-25.md). PMB retains its own provenance and memory authority; no Hermes-derived memory subsystem is authorized.
 
 ### F3 — Model combos represent different causal experiments (REINFORCE / ASSESS)
 
@@ -67,7 +67,7 @@ These are **not** equivalent to “Claude reasoning + Gemini vision + GPT coding
 
 **Transfer:** preserve selected execution identity, fallback reason, capability mismatch, context/handoff state, and model-specific outputs when comparing decisions. Prefer same-model retries or explicit compatible alternatives before silent heterogeneous substitution. For architecture/review research, independent parallel opinions plus an evidence-backed human synthesis are easier to audit than opaque fusion.
 
-**Already owned by HE:** [FreeLLMAPI — Gateway Boundaries & Runtime Routing (Sep 14)](../..//01%20Research/FreeLLMAPI%20%E2%80%94%20Gateway%20Boundaries%20%26%20Runtime%20Routing%20%E2%80%94%202026-09-14.md), [Model-Tiered Workflows & Independent Factory Assurance (Sep 24)](../..//01%20Research/Model-Tiered%20Workflows%20%26%20Independent%20Factory%20Assurance%20%E2%80%94%202026-09-24.md), and [Harness Portability, Exit Cost & Inspectability (Sep 24)](../..//01%20Research/Harness%20Portability%2C%20Exit%20Cost%20%26%20Inspectability%20%E2%80%94%202026-09-24.md).
+**Already owned by HE:** [FreeLLMAPI — Gateway Boundaries & Runtime Routing (Sep 14)](../FreeLLMAPI%20%E2%80%94%20Gateway%20Boundaries%20%26%20Runtime%20Routing%20%E2%80%94%202026-09-14.md), [Model-Tiered Workflows & Independent Factory Assurance (Sep 24)](../Model-Tiered%20Workflows%20%26%20Independent%20Factory%20Assurance%20%E2%80%94%202026-09-24.md), and [Harness Portability, Exit Cost & Inspectability (Sep 24)](../Harness%20Portability%2C%20Exit%20Cost%20%26%20Inspectability%20%E2%80%94%202026-09-24.md).
 
 ### F4 — Always-on is a deployment property, not proof of a useful assistant (ASSESS)
 

@@ -436,3 +436,28 @@ Bonsai 2 demonstrates two truths at once:
 For HE the durable rule is:
 
 > **Evaluate compression at the task horizon and interaction pattern you intend to deploy, and use traces to diagnose whether failures come from knowledge, coding, state tracking, progress control, runtime configuration, or another owning component.**
+
+---
+
+# 2026-11-04 — Availability and runtime follow-up (Tom Bilyeu / Emad Mostaque interview)
+
+The separate interview at https://www.youtube.com/watch?v=WsdcF7EEvhM (~42:30–44:15) independently surfaced PrismML's 27B-to-~6GB compression claim. **This finding was already assessed above in September.** Do not treat the new interview as new independent model-quality evidence; it mostly repeats PrismML's headline.
+
+Verified updates as of this review:
+
+- PrismML **Bonsai 2 9B**, based on Qwen3.5, was released on October 15, 2026, with a published ~2.00 GB language-weight footprint; 2B and 4B siblings were also published. This is a potentially lower-friction **bounded local task** candidate than the 27B, not an agent replacement decision.
+- The Bonsai 2 27B model card now lists **Q2_0 (7.63 GB)** as supported by **stock llama.cpp from b11556 onward** because the needed Hadamard activation runtime was integrated. The earlier Q2_0 incompatibility warning above remains relevant for **older** binaries: they can load and produce wrong output without warning.
+- The smallest **PTQ1_0 (5.95 GB)** and **PQ2_0 (7.21 GB)** still require PrismML's custom llama.cpp fork. Do not equate Hugging Face's auto-generated Ollama snippets with confirmed support for these specialized files.
+- For the user's reported 8 GB RTX 5060 Laptop GPU, the 5.95 GB weight file could be a candidate but does not imply 6 GB GPU viability after context, buffers and OS overhead. PrismML ships Windows/CUDA setup scripts. No local test was conducted in this research pass.
+- PrismML's Snapdragon glasses demonstration on September 23 used a **2B vision-language model**, not the 27B release. The interview's transition from 27B to glasses/watches should not be used as a hardware fact.
+- **Important continuity:** this source's documented ~75% long-horizon retention and repeated-tool-loop failures must remain part of any candidate recommendation, even when a new video highlights the aggregate 98.2%.
+
+Source record for the full interview and corroboration: `01 Research/Sources/Tom Bilyeu and Emad Mostaque — Bonsai Zenith and AI Claims — 2026-11-04.md`.
+
+Primary sources:
+- https://huggingface.co/prism-ml/Ternary-Bonsai-2-27B-gguf
+- https://github.com/PrismML-Eng/Bonsai-demo
+- https://prismml.com/news/bonsai-2-family
+- https://prismml.com/news/prismml-brings-1-bit-bonsai-models-to-ai-smart-glasses-powered-by-snapdragon
+
+**Disposition remains REINFORCE / optional workload-scoped ASSESS; no local installation, ACR model switch or HE design change.**

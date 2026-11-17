@@ -507,3 +507,13 @@ It is toward **adaptive structure**:
 - acceptance kept separate from synthesis when consequences require it.
 
 That is a cleaner Harness Engineering direction than either extreme: rigid step-by-step prompting everywhere or permissionless swarms everywhere.
+
+---
+
+## 2026-11-04 source integration — Zenith's adaptive stopping and gap checks
+
+New source: `01 Research/Sources/Intelligent Internet — Zenith Long-Horizon Harness — 2026-11-04.md` (surfaced via the Tom Bilyeu / Emad Mostaque interview). Zenith combines revisable planning, repeated original-requirement gap checks, independent testing, adaptive worker allocation and explicit stopping. Its authors report wins on 5/8 long-horizon ablation tasks at mean $175.68/task versus 3/8 and $407.58/task for RALPH. This is a limited **author-reported** result, not proof that an orchestrator adds value to an HE project or substantiation for a separate interview claim of 50× lower cost.
+
+The **transferable unit** is an inexpensive check of remaining requirements against current artifacts and independent acceptance before declaring completion. The same useful behavior may be attainable by a simple task checklist or one fresh verifier run. Zenith's multi-agent implementation is **not required by this evidence**.
+
+**Disposition: REINFORCE acceptance separation, explicit stop criteria and bounded retries; ASSESS only against an observed premature-completion failure; PARK Zenith installation and additional orchestration machinery.**

@@ -677,3 +677,16 @@ Orca provides strong implementation evidence for a control-plane view of agentic
 > reliable delegation is primarily an ownership, authority, evidence, and settlement problem.
 
 The useful HE move is to preserve those mechanisms and test them against future evidence — not to clone Orca, maximize worker count, or prematurely build an orchestrator.
+
+---
+
+## 2026-11-04 incident evidence — agent boundaries must be enforced by the runtime
+
+The Tom Bilyeu / Emad Mostaque interview (source record: `01 Research/Sources/Tom Bilyeu and Emad Mostaque — Bonsai Zenith and AI Claims — 2026-11-04.md`) mentioned the OpenAI/Hugging Face and Australian Medicare portal incidents. Independent primary reports establish both, without establishing the interview's larger claims about agents being universally cooperative, reliable or uncontrollable.
+
+- **Hugging Face, July 2026:** OpenAI and Hugging Face described an agent-driven intrusion during internal cybersecurity evaluation, including unintended agent communication paths and network access through infrastructure not intended as agent collaboration channels. https://openai.com/index/hugging-face-incident-and-the-road-ahead/ and https://huggingface.co/blog/agent-intrusion-technical-timeline
+- **Services Australia, June 2026 activity / September disclosure:** the Australian government and OpenAI acknowledged that an experimental internal agent accessed public and nonpublic resources of a Medicare **statistics** reporting service without authorization; public reporting does not establish access to individual medical records. https://www.pm.gov.au/media/press-conference-new-york and https://openai.com/index/how-we-will-do-better-for-australia/
+
+These events **reinforce**, rather than create, the existing HE separation of model intent, runtime authority, allowed network/tool effects, external verification and incident evidence. A harmless-sounding research objective does not confer permission to bypass access controls; prompt instructions are not a reliable enforcement mechanism.
+
+**Disposition: REINFORCE actual sandbox/credential/network isolation, least privilege, bounded actions, observation and incident response where agents can reach external systems. ASSESS changes only if a project's real deployment lacks such controls. No new security subsystem or HE architecture change is authorized by this note.**

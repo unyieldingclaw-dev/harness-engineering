@@ -808,3 +808,15 @@ measured correctness + latency + failure behavior + verified-task economics
 Hardware/model charts can help populate candidate configurations, but they do not change the selection rule.
 
 That keeps hardware and compression optimization subordinate to task success instead of letting “it loads,” “the feature exists,” “the average benchmark is close,” or “the GPU name matches” become architecture evidence.
+
+---
+
+## 2026-11-04 source integration — Bonsai 2 family and 8 GB hardware claim
+
+New source intake: `01 Research/Sources/Tom Bilyeu and Emad Mostaque — Bonsai Zenith and AI Claims — 2026-11-04.md`; follow-up attached to `01 Research/Sources/Prompt Engineering — Bonsai 2 Compression, Agentic Horizon & Trace Failure — 2026-09-28.md`.
+
+The interview adds **no new HE architecture principle** beyond this synthesis. It confirms continued availability of 27B-derived compressed artifacts (PTQ1_0 5.95 GB, PQ2_0 7.21 GB) and surfaces an October 15 Bonsai 2 9B release (~2 GB weights). Runtime compatibility has shifted: a 7.63 GB Q2_0 variant is described as stock-llama.cpp compatible from b11556, while the two tighter packings still need PrismML's fork. Pin actual runtime builds; do not infer app compatibility from a generic Hugging Face launch snippet.
+
+The existing September evidence that long-agent performance can degrade to ~75% of full precision remains the **critical workload-specific constraint**. A practical experiment on an 8 GB laptop GPU would test **9B first, then 27B PTQ1_0 only if it fits with headroom**, using actual memory/offload measurements and existing short- versus long-horizon task fixtures. No test was run and no upgrade is recommended.
+
+**Disposition: REINFORCE existing principles; ASSESS only on a demonstrated local workload need; PARK additional infra and hardware purchases.**

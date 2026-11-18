@@ -1,5 +1,8 @@
 # AI Edge — Fable 5.2 Model Economics, Subagents, Effort and Skool Asset Accessibility — 2026-11-17
 
+> **Access update — later on Nov 17, 2026:** The user provided full authenticated Skool lesson text and downloadable markdown/PDF resources for the model-routing guide, seven-repository pack, Graph Engineering/Clone Your Brain kit, and historical Fable 5 newsletter. The **earlier evidence gap and “request four assets” wording below describes the state before those downloads** and is retained as provenance, not the current access status. See [Downloaded Skool Guides, Model Routing, Seven Repos & Workflow Contracts](./AI%20Edge%20%E2%80%94%20Downloaded%20Skool%20Guides%2C%20Model%20Routing%2C%20Seven%20Repos%20%26%20Workflow%20Contracts%20%E2%80%94%202026-11-17.md) for the updated detailed review. The **Fable for Cheap executable ZIP/source remains uninspected**. No installer was run.
+
+
 **Status:** HE source research, unreviewed. **No authorization** to execute third-party installers, change Claude settings/model defaults, or alter PMB, ACR, the independent Dashboard, HE runtime, CI, or work systems.
 
 ## Inputs and provenance

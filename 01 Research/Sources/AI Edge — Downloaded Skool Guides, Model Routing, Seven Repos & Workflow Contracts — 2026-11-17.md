@@ -2,6 +2,8 @@
 
 **Status:** Research / user-provided primary artifacts reviewed; interpretations below are **not** an HE standard, installation instruction or implementation approval. Companion to [AI Edge — Fable Model Economics, Subagent Delegation & Skool Access — 2026-11-17](./AI%20Edge%20%E2%80%94%20Fable%20Model%20Economics%2C%20Subagent%20Delegation%20%26%20Skool%20Access%20%E2%80%94%202026-11-17.md) and draft [PR #35](https://github.com/unyieldingclaw-dev/harness-engineering/pull/35).
 
+> **Nov 18, 2026 update:** The user supplied the previously missing original `fable-for-cheap.zip`. It has been **statically reviewed without execution**; see [Fable for Cheap ZIP — Static Source Audit](./AI%20Edge%20%E2%80%94%20Fable%20for%20Cheap%20ZIP%20%E2%80%94%20Static%20Source%20Audit%20%E2%80%94%202026-11-18.md). Earlier lines describing the ZIP as unavailable or awaiting review are retained below as historical evidence, **not current status**. The source audit recommends **do not install this version unchanged**, principally due to incomplete restoration, vulnerable marker removal, and an audit permission/sequence contradiction.
+
 ## Scope, provenance and access update
 
 The user supplied **actual authenticated Skool lesson content and downloads**, closing much of the accessibility gap recorded in the earlier note. Sources reviewed:

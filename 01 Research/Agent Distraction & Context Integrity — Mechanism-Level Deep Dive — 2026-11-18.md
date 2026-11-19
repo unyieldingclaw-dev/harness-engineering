@@ -447,3 +447,48 @@ A separate **Corp ChatGPT read-only investigation** is now useful if corporate p
 **Handoff acceptance criterion:** report: (a) existing enforceable gates and their owner; (b) any verified stale-state gap with reproducible *read-only* evidence or UNPROVEN; (c) smallest feasible source/workflow owner correction if warranted; (d) whether another checker would duplicate an existing gate. Stop without proposing architecture if protections are already adequate. The executable Corp ChatGPT prompt is supplied in the user conversation, not duplicated in this Home research file.
 
 **Decision:** Continue Home source-level research; recommend this *separate, bounded* Work discovery at this point. No production change, no Work system accessed from Home, no new platform, and no repo merge authorized.
+
+---
+
+## 2026-11-19 Work MB candidate assessment and one-shot enterprise handoff boundary
+
+**Scope clarification from user:** Corp ChatGPT cannot be treated as an ongoing research peer with a back-and-forth information channel. Prepare a **single self-contained corporate investigation** that produces a corporate-contained deliverable. Complete public-source conceptual research here first. Work Memory Bank ("Work MB") is an **existing distinct corporate system**, not PMB, and may have different requirements, users, tools and governance. No Work MB source was accessed or verified in this Home investigation. Do not copy internal URLs, paths, tickets, code or findings into this public HE repository.
+
+### Hypotheses worth independently testing in Work MB (not observed corporate defects)
+
+| Work MB inspection candidate | Minimum corporate-side evidence needed | Smallest action if actually deficient | Avoid |
+| --- | --- | --- | --- |
+| **M2: active context/instruction loading and authority** | Trace exact runtime startup/hook/skill/retrieval path for one approved sample: source file → selected text → model-visible context; list decision/contract owner when docs and code disagree | Correct owning pointer or narrowly scoped instructions; report true intent conflict to human owner | Assuming checked-in docs are loaded, blanket "code wins", additional metadata layer |
+| **M3: repeated stale guidance and review status** | Compare one historically suspect pointer/command to actual config, tests and owner; determine whether review age/last-reviewed is merely metadata or implies validation | Fix the source once; reuse existing doctor/audit or review mechanism if already present | Treating every aged document as invalid, recurring sweep, duplicate status |
+| **M1/M5: task scope and handoff constraints** | Reconstruct one approved session/handoff; check if goal, write boundaries, prohibitions and status of incidental issues remain distinct; do not require proprietary session exports into Home | Source-owned, task-local anchor for consequential restrictions; verify actual successor behavior | Assuming a summary that mentions a restriction enforces it, universal new mandatory template |
+| **M4: mutable operational facts in memory** | Identify whether Work MB stores GitLab/Jira/CI/release/approval facts as live claims versus as-of observations; find actual freshness check at use point | Link the live owner, mark timestamp/revision, or revalidate at action boundary; use a native conditional operation when warranted | Global state registry, copying release/approval status into a second editable truth |
+| **M5: delegated tool and side-effect boundaries** | Confirm actual hooks, permissions, read-only tools, write guards, CI and human approvals at runtime; check behavior for an existing permitted non-production path without side effects | Correct existing enforcement or one local missing invariant only with separate approval | A Bash-capable "read-only" subagent, model quorum as proof, repo hook as a security sandbox |
+| **CI/fallback/history preservation** | Trace live consumers, compatibility/rollback cases, history and approved future intent before labeling anything unused | Record **UNPROVEN** absent proof; preserve rationale and owner | Removing shell, platform, CI-only or fallback logic because normal runs do not exercise it |
+
+**Work-specific distinction:** Work MB (durable project knowledge) should not silently become the source of truth for *current release state*, runtime approvals, artifact identity, or active CI status; these belong to their authorized operational systems. However, Work MB may legitimately retain **historical** release rationale, runbook procedures and policy constraints when clearly marked as such. This is an architectural principle to **test**, not an accusation that current Work MB gets it wrong.
+
+**Transfer from new literature:**
+- Salle et al. [compaction study](https://arxiv.org/html/2610.31778): process instructions and scope exclusions can be disproportionately lost. Verify both summary retention and **downstream action**, without assuming this rate applies to Work MB.
+- OpenAI [Agents SDK handoff contracts](https://openai.github.io/openai-agents-python/handoffs/): handoffs can forward entire history; nested summaries do not redact copied tool results. Investigate the **actual corporate harness/provider behavior**, not merely an analogy to this SDK.
+- [MemHarmBench](https://github.com/Kirito14IT/MemHarmBench/blob/main/docs/protocols.md): distinguish whether a lower-trust rule is retained, later *adopted*, and whether legitimate task completion conceals an unauthorized decision. Corporate evaluation must remain **passive**, use an already approved sanitized sample, and must not inject actual attacks into enterprise workflows.
+- GitLab [merge API](https://docs.gitlab.com/api/merge_requests/) and [pipeline precedence](https://docs.gitlab.com/user/project/merge_requests/auto_merge/): native checks only establish the exact revision/CI property they implement; verified Work use depends on actual server version, configuration and approval workflow.
+
+### One-shot corporate execution plan; no return-dependency
+
+When dispatched, the **corporate** assistant should work in two **separate tracks**:
+
+**Track A — Work MB (primary):** Inspect existing code/docs/config/tests for startup context injection, memory ownership, frontmatter and review/retention semantics, compaction, handoff isolation, query/audit/doctor, hook failure modes, concurrent worktree behavior, and read-only access control. Compare **documented intent vs implemented behavior vs actually invoked runtime path**. If no source access is available, label implementation **UNVERIFIED**; do not infer it from PMB history or the user's earlier design discussions. Treat the product's support for less-technical team members as a legitimate constraint, not justification for expanding default context or adding more mandatory governance.
+
+**Track B — Release Engineering sample (secondary):** With approval, map **one representative non-production** MR/change/release path across source SHA, required pipeline/job and artifact, issue/change approval, target environment and any human authorization. Note which system owns each fact, existing validation at the action point, supported expected-revision checks, permitted tools and whether Work MB properly links to live state. If no representative case can be inspected, provide public/vendor-documented candidate checks only, explicitly **UNVERIFIED** in corporate environment.
+
+**Required one-shot output, maintained only within sanctioned company storage:**
+1. Actual inspected source inventory (commit/revision/as-of, exact internal citations and limitations), and a clear **NO ACCESS** statement for anything not inspected.
+2. At most **three evidence-backed current defects**, if any, each with reproducer or directly supporting traces, authoritative owner, smallest change, regressions to protect and severity/impact. **Zero valid findings is an acceptable result.**
+3. Separate list of *hypothetical risks*, *already covered controls* and *UNPROVEN* mismatches. Do not classify policies/plans as obsolete merely because current code differs.
+4. A falsification/negative-control assessment: historical rationale, approved future work, CI-only path, compatibility fallback, in-progress/dirty worktree, distinct version meanings, and non-production constraints where relevant.
+5. A small recommendation table with **DO NOTHING / FIX OWNER / VERIFY NEXT / ESCALATE FOR APPROVAL**. No implied implementation permission.
+6. Any experimental idea must be **read-only, non-production, bounded**, independently labeled; provide exact success/false-positive/operator-cost metrics and stop criteria. Do not run attacks, change configuration, mutate repositories, or manipulate approvals.
+
+**Boundary / operating rule:** The company assistant must not ask for live relay to Home, publish internal results to GitHub, move protected artifacts into private personal apps, or make direct changes without separate permission. The user can retain the full corporate deliverable in company-managed storage; if company policy allows, the user may later share only a **generalized, sanitized lesson without code, identifiers, screenshots, URLs or confidential operational facts** for incorporation into public HE research. Do not depend on such a transfer for task completion.
+
+**Research disposition:** A one-shot corporate **read-only discovery** is now useful, specifically to distinguish Work MB implementation from inherited personal assumptions and to identify whether release validation is already enforced. It is not an enterprise sweep pilot or rollout proposal. Home can continue independent research without receiving the corporate findings.

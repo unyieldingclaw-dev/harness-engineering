@@ -59,7 +59,7 @@ Continue focused investigation into how stale and irrelevant context induces cod
 
 > Bishop, continue the Agent Distraction & Context Integrity investigation as a distinct HE research thread.
 >
-> Start by reading HE draft PR #39 and its two committed documents:
+> Start by reading HE draft PR #39, including the Google source audit, mechanism-level deep dive, and continuation checklist:
 > https://github.com/unyieldingclaw-dev/harness-engineering/pull/39
 >
 > Use Google's November 6, 2026 Agent Distraction article, the independent stale-instruction studies, and the AI LABS /sweep walkthrough already analyzed as the evidence baseline. Do not duplicate that source mining.
@@ -72,7 +72,7 @@ Continue focused investigation into how stale and irrelevant context induces cod
 
 ## Resumption note
 
-Recheck PR #39 and actual repository state before recommending further work. This document is a handoff and evaluation checklist, NOT proof that any incident exists or that the user approved a pilot. When no concrete failure can be identified, stop at 'research documented, no further action justified.'
+Recheck PR #39 and actual repository state before recommending further work. This document is a handoff and evaluation checklist, NOT proof that any incident exists or that the user approved a pilot. When no concrete failure can be identified, stop **operational adoption or a production sweep**; source-driven conceptual research and controlled, non-mutating fixture designs remain appropriate when they answer a distinct question.
 
 ---
 
@@ -115,3 +115,14 @@ Recheck PR #39 and actual repository state before recommending further work. Thi
 **Reopen condition (decision heuristic, not a measured threshold):** at least two separately documented *current* task-scope/context failures on comparable Home tasks after the existing corrections, or one high-impact, clearly attributable unauthorized mutation. Capture original requested scope, encountered context, behavior/diff, owning source and history, operator rework, and baseline run cost. If met, use the already-defined **5–10-case, labeled, disposable-checkout read-only pilot** to compare no check, a task-local scope rule and a narrowly triggered discrepancy check. Count true/false positives, unsupported "obsolete" calls, unrequested edits, owner attribution, user review effort, tools, tokens, wall time and maintenance; require an actual win before requesting implementation authorization. Otherwise stop.
 
 **Work boundary unchanged:** no corporate source/telemetry was inspected here. Home evidence and code must not be transferred to Work; any Work assessment needs independently sanctioned data, tools and authorization.
+
+
+---
+
+## Scope correction — mechanism-level research, not a sweep-implementation decision
+
+The retrospective incident matrix is useful for identifying demonstrated Home failures, but the **no-sweep** decision must not be generalized into **stop researching context integrity**. The dedicated deep dive in this PR addresses *five distinct failure mechanisms*: unrequested TODO detours; stale instruction precedence; documentation debt with successful-but-wasteful recovery; in-session stale tool observations (Concord); and trajectory/specification drift (Wink). These require different evidence and controls. Neither the lack of a Home detour rate nor the existence of current source-owned fixes disposes of the broader research question.
+
+**Read first:** `01 Research/Agent Distraction & Context Integrity — Mechanism-Level Deep Dive — 2026-11-18.md`.
+
+**Decision unchanged:** no production sweep, autonomous archival, global instruction rewrite or work integration authorized. **Research decision revised:** retain the distinct mechanisms, threat/authority model, ranked lightweight controls, and eight-fixture experiment design for future validation. The 2-incident reopening threshold applies to *operational adoption*, not to conducting meaningful research.

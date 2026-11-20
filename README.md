@@ -1,4 +1,9 @@
-# harness-engineering
+# Harness Engineering
+
+<p align="center">
+  <img src="assets/branding/logo-1024.png" alt="Harness Engineering — Investigate, Validate, Improve" width="280" />
+</p>
+
 
 Engineering principles, patterns, and reference implementations for designing, auditing, and optimizing AI harnesses.
 

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-label="Harness Engineering primary logo"><defs>
+<linearGradient id="gear" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00ECF0"/><stop offset="0.45" stop-color="#078BFB"/><stop offset="1" stop-color="#004BE9"/></linearGradient>
+<linearGradient id="deck" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#08236A"/><stop offset="0.55" stop-color="#0874E8"/><stop offset="1" stop-color="#03F1D1"/></linearGradient>
+<linearGradient id="edge" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0063EF"/><stop offset="1" stop-color="#04F1EA"/></linearGradient>
+</defs><rect width="1024" height="1024" fill="#020B22"/><rect x="15" y="15" width="994" height="994" rx="45" stroke="#0289F7" stroke-width="10" fill="none"/>
+<g transform="translate(256 48) scale(.96)"><polygon points="259.5,63.0 277.2,64.2 285.2,30.9 361.7,55.8 348.6,87.4 363.6,96.8 369.4,101.0 383.0,112.3 409.0,90.1 456.3,155.2 427.1,173.1 433.7,189.5 435.9,196.3 440.2,213.5 474.3,210.8 474.3,291.2 440.2,288.5 435.9,305.7 433.7,312.5 427.1,328.9 456.3,346.8 409.0,411.9 383.0,389.7 369.4,401.0 363.6,405.2 348.6,414.6 361.7,446.2 285.2,471.1 277.2,437.8 259.5,439.0 252.5,439.0 234.8,437.8 226.8,471.1 150.3,446.2 163.4,414.6 148.4,405.2 142.6,401.0 129.0,389.7 103.0,411.9 55.7,346.8 84.9,328.9 78.3,312.5 76.1,305.7 71.8,288.5 37.7,291.2 37.7,210.8 71.8,213.5 76.1,196.3 78.3,189.5 84.9,173.1 55.7,155.2 103.0,90.1 129.0,112.3 142.6,101.0 148.4,96.8 163.4,87.4 150.3,55.8 226.8,30.9 234.8,64.2 252.5,63.0" fill="url(#gear)" stroke="#15E9F7" stroke-width="6" stroke-linejoin="round"/><circle cx="256" cy="251" r="164" fill="#020C25"/><path d="M123 315 L254 247 L390 315 L257 387 Z" fill="#021C4C" stroke="url(#edge)" stroke-width="10" stroke-linejoin="round"/>
+<path d="M123 273 L254 205 L390 273 L257 347 Z" fill="url(#deck)" stroke="#00DFF1" stroke-width="10" stroke-linejoin="round"/>
+<path d="M123 225 L254 157 L390 225 L257 301 Z" fill="url(#deck)" stroke="#18DDFE" stroke-width="10" stroke-linejoin="round"/>
+<path d="M173 232 L256 166 L339 232" fill="none" stroke="#F9FDFF" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="173" cy="232" r="19" fill="#0587FF" stroke="white" stroke-width="10"/>
+<circle cx="256" cy="166" r="19" fill="#00DECA" stroke="white" stroke-width="10"/>
+<circle cx="339" cy="232" r="19" fill="#0587FF" stroke="white" stroke-width="10"/></g>
+<text x="512" y="728" font-family="Inter,Arial,sans-serif" font-weight="800" font-size="194" text-anchor="middle" fill="#FFFFFF">HE</text>
+<text x="512" y="822" font-family="Inter,Arial,sans-serif" font-weight="700" font-size="53" letter-spacing="3" text-anchor="middle" fill="#FFFFFF">HARNESS ENGINEERING</text>
+<path d="M110 863 H914" stroke="url(#edge)" stroke-width="7" stroke-linecap="round"/>
+<text x="512" y="922" font-family="Inter,Arial,sans-serif" font-weight="600" font-size="39" letter-spacing="2" text-anchor="middle" fill="#A1EAF7">INVESTIGATE &#8226; VALIDATE &#8226; IMPROVE</text></svg>

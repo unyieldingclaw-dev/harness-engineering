@@ -114,6 +114,7 @@ Evidence trail:
 - `01 Research/Sources/Simon Willison — Harness Engineering Findings — 2026-09-01 through 2026-09-14.md`
 - `01 Research/Sources/Simon Willison — Harness Engineering Findings — 2026-09-15 through 2026-09-21.md`
 - `01 Research/Sources/Simon Willison — Harness Engineering Findings — 2026-11-10 through 2026-11-15.md`
+- `01 Research/Sources/Simon Willison — Harness Engineering Findings — 2026-11-16 through 2026-11-22.md`
 - Earlier Agentic Engineering Patterns research retained in this synthesis.
 
 #### Durable findings
@@ -177,6 +178,18 @@ The November review adds several boundary conditions to the existing findings:
 - **Responsibility framing is a hypothesis, not authority.** Ownership instructions may affect behavior, but should be tested on bounded tasks and must not silently grant permission to broaden scope or alter durable project policy.
 
 These findings refine provenance, effective-authority, modular-capability, and independent-evaluation questions without creating a provider router, credential broker, emulator requirement, or default ownership policy.
+
+#### November 16–22, 2026 refinement
+
+Evidence: `01 Research/Sources/Simon Willison — Harness Engineering Findings — 2026-11-16 through 2026-11-22.md`.
+
+- **Sandbox scope is client-tool specific.** Simon and Prime Radiant's external-sandbox prototypes route execution through a separate Linux guest, but Claude Code's native Read/Edit remain on the host while its Bash is intercepted. Codex and Pi have different interception coverage. A sandboxed command channel does not establish confinement of every agent capability; inspect the actual tool dispatch path and failure behavior.
+- **Credential substitution reduces guest exposure, not downstream authority.** A host-side allow-list proxy can keep secrets out of guest context while still enabling authenticated calls. Approved destinations can potentially echo secrets; network methods, paths, mounts, and host-native tools remain part of the effective authority.
+- **Generated migration parity has a moving baseline.** Daniel Stenberg's curl rewrite comparison illustrates that snapshot translation and generated line counts do not establish continuing compatibility with upstream bug/security fixes. Treat upstream freshness as a task-specific verification question, not a standing migration framework.
+- **Reasoning effort is an adapter capability and measured workload parameter.** Simon's Gemini Hydrogen high/xhigh creative comparison showed a large difference in tokens, latency and cost. It is not evidence that extra effort improves ACR defect detection; record supported/applied effort when relevant.
+- **Dependency fixes can expose latent contract assumptions.** SQLite 3.54.1 corrected JSON typing behavior and broke LLM logging that relied on the previous behavior. Preserve behavior-based regression evidence and runtime versions where consequential.
+
+**Disposition:** REINFORCE composed authority, execution provenance, independent verification, freshness and total verified task economics; ASSESS actual host-versus-guest tool routing when sandboxing is in scope; PARK adopting a VM/proxy, migration watcher or effort router without observed need; REJECT claims of complete agent isolation from Bash-only interception.
 
 #### Harness implications
 

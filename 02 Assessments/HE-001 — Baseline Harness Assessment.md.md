@@ -155,6 +155,20 @@ Examples include:
 - Underlying model
 
 Determine whether context management materially changes effective model capability, including context selection, retention, compaction, recovery, and long-running task continuity.
+### Execution Boundary Coverage (research refinement, 2026-11-23)
+
+When HE-001 encounters a claim that an agent's code or tools execute inside a sandbox, record the **actual routing coverage by tool and client**. Simon Willison and Prime Radiant's November 17 external-sandbox prototypes provide a concrete counterexample: intercepting Claude Code Bash does not confine native Read/Edit, which remain host operations in that integration. Codex and Pi use different interception mechanisms.
+
+For an observed workflow, distinguish:
+- model/agent process location from command/tool execution location;
+- shell interception from native file Read/Edit/patch and other host tools;
+- read-only versus read-write mount authority and host-side path access;
+- default network denial, allow-list proxy methods/paths, credential substitution, and potential response disclosure;
+- behavior when the sandbox or adapter is missing, fails, or is bypassed;
+- prototype conformance testing from an independently audited security guarantee.
+
+This refines existing effective-authority and deterministic-enforcement questions. **Do not** install a sandbox, grant credentials, or infer a current HE/PMB/ACR vulnerability from external prototypes. Source: `01 Research/Sources/Simon Willison — Harness Engineering Findings — 2026-11-16 through 2026-11-22.md`.
+
 ### Context and Capability Cost
 
 Evaluate the operational cost of harness surfaces in addition to their
